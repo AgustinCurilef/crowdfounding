@@ -13,7 +13,7 @@ $routes->get('/register', 'LoginController::register');
 
 $routes->get('/inicio', 'UserController::index');
 
-$routes->get('/MyProjects', 'ProjectController::list');
+$routes->get('/myprojects', 'ProjectController::list');
 
 
 

@@ -1,0 +1,90 @@
+ERROR - 2024-11-06 02:04:15 --> Error connecting to the database: mysqli_sql_exception: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión in C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowdfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#4 C:\wamp64\www\crowdfounding\app\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowdfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#6 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowdfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowdfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowdfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión in C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowdfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#3 C:\wamp64\www\crowdfounding\app\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowdfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#5 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#6 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#7 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\crowdfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\crowdfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\crowdfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2024-11-06 02:04:15 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*
+FROM `proyectos`', [], false)
+ 3 APPPATH\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-06 02:06:02 --> Error connecting to the database: mysqli_sql_exception: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión in C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowdfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#4 C:\wamp64\www\crowdfounding\app\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowdfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#6 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowdfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowdfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowdfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión in C:\wamp64\www\crowdfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowdfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowdfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#3 C:\wamp64\www\crowdfounding\app\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowdfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#5 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#6 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#7 C:\wamp64\www\crowdfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\wamp64\www\crowdfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 C:\wamp64\www\crowdfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\wamp64\www\crowdfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2024-11-06 02:06:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*
+FROM `proyectos`', [], false)
+ 3 APPPATH\Models\ProjectModel.php(31): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
