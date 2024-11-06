@@ -18,10 +18,11 @@
                         <div class="form-group">
                             <label>Categoría</label>
                             <select class="form-control select2" id="categoryFilter">
-                                <option value="">Todas</option>
-                                <option value="1">Tecnología</option>
-                                <option value="2">Arte</option>
-                                <option value="3">Música</option>
+                            <option value="0">Todos</option>
+                            <?php foreach ($categories as $category) : ?>
+                                
+                                <option value= <?=esc( $category->ID_CATEGORIA)?> > <?= esc($category->NOMBRE) ?></option>
+                                <?php endforeach; ?>   
                             </select>
                         </div>
                     </div>
