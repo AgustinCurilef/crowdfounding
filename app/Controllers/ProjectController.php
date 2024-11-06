@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\ProjectModel;
+use App\Models\CategoryModel;
 
 class ProjectController extends BaseController
 {
@@ -9,10 +10,12 @@ class ProjectController extends BaseController
     {
         
         $ProjectModel = new ProjectModel();
+        $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
+        $categories= $categoryModel-> findAll();
         
         
-        $data = ['title' => 'Mis Proyectos', 'projects' => $projects ];
+        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
 
         return view('estructura/header', $data)
             .view('estructura/navbar')

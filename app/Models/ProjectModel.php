@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\CategoryModel;
 
 class ProjectModel extends Model
 {
@@ -31,26 +32,15 @@ class ProjectModel extends Model
         $query = $builder->get();
     
         $projects = $query->getResult();
+         // Instanciamos CategoryModel
+         $categoryModel = new CategoryModel();
+
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
-            $project->categoria_nombre = $this->getCategory($project->ID_PROYECTO);
+            $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
         }
         
         return $projects;
     }
-    public function getCategory($id) {
-        $builder = $this->db->table('categorias');
-        $builder->select('categorias.NOMBRE');
-        $builder->join('proyecto_categoria', 'proyecto_categoria.ID_CATEGORIA = categorias.ID_CATEGORIA');
-        $builder->where('proyecto_categoria.ID_PROYECTO', $id);
-        $query = $builder->get();
     
-        // Extraemos solo los nombres de las categorías en un arreglo plano
-        $result = $query->getResult();
-        $categoryNames = [];
-        foreach ($result as $row) {
-            $categoryNames[] = $row->NOMBRE;
-        }
-        return $categoryNames;
-    }
 }
