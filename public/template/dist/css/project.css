@@ -1,0 +1,146 @@
+.content-wrapper {
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
+.project-form-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    margin-bottom: 1rem;
+}
+
+.project-header {
+    background: #17a2b8;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.upload-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.upload-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.upload-preview i {
+    font-size: 2rem;
+    color: #6c757d;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.upload-btn {
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #0056b3;
+}
+
+.btn-submit {
+    min-width: 120px;
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 10px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* ACA COMIENZAN LOS ESTILOS DEL LISTAR PROYECTO */
+/* Project Card Styles */
+.project-card {
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.project-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-card .progress {
+    height: 10px;
+    margin: 10px 0;
+}
+
+.project-stats {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.project-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.project-card .badge {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+}
+
+/* Filter Section Styles */
+.select2-container--default .select2-selection--single {
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    border: 1px solid #ced4da;
+}
+
+.card-header .btn-primary {
+    padding: 8px 16px;
+}
+
+/* Modal Styles */
+.modal-lg {
+    max-width: 800px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .project-stats {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .project-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

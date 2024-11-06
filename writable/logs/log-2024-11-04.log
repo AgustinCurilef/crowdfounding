@@ -1,0 +1,614 @@
+CRITICAL - 2024-11-04 05:56:00 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 05:57:18 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 05:57:19 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:00:45 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:00:46 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:28 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:29 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:29 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:29 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:29 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:30 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:30 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:09:31 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:13:02 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:13:17 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(18): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:15:31 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(19): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:15:34 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(19): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:22:21 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(19): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 06:28:43 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root@localhost'@'localhost' (using password: NO) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root@localhost', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#9 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: NO) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 06:28:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: NO)
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `proyectos`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 06:29:22 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root@localhost'@'localhost' (using password: NO) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root@localhost', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#9 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: NO) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 06:29:22 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: NO)
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `proyectos`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 06:32:16 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root@localhost'@'localhost' (using password: YES) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root@localhost', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#9 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 06:32:16 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `proyectos`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 06:32:18 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root@localhost'@'localhost' (using password: YES) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root@localhost', Object(SensitiveParameterValue), 'crowdfunding', 3308, '', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#9 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#11 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\wamp64\www\crowfounding\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\wamp64\www\crowfounding\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 06:32:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(616): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `proyectos`', [], false)
+ 3 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\ProjectController.php(12): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 06:32:52 --> ErrorException: Attempt to read property "NOMBRE" on array
+[Method: GET, Route: MyProjects]
+in APPPATH\Views\project\myProjectList.php on line 63.
+ 1 APPPATH\Views\project\myProjectList.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "NOMBRE" on array', 'C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php', 63)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\wamp64\\www\\crowfounding\\app\\Views\\project\\myProjectList.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('project/myProjectList', [], true)
+ 5 APPPATH\Controllers\ProjectController.php(19): view('project/myProjectList', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 23:44:46 --> mysqli_sql_exception: Table 'crowdfunding.categoria' doesn't exist in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `proyect...', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyect...')
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyect...')
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#4 C:\wamp64\www\crowfounding\app\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 23:44:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'crowdfunding.categoria' doesn't exist
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 2 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 23:44:46 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'crowdfunding.categoria' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 4 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 23:44:46 --> [Caused by] mysqli_sql_exception: Table 'crowdfunding.categoria' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`nombre` AS `categoria_NOMBRE`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 5 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2024-11-04 23:45:46 --> mysqli_sql_exception: Table 'crowdfunding.categoria' doesn't exist in C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\wamp64\www\crowfounding\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `proyect...', 0)
+#1 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyect...')
+#2 C:\wamp64\www\crowfounding\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyect...')
+#3 C:\wamp64\www\crowfounding\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyect...', Array, false)
+#4 C:\wamp64\www\crowfounding\app\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\wamp64\www\crowfounding\app\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+#6 C:\wamp64\www\crowfounding\system\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+#7 C:\wamp64\www\crowfounding\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+#8 C:\wamp64\www\crowfounding\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\wamp64\www\crowfounding\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 C:\wamp64\www\crowfounding\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\wamp64\www\crowfounding\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2024-11-04 23:45:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'crowdfunding.categoria' doesn't exist
+[Method: GET, Route: MyProjects]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 2 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 23:45:46 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'crowdfunding.categoria' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 4 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-04 23:45:46 --> [Caused by] mysqli_sql_exception: Table 'crowdfunding.categoria' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `proyectos`.*, `categoria`.`NOMBRE` AS `categoria_nombre`
+FROM `proyectos`
+JOIN `proyecto_categoria` ON `proyecto_categoria`.`ID_PROYECTO` = `proyectos`.`ID_PROYECTO`
+JOIN `categoria` ON `proyecto_categoria`.`ID_CATEGORIA` = `categoria`.`ID_CATEGORIA`', [], false)
+ 5 APPPATH\Models\ProjectModel.php(34): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\ProjectController.php(12): App\Models\ProjectModel->getProjects()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ProjectController->list()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProjectController))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
