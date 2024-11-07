@@ -15,6 +15,10 @@ $routes->get('/inicio', 'UserController::index');
 
 $routes->get('/myprojects', 'ProjectController::list');
 
+$routes->post('saveProject', 'ProjectController::saveProject');
+
+$routes->get('/addProyect', 'ProjectController::addProyect');
+
 
 
 

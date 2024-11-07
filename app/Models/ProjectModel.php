@@ -42,5 +42,25 @@ class ProjectModel extends Model
         
         return $projects;
     }
+
+    public function setProject($data)
+    {
+        if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
+            return false; 
+        }
+
+        try {
+            $inserted = $this->insert($data);
+
+            if ($inserted) {
+                return true;
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Error al guardar el proyecto: ' . $e->getMessage());
+        }
+
+        return false;
+    }
+
     
 }
