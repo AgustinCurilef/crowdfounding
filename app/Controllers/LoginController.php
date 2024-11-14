@@ -10,10 +10,4 @@ class LoginController extends BaseController
         return view('session/login', $data);
     }
 
-    public function register():String
-    {
-        $data = ['title' => 'Formulario de Registro'];
-        return view('session/register', $data);
-    }
-
 }

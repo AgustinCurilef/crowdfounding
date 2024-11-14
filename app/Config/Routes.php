@@ -9,12 +9,13 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
-$routes->get('/register', 'LoginController::register');
+$routes->get('/register', 'registerController::register');
 
 $routes->get('/inicio', 'UserController::index');
 
 $routes->get('/myprojects', 'ProjectController::list');
 
+$routes->post('/register', 'registerController::store');
 
 
 

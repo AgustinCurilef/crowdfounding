@@ -24,7 +24,7 @@
                 </a> 
             </div>
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">¡Uneté a nuestra página!</p>
                 <form action="<?= base_url('template/dist/pages/index3.html') ?>" method="post">
                     <div class="input-group mb-1">
                         <div class="form-floating"> <input id="loginEmail" type="email" class="form-control" value="" placeholder=""> <label for="loginEmail">Email</label> </div>
@@ -36,19 +36,18 @@
                     </div> <!--begin::Row-->
                     <div class="row">
                         <div class="col-8 d-inline-flex align-items-center">
-                            <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault">
-                                    Remember Me
-                                </label> </div>
                         </div> <!-- /.col -->
-                        <div class="col-4">
-                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Sign In</button> </div>
+                        <div class="col-12">
+                            <div class="d-grid gap-2"> 
+                                <button type="submit" class="btn btn-primary">Registrar</button> 
+                                <p class="mb-0">
+                                    <a href="register.html" class="text-center">Crear una cuenta de usuario</a> 
+                                </p>
+                            </div>
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
                 </form>
-                <p class="mb-1"> <a href="forgot-password.html">I forgot my password</a> </p>
-                <p class="mb-0"> <a href="register.html" class="text-center">
-                        Register a new membership
-                    </a> </p>
+
             </div> <!-- /.login-card-body -->
         </div>
     </div> <!-- /.login-box --> <!--begin::Third Party Plugin(OverlayScrollbars)-->
