@@ -25,31 +25,51 @@
             </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
-                <form action="<?= base_url('template/dist/pages/index3.html') ?>" method="post">
-                    <div class="input-group mb-1">
-                        <div class="form-floating"> <input id="loginEmail" type="email" class="form-control" value="" placeholder=""> <label for="loginEmail">Email</label> </div>
-                        <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
-                    </div>
-                    <div class="input-group mb-1">
-                        <div class="form-floating"> <input id="loginPassword" type="password" class="form-control" placeholder=""> <label for="loginPassword">Password</label> </div>
-                        <div class="input-group-text"> <span class="bi bi-lock-fill"></span> </div>
-                    </div> <!--begin::Row-->
-                    <div class="row">
-                        <div class="col-8 d-inline-flex align-items-center">
-                            <div class="form-check"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> <label class="form-check-label" for="flexCheckDefault">
-                                    Remember Me
-                                </label> </div>
-                        </div> <!-- /.col -->
-                        <div class="col-4">
-                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Sign In</button> </div>
-                        </div> <!-- /.col -->
-                    </div> <!--end::Row-->
-                </form>
+                <form action="<?= base_url('login/authenticate') ?>" method="post">
+    <div class="input-group mb-1">
+        <div class="form-floating">
+            <input id="loginEmail" type="email" class="form-control" name="email" value="" placeholder="">
+            <label for="loginEmail">Email</label>
+        </div>
+        <div class="input-group-text">
+            <span class="bi bi-envelope"></span>
+        </div>
+    </div>
+    <div class="input-group mb-1">
+        <div class="form-floating">
+            <input id="loginPassword" type="password" class="form-control" name="password" placeholder="">
+            <label for="loginPassword">Password</label>
+        </div>
+        <div class="input-group-text">
+            <span class="bi bi-lock-fill"></span>
+        </div>
+    </div>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+
+    <div class="row">
+        <div class="col-8">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Remember Me
+                </label>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </div>
+        </div>
+    </div>
+</form>
                 <p class="mb-1"> <a href="forgot-password.html">I forgot my password</a> </p>
                 <p class="mb-0"> <a href="register.html" class="text-center">
-                        Register a new membership
-                    </a> </p>
-            </div> <!-- /.login-card-body -->
+                        <a href="<?= base_url('/register') ?>">Register a new membership</a></li>
+
+                        </div> <!-- /.login-card-body -->
         </div>
     </div> <!-- /.login-box --> <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->

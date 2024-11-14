@@ -39,7 +39,8 @@ class ProjectController extends BaseController
         // Recogemos los datos del formulario
         $data = [
             'NOMBRE' => $this->request->getPost('NOMBRE'),
-            'USERNAME_USUARIO' => $this->request->getPost('USERNAME_USUARIO'),
+            'CATEGORY' => $this->request->getPost('CATEGORIA'),
+            'USERNAME_USUARIO' => 'agus',
             'PRESUPUESTO' => $this->request->getPost('PRESUPUESTO'),
             'OBJETIVO' => $this->request->getPost('OBJETIVO'),
             'DESCRIPCION' => $this->request->getPost('DESCRIPCION'),
@@ -48,12 +49,31 @@ class ProjectController extends BaseController
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB')
         ];
         $projectModel = new ProjectModel();
-
         if ($projectModel->setProject($data)) {
+            log_message('debug', 'supuestamente guarda.');
             return redirect()->to('/proyectos')->with('success', 'Proyecto guardado exitosamente.');
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto.');
         }
     }
+
+    public function listInvestments():String
+    {
+        
+        $ProjectModel = new ProjectModel();
+        $categoryModel = new CategoryModel();
+        $projects = $ProjectModel->getProjects();
+        $categories= $categoryModel-> findAll();
+        
+        
+        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
+
+        return view('estructura/header', $data)
+            .view('estructura/navbar')
+            .view('estructura/sidebar')
+            .view('project/myInvestments', $data)
+            .view('estructura/footer');
+    }
+
 
 }

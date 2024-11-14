@@ -20,7 +20,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Editar Perfil</p>
-                                    </a> </li>
+                                    </a> </li>*+
                                 <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Preferencias Pago</p>
                                     </a> </li>
@@ -78,16 +78,26 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Mis Inversiones</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Explorar Inversiones</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Dashboard v3</p>
-                                    </a> </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a href="<?= base_url('myInvestments') ?>" class="nav-link"> 
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Mis Inversiones</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index2.html" class="nav-link"> 
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Explorar Inversiones</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./index3.html" class="nav-link"> 
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Dashboard v3</p>
+                            </a>
+                        </li>
+                    </ul>
+
                             
                         </li>
                     

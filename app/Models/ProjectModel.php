@@ -45,12 +45,17 @@ class ProjectModel extends Model
 
     public function setProject($data)
     {
+        
         if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
+            log_message('debug', 'retorna false.');
+
             return false; 
+
         }
 
         try {
             $inserted = $this->insert($data);
+          //  dd($data);
 
             if ($inserted) {
                 return true;

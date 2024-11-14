@@ -20,6 +20,19 @@
                             <div class="col-12">
                                 <div class="card project-form-card">
                                     <div class="card-body">
+                                          <!-- Mensajes flash de éxito o error -->
+                                          <?php if (session()->getFlashdata('success')): ?>
+                                            <div class="alert alert-success">
+                                                <?= session()->getFlashdata('success'); ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if (session()->getFlashdata('error')): ?>
+                                            <div class="alert alert-danger">
+                                                <?= session()->getFlashdata('error'); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        
                                     <form id="projectForm" action="saveProject" method="POST">
                                     <!-- Imagen de portada -->
                                             <div class="text-center mb-4">
@@ -47,7 +60,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="category">Categoría</label>
-                                                        <select class="form-control" id="category" name="category" required>
+                                                        <select class="form-control" id="CATEGORIA" name="category" required>
                                                             <option value="">Selecciona una categoría</option>
                                                             <option value="tech">Tecnología</option>
                                                             <option value="art">Arte</option>

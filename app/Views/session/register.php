@@ -25,8 +25,8 @@
         <div class="card">
             <div class="card-body register-card-body">
                 <p class="register-box-msg">Register a new membership</p>
-                <form action="<?= base_url('template/dist/pages/index3.html') ?>"method="post">
-                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Full Name">
+                <form action="<?= base_url('register') ?>" method="post">
+                <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Full Name">
                         <div class="input-group-text"> <span class="bi bi-person"></span> </div>
                     </div>
                     <div class="input-group mb-3"> <input type="email" class="form-control" placeholder="Email">

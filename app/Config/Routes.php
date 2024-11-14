@@ -19,6 +19,10 @@ $routes->post('saveProject', 'ProjectController::saveProject');
 
 $routes->get('/addProyect', 'ProjectController::addProyect');
 
+$routes->post('/login/authenticate', 'LoginController::authenticate'); 
+
+$routes->get('/myInvestments', 'ProjectController::listInvestments');
+
 
 
 
