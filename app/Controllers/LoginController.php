@@ -11,6 +11,7 @@ class LoginController extends BaseController
         return view('session/login', $data);
     }
 
+<<<<<<< HEAD
     public function authenticate()
     {
 
@@ -44,4 +45,6 @@ class LoginController extends BaseController
         return view('session/register', $data);
     }
 
+=======
+>>>>>>> register
 }
