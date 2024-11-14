@@ -5,6 +5,13 @@
 !system/cache/*
 !*/cache/index.html
 !*/cache/.htaccess
+writable
+writable/*
+/writable/*
+!/writable/cache
+
+/writable/cache/*
+
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
