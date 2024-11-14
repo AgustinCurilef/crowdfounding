@@ -11,7 +11,6 @@ class LoginController extends BaseController
         return view('session/login', $data);
     }
 
-<<<<<<< HEAD
     public function authenticate()
     {
 
@@ -39,12 +38,6 @@ class LoginController extends BaseController
         }
     }
 
-    public function register()
-    {
-        $data = ['title' => 'Formulario de Registro'];
-        return view('session/register', $data);
-    }
 
-=======
->>>>>>> register
+
 }
