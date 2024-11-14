@@ -4,9 +4,9 @@
                  <!--begin::Brand Link--> 
                  <a href="./index.html" class="brand-link"> 
                 <!--begin::Brand Image-->
-                 <img src="../../dist/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow"> 
+                 <img src="../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow"> 
                  <!--end::Brand Image-->
-                  <!--begin::Brand Text--> <span class="brand-text fw-light">Found4Futures</span> <!--end::Brand Text-->
+                  <!--begin::Brand Text--> <span class="brand-text fw-light">AdminLTE 4</span> <!--end::Brand Text-->
                  </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
@@ -18,9 +18,9 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="<?= base_url('/editProfile') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Editar Perfil</p>
-                                    </a> </li>*+
+                                    </a> </li>
                                 <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Preferencias Pago</p>
                                     </a> </li>
@@ -32,7 +32,7 @@
                         </li>  
                         <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
-                                    Administracion
+                                    Administracion General
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -59,7 +59,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="<?= base_url('/myprojects') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Mis Proyectos</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -78,7 +78,6 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-<<<<<<< HEAD
                         <li class="nav-item">
                             <a href="<?= base_url('myInvestments') ?>" class="nav-link"> 
                                 <i class="nav-icon bi bi-circle"></i>
@@ -86,9 +85,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link"> 
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Explorar Inversiones</p>
+                        <a href="<?= base_url('investment/create') ?>" class="nav-link"> 
+                        <i class="nav-icon bi bi-circle"></i>
+                                <p>Realizar Inversion</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -99,37 +98,10 @@
                         </li>
                     </ul>
 
-=======
-                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Mis Inversiones</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="<?= base_url('/investment/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                    <p>Realizar Inversion</p>
-                                    </a> </li>
-                            </ul>
->>>>>>> 51af4ef382c56c7ff5db8ff15ea6cf1e78d6e40e
                             
                         </li>
-
+                    
                         <!--ACAAA LLEGUE -->
-
-
-                        <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
-                                <p>
-                                    Categorias
-                                    <i class="nav-arrow bi bi-chevron-right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="<?= base_url('/categories') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Explorar Categorias</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="<?= base_url('/categories/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                    <p>Crear Categorias (admin)</p>
-                                    </a> </li>
-                            </ul>
-                            
-                        </li>                 
                         
                     
                     </ul> <!--end::Sidebar Menu-->
