@@ -12,6 +12,8 @@ class CategoryController extends BaseController
             'title' => 'Lista de Categorías',
             'categories' => $categoryModel->findAll()
         ];
+        $session = session();
+        $data['user_name'] = $session->get('user_name');
        
         return view('estructura/header', $data)
             . view('estructura/navbar')
@@ -24,6 +26,8 @@ class CategoryController extends BaseController
     {
         // Movemos la funcionalidad de agregar a un nuevo método
         $data = ['title' => 'Agregar Categoría'];
+        $session = session();
+        $data['user_name'] = $session->get('user_name');
         return view('estructura/header', $data)
             . view('estructura/navbar')
             . view('estructura/sidebar')

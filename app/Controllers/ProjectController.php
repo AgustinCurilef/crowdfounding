@@ -14,8 +14,9 @@ class ProjectController extends BaseController
         $projects = $ProjectModel->getProjects();
         $categories= $categoryModel-> findAll();
         
-        
         $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
+        $session = session();
+        $data['user_name'] = $session->get('user_name');
 
         return view('estructura/header', $data)
             .view('estructura/navbar')
@@ -27,6 +28,8 @@ class ProjectController extends BaseController
     public function addProyect(): String
     {
         $data['title'] = 'Agregar Proyecto';
+        $session = session();
+        $data['user_name'] = $session->get('user_name');
         return view('estructura/header', $data)
             .view('estructura/navbar')
             .view('estructura/sidebar')
@@ -67,7 +70,9 @@ class ProjectController extends BaseController
         
         
         $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
-
+        $session = session();
+        $data['user_name'] = $session->get('user_name');
+        
         return view('estructura/header', $data)
             .view('estructura/navbar')
             .view('estructura/sidebar')
