@@ -9,6 +9,8 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
+$routes->get('/investment', 'InvestmentController::index');
+
 $routes->get('/register', 'LoginController::register');
 
 $routes->get('/inicio', 'UserController::index');

@@ -67,7 +67,7 @@
                         <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <div class="project-stats d-flex justify-content-between">
-                        <span><?= esc($project->PRESUPUESTO) ?> recaudados</span>
+                        <span><?= esc($project->PRESUPUESTO) ?> objetivo</span>
                         <span>75% completado</span>
                     </div>
                     <p class="card-text mt-2"><?= esc($project->DESCRIPCION) ?></p>
