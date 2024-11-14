@@ -9,11 +9,14 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
-$routes->get('/investment', 'InvestmentController::index');
-
 $routes->get('/register', 'LoginController::register');
 
+/*Usuarios */
+
 $routes->get('/inicio', 'UserController::index');
+$routes->get('/editProfile', 'UserController::editProfile');
+
+/*Proyectos */
 
 $routes->get('/myprojects', 'ProjectController::list');
 
