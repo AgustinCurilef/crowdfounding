@@ -22,7 +22,6 @@ $routes->get('/editProfile', 'UserController::editProfile');
 
 $routes->get('/myprojects', 'ProjectController::list');
 
-<<<<<<< HEAD
 $routes->post('saveProject', 'ProjectController::saveProject');
 
 $routes->get('/addProyect', 'ProjectController::addProyect');
@@ -49,9 +48,7 @@ $routes->post('investment/save', 'InvestmentController::save');
 $routes->get('/myInvestments', 'ProjectController::listInvestments');
 
 
-=======
 $routes->post('/register', 'registerController::store');
->>>>>>> register
 
 
 
