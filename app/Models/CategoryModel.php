@@ -7,12 +7,9 @@ class CategoryModel extends Model
 {
     protected $table      = 'categorias';
     protected $primaryKey = 'ID_CATEGORIA';
-
     protected $useAutoIncrement = true;
-
     protected $returnType     =  'object';
     protected $useSoftDeletes = false;
-
     protected $allowedFields = ['NOMBRE', 'DESCRIPCION'];
 
     protected $useTimestamps = false;
@@ -23,7 +20,6 @@ class CategoryModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
-
 
     
     public function getCategory($id) {
