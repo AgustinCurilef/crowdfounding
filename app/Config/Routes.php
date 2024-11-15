@@ -9,7 +9,7 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
-$routes->get('/register', 'LoginController::register');
+$routes->get('/register', 'registerController::register');
 
 $routes->post('/login/authenticate', 'LoginController::authenticate'); 
 
@@ -48,6 +48,7 @@ $routes->post('investment/save', 'InvestmentController::save');
 $routes->get('/myInvestments', 'ProjectController::listInvestments');
 
 
+$routes->post('/register', 'registerController::store');
 
 
 

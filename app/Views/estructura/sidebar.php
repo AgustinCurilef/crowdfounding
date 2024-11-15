@@ -18,9 +18,9 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="<?= base_url('/editProfile') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="<?= base_url('editProfile') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Editar Perfil</p>
-                                    </a> </li>*+
+                                    </a> </li>
                                 <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Preferencias Pago</p>
                                     </a> </li>
@@ -32,7 +32,7 @@
                         </li>  
                         <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
-                                    Administracion
+                                    Administracion General
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
@@ -59,10 +59,10 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="<?= base_url('/myprojects') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item">  <a href="<?= base_url('myprojects') ?>" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Mis Proyectos</p>
                                     </a> </li>
-                                <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="<?= base_url('addProyect') ?>" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Crear Proyectos</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -78,7 +78,6 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-<<<<<<< HEAD
                         <li class="nav-item">
                             <a href="<?= base_url('myInvestments') ?>" class="nav-link"> 
                                 <i class="nav-icon bi bi-circle"></i>
@@ -86,9 +85,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./index2.html" class="nav-link"> 
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Explorar Inversiones</p>
+                        <a href="<?= base_url('investment/create') ?>" class="nav-link"> 
+                        <i class="nav-icon bi bi-circle"></i>
+                                <p>Realizar Inversion</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -97,22 +96,9 @@
                                 <p>Dashboard v3</p>
                             </a>
                         </li>
-                    </ul>
-
-=======
-                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                        <p>Mis Inversiones</p>
-                                    </a> </li>
-                                <li class="nav-item"> <a href="<?= base_url('/investment/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                    <p>Realizar Inversion</p>
-                                    </a> </li>
-                            </ul>
->>>>>>> 51af4ef382c56c7ff5db8ff15ea6cf1e78d6e40e
-                            
-                        </li>
-
-                        <!--ACAAA LLEGUE -->
-
+                       
+                    </ul>                            
+                    </li>
 
                         <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                                 <p>
@@ -129,7 +115,9 @@
                                     </a> </li>
                             </ul>
                             
-                        </li>                 
+                        </li>
+                    
+                        <!--ACAAA LLEGUE -->
                         
                     
                     </ul> <!--end::Sidebar Menu-->
