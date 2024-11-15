@@ -30,7 +30,7 @@ class LoginController extends BaseController
             // Si el usuario existe y la contraseña es correcta (asegúrate de usar `password_verify`)
             
             // Aquí puedes guardar la sesión del usuario si usas sesiones
-            session()->set('user_id', $user['ID_USUARIO']);  // Usar el nombre correcto de la columna
+            session()->set( $user);  // Usar el nombre correcto de la columna
             return redirect()->to('/inicio');  // Redirigir a la página de inicio
         } else {
             // Si las credenciales son incorrectas, redirigir al login con un mensaje de error

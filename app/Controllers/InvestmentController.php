@@ -4,8 +4,18 @@ use App\Models\InvestmentModel;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
 
+
 class InvestmentController extends BaseController
 {
+    protected  $user;
+
+    public function __construct()
+    {
+        // Inicializa el modelo de usuario una sola vez en el constructor
+   
+        $this->user = session()->get();
+
+    }
     public function index():String
     {
         
@@ -15,10 +25,14 @@ class InvestmentController extends BaseController
         $categories= $categoryModel-> findAll();
         
         
-        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
+        
+        $data = ['title' => 'Mis Proyectos', 
+        'projects' => $projects, 
+        'categories' => $categories,
+        'user_name' => $this->user['USERNAME'] ];
 
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar',$data)
             .view('estructura/sidebar')
             .view('investment', $data)
             .view('estructura/footer');
@@ -30,11 +44,12 @@ class InvestmentController extends BaseController
         
         $data = [
             'title' => 'Realizar Inversión',
-            'proyectos' => $projectModel->findAll()
+            'proyectos' => $projectModel->findAll(),
+            'user_name' => $this->user['USERNAME'] 
         ];
         
         return view('estructura/header', $data)
-            . view('estructura/navbar')
+            . view('estructura/navbar',$data)
             . view('estructura/sidebar')
             . view('investment/makeInvestment', $data)
             . view('estructura/footer');
@@ -44,13 +59,12 @@ class InvestmentController extends BaseController
     {
         $investmentModel = new InvestmentModel();
         
-        // Obtener el ID del usuario de la sesión
-        $idUsuario = session()->get('id_usuario'); // Ajusta esto según tu manejo de sesión
+        
         
         // Preparar los datos
         $data = [
             'ID_PROYECTO' => $this->request->getPost('id_proyecto'),
-            'ID_USUARIO' => $idUsuario,
+            'ID_USUARIO' => $this->user['ID_USUARIO'] ,
             'MONTO' => $this->request->getPost('monto'),
             'ESTADO' => 'Pendiente',
             'FECHA' => date('Y-m-d') // Fecha actual

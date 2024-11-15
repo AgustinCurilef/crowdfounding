@@ -18,7 +18,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="<?= base_url('editProfile') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Editar Perfil</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>

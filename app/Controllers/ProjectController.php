@@ -3,9 +3,18 @@
 namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
+use App\Models\UserModels;
 
 class ProjectController extends BaseController
 {
+    protected  $user;
+
+    public function __construct()
+    {
+        // Inicializa el modelo de usuario una sola vez en el constructor
+        $this->user = session()->get();
+
+    }
     public function list():String
     {
         
@@ -13,13 +22,20 @@ class ProjectController extends BaseController
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
         $categories= $categoryModel-> findAll();
+       
         
-        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
-        $session = session();
-        $data['user_name'] = $session->get('user_name');
+        $data = [
+            'title' => 'Mis Proyectos',
+            'projects' => $projects,
+            'categories' => $categories,
+            'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
+        ];
+        
+       
+
 
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar', $data)
             .view('estructura/sidebar')
             .view('project/myProjectList', $data)
             .view('estructura/footer');
@@ -27,13 +43,16 @@ class ProjectController extends BaseController
 
     public function addProyect(): String
     {
-        $data['title'] = 'Agregar Proyecto';
-        $session = session();
-        $data['user_name'] = $session->get('user_name');
+    
+        $data = [
+            'title' => 'Agregar Proyecto',
+            'user_name' => $this->user['USERNAME'] ?? null // Usa el nombre de usuario directamente
+        ];
+       
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar', $data)
             .view('estructura/sidebar')
-            .view('project/addProyect')
+            .view('project/addProyect', $data)
             .view('estructura/footer');
     }
 
@@ -43,7 +62,7 @@ class ProjectController extends BaseController
         $data = [
             'NOMBRE' => $this->request->getPost('NOMBRE'),
             'CATEGORY' => $this->request->getPost('CATEGORIA'),
-            'USERNAME_USUARIO' => 'agus',
+            'USERNAME_USUARIO' => $this->user['USERNAME'] ,
             'PRESUPUESTO' => $this->request->getPost('PRESUPUESTO'),
             'OBJETIVO' => $this->request->getPost('OBJETIVO'),
             'DESCRIPCION' => $this->request->getPost('DESCRIPCION'),
@@ -69,12 +88,14 @@ class ProjectController extends BaseController
         $categories= $categoryModel-> findAll();
         
         
-        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
-        $session = session();
-        $data['user_name'] = $session->get('user_name');
+        $data = ['title' => 'Mis Proyectos',
+         'projects' => $projects, 
+         'categories' => $categories,
+        'user_name'=> $this->user['USERNAME'] ?? null ];
+        
         
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar', $data)
             .view('estructura/sidebar')
             .view('project/myInvestments', $data)
             .view('estructura/footer');

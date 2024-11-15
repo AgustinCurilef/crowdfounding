@@ -1,22 +1,32 @@
 <?php
 namespace App\Controllers;
 use App\Models\CategoryModel;
+use App\Models\UserModels;
 
 class CategoryController extends BaseController
 {
+    protected  $user;
+
+    public function __construct()
+    {
+        // Inicializa el modelo de usuario una sola vez en el constructor
+        $this->user = session()->get();
+
+    }
     public function index(): string
     {
         // Cambiamos el index para que muestre el listado
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Lista de Categorías',
-            'categories' => $categoryModel->findAll()
+            'categories' => $categoryModel->findAll(),
+            'user_name' => $this->user['USERNAME'] 
         ];
-        $session = session();
-        $data['user_name'] = $session->get('user_name');
+       
+       
        
         return view('estructura/header', $data)
-            . view('estructura/navbar')
+            . view('estructura/navbar',$data)
             . view('estructura/sidebar')
             . view('category/listCategories', $data)
             . view('estructura/footer');
@@ -25,11 +35,9 @@ class CategoryController extends BaseController
     public function create(): string
     {
         // Movemos la funcionalidad de agregar a un nuevo método
-        $data = ['title' => 'Agregar Categoría'];
-        $session = session();
-        $data['user_name'] = $session->get('user_name');
+        $data = ['title' => 'Agregar Categoría','user_name' => $this->user['USERNAME'] ];
         return view('estructura/header', $data)
-            . view('estructura/navbar')
+            . view('estructura/navbar',$data)
             . view('estructura/sidebar')
             . view('category/addCategory')
             . view('estructura/footer');
@@ -56,11 +64,12 @@ class CategoryController extends BaseController
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Editar Categoría',
-            'category' => $categoryModel->find($id)
+            'category' => $categoryModel->find($id),
+            'user_name' => $this->user['USERNAME'] 
         ];
        
         return view('estructura/header', $data)
-            . view('estructura/navbar')
+            . view('estructura/navbar',$data)
             . view('estructura/sidebar')
             . view('category/editCategory', $data)
             . view('estructura/footer');

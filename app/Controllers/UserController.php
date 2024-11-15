@@ -3,19 +3,29 @@
 namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
+use App\Models\UserModels;
 
 class UserController extends BaseController
+
 {
+    protected  $user;
+
+    public function __construct()
+    {
+        // Inicializa el modelo de usuario una sola vez en el constructor
+    
+        $this->user = session()->get();
+
+    }
+
+    
     public function index():String
      
     {
      // Obtener el ID de usuario de la sesión
-        $userId = session()->get('user_id');
-        $userModel = new \App\Models\UserModels();
-        $user = $userModel->find($userId);
-        $data = ['title' => 'Home','user_name' => $user['USERNAME'],];
+        $data = ['title' => 'Home','user_name' => $this->user['USERNAME'] ];
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar',$data)
             .view('estructura/sidebar')
             .view('estructura/main')
             .view('estructura/footer');
@@ -31,10 +41,13 @@ class UserController extends BaseController
         $categories= $categoryModel-> findAll();
         
         
-        $data = ['title' => 'Mis Proyectos', 'projects' => $projects, 'categories' => $categories];
+        $data = ['title' => 'Mis Proyectos',
+         'projects' => $projects, 
+         'categories' => $categories,
+        'user_name' => $this->user['USERNAME'] ];
 
         return view('estructura/header', $data)
-            .view('estructura/navbar')
+            .view('estructura/navbar',$data)
             .view('estructura/sidebar')
             .view('editProfile', $data)
             .view('estructura/footer');
