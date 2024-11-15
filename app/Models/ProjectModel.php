@@ -30,7 +30,6 @@ class ProjectModel extends Model
         $builder = $this->db->table('proyectos');
         $builder->select('proyectos.*');
         $query = $builder->get();
-    
         $projects = $query->getResult();
          // Instanciamos CategoryModel
          $categoryModel = new CategoryModel();
@@ -65,6 +64,31 @@ class ProjectModel extends Model
         }
 
         return false;
+    }
+
+    public function getInvestmentsByUser($userId)
+    {
+        // aca hago el join de projectos con inversiones y me quedo con los 
+        // projectos que correspondan al usuario de la sesion
+
+        $builder = $this->db->table('inversiones');
+        $builder->select('proyectos.*, inversiones.MONTO as monto_invertido, 
+                         (SELECT SUM(MONTO) FROM inversiones 
+                          WHERE ID_PROYECTO = proyectos.ID_PROYECTO) as monto_recaudado');
+        $builder->join('proyectos', 'inversiones.ID_PROYECTO = proyectos.ID_PROYECTO');
+        $builder->where('inversiones.ID_USUARIO', $userId);
+        $query = $builder->get();
+        $projects = $query->getResult();
+    
+        $categoryModel = new CategoryModel();
+        foreach ($projects as $project) {
+            // Añadimos las categorías a cada proyecto
+            $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
+            // Calculamos el porcentaje de progreso
+            $project->porcentaje_progreso = ($project->monto_recaudado / $project->PRESUPUESTO) * 100;
+        }
+    
+        return $projects;
     }
 
     

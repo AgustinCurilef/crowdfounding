@@ -31,15 +31,34 @@ class ProjectController extends BaseController
             'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
         ];
         
-       
-
-
         return view('estructura/header', $data)
             .view('estructura/navbar', $data)
             .view('estructura/sidebar')
             .view('project/myProjectList', $data)
             .view('estructura/footer');
     }
+    public function listInvestments():String
+    {
+        $ProjectModel = new ProjectModel();
+        $categoryModel = new CategoryModel();
+        $userId = $this->user['ID_USUARIO'];
+        $projects = $ProjectModel->getInvestmentsByUser($userId);   
+        $categories= $categoryModel-> findAll();
+        $data = ['title' => 'Mis Proyectos','projects' => $projects, 
+        'categories' => $categories,'user_name'=> $this->user['USERNAME'] ?? null ];
+       
+ //       @log_message('debug', 'Proyectos recuperados para usuario {id}: {projects}', [
+ //           'id' => $userId,
+ //           'projects' => json_encode($projects, JSON_PRETTY_PRINT)
+ //       ]);
+
+        return view('estructura/header', $data)
+            .view('estructura/navbar', $data)
+            .view('estructura/sidebar')
+            .view('project/myInvestments', $data)
+            .view('estructura/footer');
+    }
+    
 
     public function addProyect(): String
     {
@@ -77,29 +96,6 @@ class ProjectController extends BaseController
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto.');
         }
-    }
 
-    public function listInvestments():String
-    {
-        
-        $ProjectModel = new ProjectModel();
-        $categoryModel = new CategoryModel();
-        $projects = $ProjectModel->getProjects();
-        $categories= $categoryModel-> findAll();
-        
-        
-        $data = ['title' => 'Mis Proyectos',
-         'projects' => $projects, 
-         'categories' => $categories,
-        'user_name'=> $this->user['USERNAME'] ?? null ];
-        
-        
-        return view('estructura/header', $data)
-            .view('estructura/navbar', $data)
-            .view('estructura/sidebar')
-            .view('project/myInvestments', $data)
-            .view('estructura/footer');
-    }
-
-
+}
 }
