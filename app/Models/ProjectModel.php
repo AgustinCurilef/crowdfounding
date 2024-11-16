@@ -14,7 +14,7 @@ class ProjectModel extends Model
     protected $returnType     =  'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO','PRESUPUESTO','OBJETIVO','DESCRIPCION','FECHA_LIMITE','RECOMPENSAS','SITIO_WEB'];
+    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO','PRESUPUESTO','OBJETIVO','DESCRIPCION','FECHA_LIMITE','RECOMPENSAS','SITIO_WEB','ESTADO'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -43,23 +43,45 @@ class ProjectModel extends Model
     }
 
     public function setProject($data)
-    {   
-        if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
-            log_message('debug', 'retorna false.');
-            return false; 
-
-        }
-        try {
-            $inserted = $this->insert($data);
-            if ($inserted) {
-                return true;
-            }
-        } catch (\Exception $e) {
-            log_message('error', 'Error al guardar el proyecto: ' . $e->getMessage());
-        }
-
+{
+    if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
+        log_message('debug', 'Faltan datos obligatorios. Retornando false.');
         return false;
     }
+
+    try {
+        $data['ESTADO'] = (int) ($data['ESTADO'] ?? 0);
+        // Insertar el proyecto en la tabla principal
+        $inserted = $this->insert($data);
+
+        if ($inserted) {
+            // Obtener el ID del proyecto recién insertado
+            $projectId = $this->insertID();
+
+            // Preparar los datos para la tabla intermedia 'proyecto_categoria'
+            if (!empty($data['CATEGORIAS']) && is_array($data['CATEGORIAS'])) {
+                $proyectoCategoriaData = [];
+                foreach ($data['CATEGORIAS'] as $categoryId) {
+                    $proyectoCategoriaData[] = [
+                        'ID_PROYECTO' => $projectId,
+                        'ID_CATEGORIA' => $categoryId
+                    ];
+                }
+
+                // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+            }
+
+            // Si todo fue exitoso, retornar true
+            return true;
+        }
+    } catch (\Exception $e) {
+        log_message('error', 'Error al guardar el proyecto o en la tabla intermedia: ' . $e->getMessage());
+    }
+
+    return false;
+}
+
 
     public function getInvestmentsByUser($userId)
     {
@@ -103,27 +125,51 @@ class ProjectModel extends Model
 
 
 public function updateProject($data)
-{   
+{
     if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
-
-        return false; 
-
+        log_message('debug', 'Faltan datos obligatorios. Retornando false.');
+        return false;
     }
+
     try {
+        // Obtener el ID del proyecto
         $id = $data['ID_PROYECTO'];
-        // Remover el ID de los datos a actualizar
-        unset($data['ID_PROYECTO']);
-        // Actualizar usando el ID y los datos
+
+        // Actualizar el proyecto en la tabla principal
         $updated = $this->update($id, $data);
+
         if ($updated) {
+            // Eliminar las categorías actuales asociadas con el proyecto
+            $this->db->table('proyecto_categoria')->where('ID_PROYECTO', $id)->delete();
+
+            // Verificar si 'CATEGORIAS' existe en los datos y es un arreglo
+            if (isset($data['CATEGORIAS']) && is_array($data['CATEGORIAS']) && !empty($data['CATEGORIAS'])) {
+                // Preparar los datos para la tabla intermedia 'proyecto_categoria'
+                $proyectoCategoriaData = [];
+                foreach ($data['CATEGORIAS'] as $categoryId) {
+                    $proyectoCategoriaData[] = [
+                        'ID_PROYECTO' => $id,
+                        'ID_CATEGORIA' => $categoryId
+                    ];
+                }
+
+                // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+            }
+
+            // Si la actualización fue exitosa, retornar true
             return true;
         }
+
     } catch (\Exception $e) {
-        log_message('error', 'Error updating the project: ' . $e->getMessage());
+        log_message('error', 'Error al actualizar el proyecto o en la tabla intermedia: ' . $e->getMessage());
     }
 
     return false;
 }
+
+
+
 
 public function deleteProject($id)
 {

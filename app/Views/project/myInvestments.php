@@ -107,12 +107,7 @@
                         <span class="badge bg-primary"><?= esc($categoria) ?></span>
                     <?php endforeach; ?>
                       <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-info">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    
                     </div>
                 </div>
             </div>
