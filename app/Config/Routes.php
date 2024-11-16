@@ -26,6 +26,12 @@ $routes->post('saveProject', 'ProjectController::saveProject');
 
 $routes->get('/addProyect', 'ProjectController::addProyect');
 
+$routes->get('/modifyProject/(:num)', 'ProjectController::modify/$1');
+
+$routes->post('/updateProject/(:num)', 'ProjectController::updateProject/$1');
+
+$routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
+
 
 /*Categoria */
 $routes->get('categories', 'CategoryController::index');

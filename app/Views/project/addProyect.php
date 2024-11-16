@@ -49,53 +49,68 @@
                                             </div>
 
                                             <div class="row">
-                                                <!-- Primera fila -->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="projectName">Nombre del Proyecto</label>
-                                                        <input type="text" class="form-control" id="projectName" name="NOMBRE" placeholder="Nombre del Proyecto" required>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="category">Categoría</label>
-                                                        <select class="form-control" id="CATEGORIA" name="category" required>
-                                                            <option value="">Selecciona una categoría</option>
-                                                            <option value="tech">Tecnología</option>
-                                                            <option value="art">Arte</option>
-                                                            <option value="education">Educación</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+    <!-- Columna izquierda: Nombre, Presupuesto y Fecha -->
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="projectName">Nombre del Proyecto</label>
+            <input type="text" class="form-control" id="projectName" name="NOMBRE" placeholder="Nombre del Proyecto" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="budget">Presupuesto Requerido</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="number" class="form-control" id="budget" name="PRESUPUESTO" placeholder="0.00" min="0" step="0.01" required>
+            </div>
+        </div>
 
-                                                <!-- Segunda fila -->
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="budget">Presupuesto Requerido</label>
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">$</span>
-                                                            </div>
-                                                            <input type="number" class="form-control" id="budget" name="PRESUPUESTO" placeholder="0.00" min="0" step="0.01" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
+        <div class="form-group">
+            <label for="deadline">Fecha límite</label>
+            <input type="datetime-local" class="form-control" id="deadline" name="FECHA_LIMITE" required>
+        </div>
+    </div>
+    
+    <!-- Columna derecha: Categorías -->
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Categorías</label>
+            <div class="categories-container border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                <div class="custom-control custom-checkbox mb-3 border-bottom pb-2">
+                    <input type="checkbox" 
+                           class="custom-control-input" 
+                           id="selectAllCategories">
+                    <label class="custom-control-label font-weight-bold" for="selectAllCategories">
+                        Seleccionar todas
+                    </label>
+                </div>
+                
+                <?php foreach ($categories as $category) : ?>
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="checkbox" 
+                               class="custom-control-input category-checkbox" 
+                               id="category_<?= esc($category->ID_CATEGORIA) ?>" 
+                               name="ID_CATEGORIA[]" 
+                               value="<?= esc($category->ID_CATEGORIA) ?>"
+                               <?= isset($project->ID_CATEGORIA) && $category->ID_CATEGORIA == $project->ID_CATEGORIA ? 'checked' : '' ?>>
+                        <label class="custom-control-label" for="category_<?= esc($category->ID_CATEGORIA) ?>">
+                            <?= esc($category->NOMBRE) ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <small class="text-muted mt-1">Seleccionadas: <span id="selectedCount">0</span> categorías</small>
+        </div>
+    </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="deadline">Fecha límite</label>
-                                                        <input type="datetime-local" class="form-control" id="deadline" name="FECHA_LIMITE" required>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Tercera fila -->
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="objective">Objetivo / Impacto esperado</label>
-                                                        <input type="text" class="form-control" id="objective" name="OBJETIVO" placeholder="Describe el objetivo principal del proyecto" required>
-                                                    </div>
-                                                </div>
+    <!-- El resto del formulario permanece igual -->
+    <div class="col-12">
+        <div class="form-group">
+            <label for="objective">Objetivo / Impacto esperado</label>
+            <input type="text" class="form-control" id="objective" name="OBJETIVO" placeholder="Describe el objetivo principal del proyecto" required>
+        </div>
+    </div>
 
                                                 <div class="col-12">
                                                     <div class="form-group">
@@ -116,6 +131,26 @@
                                                     <div class="form-group">
                                                         <label for="website">Sitio Web</label>
                                                         <input type="url" class="form-control" id="website" name="SITIO_WEB" placeholder="https://">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Campo de estado del proyecto -->
+                                            <div class="row mt-4">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label>Estado del Proyecto</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="ESTADO" id="estadoPublicado" value="1">
+                                                            <label class="form-check-label" for="estadoPublicado">
+                                                                Publicado
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="ESTADO" id="estadoOculto" value="0" checked>
+                                                            <label class="form-check-label" for="estadoOculto">
+                                                                Oculto
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

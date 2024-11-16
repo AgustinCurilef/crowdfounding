@@ -112,11 +112,14 @@
                     <?php foreach ($project->categoria_nombre as $categoria) : ?>
                         <span class="badge bg-primary"><?= esc($categoria) ?></span>
                     <?php endforeach; ?>
+                    <!-- Modificar el ruteo de los botones editar y eliminar -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-info">
+                            <a href="<?= base_url('modifyProject/'.$project->ID_PROYECTO) ?>" class="btn btn-sm btn-info">
                             <i class="fas fa-edit"></i>
+                            </a>
                         </button>
-                        <button type="button" class="btn btn-sm btn-danger">
+                             <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?= base_url('deleteProject/'.$project->ID_PROYECTO) ?>')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -150,3 +153,13 @@
 </section>
 
 </main>
+<script>
+function confirmDelete(url) {
+        if (confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) {
+            // Si el usuario confirma, redirige a la URL de eliminación
+            window.location.href = url;
+        }
+        // Si el usuario cancela, no pasa nada
+    }
+
+</script>
