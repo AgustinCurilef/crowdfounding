@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Models\InvestmentModel;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
+use DateTime; // Añade esta línea
 
 
 class InvestmentController extends BaseController
@@ -11,11 +12,21 @@ class InvestmentController extends BaseController
 
     public function __construct()
     {
-        // Inicializa el modelo de usuario una sola vez en el constructor
-   
-        $this->user = session()->get();
+        $this->user = [
+            'ID_USUARIO' => session()->get('ID_USUARIO'),
+            'USERNAME' => session()->get('USERNAME'),
+        ];
+       
+        // Inicializa el modelo de usuario una sola vez en el constructor $this->user = session()->get();
 
     }
+    protected function checkSession()
+    {
+        if (!session()->get('ID_USUARIO')) {
+            return redirect()->to('/login')->send(); // `send` detiene la ejecución
+        }
+    }
+
     public function index():String
     {
         
@@ -29,7 +40,7 @@ class InvestmentController extends BaseController
         $data = ['title' => 'Mis Proyectos', 
         'projects' => $projects, 
         'categories' => $categories,
-        'user_name' => $this->user['USERNAME'] ];
+        'user_name' => session()->get('USERNAME') ];
 
         return view('estructura/header', $data)
             .view('estructura/navbar',$data)
@@ -37,57 +48,98 @@ class InvestmentController extends BaseController
             .view('investment', $data)
             .view('estructura/footer');
     }
-    public function create()
+    public function create($ID_PROYECTO = null)
     {
-        // Cargar el modelo de proyectos para obtener la lista
+        $this->checkSession(); // Verifica la sesión
+
         $projectModel = new ProjectModel();
-        
+        $project = $projectModel->find($ID_PROYECTO);
+    
         $data = [
             'title' => 'Realizar Inversión',
-            'proyectos' => $projectModel->findAll(),
-            'user_name' => $this->user['USERNAME'] 
-        ];
-        
+            'project' => $project,
+            'user_name' => session()->get('USERNAME')    
+             ];
+    
         return view('estructura/header', $data)
-            . view('estructura/navbar',$data)
+            . view('estructura/navbar', $data)
             . view('estructura/sidebar')
             . view('investment/makeInvestment', $data)
             . view('estructura/footer');
     }
-    
+
     public function save()
     {
+        $this->checkSession(); // Verifica la sesión
+        
         $investmentModel = new InvestmentModel();
+        $projectModel = new ProjectModel();
+
+        $ID_PROYECTO = $this->request->getPost('id_proyecto');
+        $MONTO = $this->request->getPost('monto');
+
+        if (empty($ID_PROYECTO) || empty($MONTO)) {
+            return redirect()->to('/investment/create')
+                        ->with('error', 'Todos los campos son obligatorios');
+        }
+
+        if ($MONTO <= 0) {
+            return redirect()->to('/investment/create')
+                        ->with('error', 'El monto debe ser mayor a 0');
+        }
+
+        // Obtener información del proyecto
+        $project = $projectModel->find($ID_PROYECTO);
+        if (!$project) {
+            return redirect()->to('/investment/create')
+                        ->with('error', 'Proyecto no encontrado');
+        }
+
+        // Calcular el total recaudado hasta ahora
+        $totalRecaudado = $investmentModel->where('ID_PROYECTO', $ID_PROYECTO)
+                                        ->selectSum('MONTO')
+                                        ->get()
+                                        ->getRow()
+                                        ->monto ?? 0;
         
+        // Sumar la nueva inversión
+        $totalRecaudado += $MONTO;
+
+        // Determinar el estado de la inversión
+        $fechaActual = new DateTime();
+        $fechaLimite = new DateTime($project->FECHA_LIMITE);
         
-        
-        // Preparar los datos
+        if ($fechaActual > $fechaLimite) {
+            if ($totalRecaudado >= $project->PRESUPUESTO) {
+                $estado = 'Pagado';
+            } else {
+                $estado = 'Cancelado';
+            }
+        } else {
+            $estado = 'Pendiente';
+        }
+
         $data = [
-            'ID_PROYECTO' => $this->request->getPost('id_proyecto'),
-            'ID_USUARIO' => $this->user['ID_USUARIO'] ,
-            'MONTO' => $this->request->getPost('monto'),
-            'ESTADO' => 'Pendiente',
-            'FECHA' => date('Y-m-d') // Fecha actual
+            'ID_PROYECTO' => $ID_PROYECTO,
+            'ID_USUARIO' => session()->get('ID_USUARIO'),
+            'MONTO' => $MONTO,
+            'ESTADO' => $estado,
+            'FECHA' => date('Y-m-d')
         ];
-        
-        // Validaciones
-        if (empty($data['ID_PROYECTO']) || empty($data['MONTO'])) {
-            return redirect()->to('/investment/create')
-                           ->with('error', 'Todos los campos son obligatorios');
-        }
-        
-        if ($data['MONTO'] <= 0) {
-            return redirect()->to('/investment/create')
-                           ->with('error', 'El monto debe ser mayor a 0');
-        }
-        
+
         // Guardar la inversión
         if ($investmentModel->insert($data)) {
+            $mensaje = 'Inversión registrada exitosamente';
+            if ($estado === 'Pagado') {
+                $mensaje .= '. El proyecto alcanzó su meta y la inversión ha sido marcada como pagada.';
+            } elseif ($estado === 'Cancelado') {
+                $mensaje .= '. El proyecto no alcanzó su meta y la inversión ha sido cancelada.';
+            }
             return redirect()->to('/investment')
-                           ->with('mensaje', 'Inversión registrada exitosamente');
+                        ->with('mensaje', $mensaje);
         } else {
             return redirect()->to('/investment/create')
-                           ->with('error', 'Error al registrar la inversión');
+                        ->with('error', 'Error al registrar la inversión');
         }
     }
 }
