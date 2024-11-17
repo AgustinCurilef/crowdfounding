@@ -48,7 +48,7 @@ class InvestmentController extends BaseController
             .view('investment', $data)
             .view('estructura/footer');
     }
-    public function create($ID_PROYECTO = null)
+    public function create($ID_PROYECTO )
     {
         $this->checkSession(); // Verifica la sesión
 
@@ -56,14 +56,15 @@ class InvestmentController extends BaseController
         $project = $projectModel->find($ID_PROYECTO);
 
         if (!$project) {
-            return redirect()->to('/investment')
+            return redirect()->to('/inicio')
                         ->with('error', 'Proyecto no encontrado');
         }
     
         $data = [
             'title' => 'Realizar Inversión',
             'project' => $project,
-            'user_name' => session()->get('USERNAME')    
+            'user_name' => session()->get('USERNAME')  
+              
              ];
     
         return view('estructura/header', $data)
@@ -83,11 +84,6 @@ class InvestmentController extends BaseController
         $ID_PROYECTO = $this->request->getPost('id_proyecto');
         $MONTO = $this->request->getPost('monto');
 
-        // Validaciones iniciales
-        if (empty($ID_PROYECTO) || empty($MONTO)) {
-            return redirect()->to('/investment/create/' . $ID_PROYECTO)
-                        ->with('error', 'Todos los campos son obligatorios');
-        }
 
         if ($MONTO <= 0) {
             return redirect()->to('/investment/create/' . $ID_PROYECTO)
@@ -96,18 +92,10 @@ class InvestmentController extends BaseController
 
         // Obtener información del proyecto - MOVIDO ANTES DE SU USO
         $project = $projectModel->find($ID_PROYECTO);
-        if (!$project) {
-            return redirect()->to('/investment/create/' . $ID_PROYECTO)
-                        ->with('error', 'Proyecto no encontrado');
-        }
-
+      
         // Calcular el total recaudado hasta ahora
-        $totalRecaudado = $investmentModel->where('ID_PROYECTO', $ID_PROYECTO)
-                                        ->selectSum('MONTO')
-                                        ->get()
-                                        ->getRow()
-                                        ->monto ?? 0;
-        
+        $totalRecaudado =$projectModel->getAmountInvestmentsByProject($ID_PROYECTO);
+    
         // Sumar la nueva inversión
         $totalRecaudado += $MONTO;
 
@@ -115,35 +103,37 @@ class InvestmentController extends BaseController
         $fechaActual = new DateTime();
         $fechaLimite = new DateTime($project->FECHA_LIMITE); // Ahora $project ya está definido
         
-        if ($fechaActual > $fechaLimite) {
-            if ($totalRecaudado >= $project->PRESUPUESTO) {
-                $estado = 'Pagado';
-            } else {
-                $estado = 'Cancelado';
-            }
+        if ($totalRecaudado >= $project->PRESUPUESTO) {
+            $estado = 'Pagado';
+        } elseif ($fechaActual > $fechaLimite) {
+            $estado = 'Cancelado';
         } else {
             $estado = 'Pendiente';
         }
+
 
         $data = [
             'ID_PROYECTO' => $ID_PROYECTO,
             'ID_USUARIO' => session()->get('ID_USUARIO'),
             'MONTO' => $MONTO,
+              'FECHA' => date('Y-m-d H:i:s') ,
             'ESTADO' => $estado,
 
 
         ];
 
-
+        //////////
         // Guardar la inversión
-        if ($investmentModel->insert($data)) {
+        if ($investmentModel->saveInvestment($data)) {
             $mensaje = 'Inversión registrada exitosamente';
             if ($estado === 'Pagado') {
                 $mensaje .= '. El proyecto alcanzó su meta y la inversión ha sido marcada como pagada.';
+                $investmentModel->updateStatusInvestment($estado,$ID_PROYECTO);
             } elseif ($estado === 'Cancelado') {
                 $mensaje .= '. El proyecto no alcanzó su meta y la inversión ha sido cancelada.';
+                $investmentModel->updateStatusInvestment($estado,$ID_PROYECTO);
             }
-            return redirect()->to('/investment')
+            return redirect()->to('/investment/create/'. $ID_PROYECTO)
                         ->with('mensaje', $mensaje);
         } else 
             {  
@@ -153,8 +143,8 @@ class InvestmentController extends BaseController
                 
                 return redirect()->to('/investment/create/' . $ID_PROYECTO)
                     ->with('error', 'Error al registrar la inversión: ' 
-                        . json_encode($errors) 
+                        . $data['ID_PROYECTO']. $data['ID_USUARIO'].$data['MONTO'].$data['FECHA'].$data['ESTADO']
                         . ' - ' . json_encode($dbError));
             }
-    }
+        }
 }

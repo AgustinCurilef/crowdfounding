@@ -40,7 +40,7 @@
                                    class="form-control" 
                                    id="monto" 
                                    name="monto" 
-                                   step="0.01" 
+                                   step="1.00" 
                                    min="0" 
                                    required
                                    placeholder="0.00">

@@ -34,31 +34,27 @@ class InvestmentModel extends Model
         
         // Verificar si la inserción fue exitosa
         if ($result) {
-            return $this->db->insertID();
+            return true;
         }
         
         return false;
     }
 
-    public function insert($data = null, bool $returnID = true)
-    {
-        // Si los datos son válidos, proceder con la inserción
-        if ($this->validate($data)) {
-            // Usar el método insert de la clase padre
-            $result = parent::insert($data, $returnID);
-            
-            // Si la inserción fue exitosa y queremos el ID
-            if ($result !== false && $returnID) {
-                return $this->getInsertID();
-            }
-            
-            // Si la inserción fue exitosa pero no queremos el ID
-            if ($result !== false) {
-                return true;
-            }
-        }
-        
-        // Si la validación falló o la inserción falló
-        return false;
+    public function updateStatusInvestment($estado, $idProyecto)
+{
+    // Verificar si el estado es válido (opcional)
+    $estadosValidos = ['Pendiente', 'Pagado', 'Cancelado']; // Definir los estados permitidos
+    if (!in_array($estado, $estadosValidos)) {
+        return false; // Si el estado no es válido, retorna false
     }
+
+    // Realizar la actualización de estado en todas las inversiones relacionadas con el ID_PROYECTO
+    $result = $this->db->table('inversiones') // Asumiendo que la tabla de inversiones se llama 'inversiones'
+                       ->set('estado', $estado) // Establecer el nuevo estado
+                       ->where('ID_PROYECTO', $idProyecto) // Filtrar por el ID_PROYECTO
+                       ->update(); // Ejecutar la actualización
+
+   
+}
+
 }

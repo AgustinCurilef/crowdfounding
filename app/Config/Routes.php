@@ -52,7 +52,7 @@ $routes->post('categories/update/(:num)', 'CategoryController::update/$1');
 $routes->get('categories/delete/(:num)', 'CategoryController::delete/$1');
 
 /*Inversion */
-$routes->get('investment/create/(:num)', 'InvestmentController::create');
+$routes->get('investment/create/(:num)', 'InvestmentController::create/$1');
 
 $routes->post('investment/save', 'InvestmentController::save');
 
