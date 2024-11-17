@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+
 use CodeIgniter\Model;
 
 class InvestmentModel extends Model
@@ -9,36 +10,13 @@ class InvestmentModel extends Model
     protected $useSoftDeletes = false;
     protected $allowedFields = ['ID_PROYECTO', 'ID_USUARIO', 'MONTO', 'ESTADO', 'FECHA'];
     protected $useTimestamps = false;
-
+    
     protected $validationRules = [
         'ID_PROYECTO' => 'required|numeric',
         'ID_USUARIO' => 'required|numeric',
         'MONTO' => 'required|numeric|greater_than[0]',
         'ESTADO' => 'required',
-        'FECHA' => 'required|valid_date'
-    ];
-
-    protected $validationMessages = [
-        'ID_PROYECTO' => [
-            'required' => 'El proyecto es obligatorio',
-            'numeric' => 'El ID del proyecto debe ser un número'
-        ],
-        'ID_USUARIO' => [
-            'required' => 'El usuario es obligatorio',
-            'numeric' => 'El ID del usuario debe ser un número'
-        ],
-        'MONTO' => [
-            'required' => 'El monto es obligatorio',
-            'numeric' => 'El monto debe ser un número',
-            'greater_than' => 'El monto debe ser mayor a 0'
-        ],
-        'ESTADO' => [
-            'required' => 'El estado es obligatorio'
-        ],
-        'FECHA' => [
-            'required' => 'La fecha es obligatoria',
-            'valid_date' => 'La fecha debe tener un formato válido'
-        ]
+     
     ];
 
     public function findComposite($ID_PROYECTO, $ID_USUARIO)
@@ -49,22 +27,38 @@ class InvestmentModel extends Model
         ])->first();
     }
 
-    public function deleteComposite($ID_PROYECTO, $ID_USUARIO)
+    public function saveInvestment($data)
     {
-        return $this->where([
-            'ID_PROYECTO' => $ID_PROYECTO,
-            'ID_USUARIO' => $ID_USUARIO
-        ])->delete();
+        // Intentar insertar directamente
+        $result = $this->db->table($this->table)->insert($data);
+        
+        // Verificar si la inserción fue exitosa
+        if ($result) {
+            return $this->db->insertID();
+        }
+        
+        return false;
     }
 
     public function insert($data = null, bool $returnID = true)
     {
-        if (is_array($data) && isset($data['ID_PROYECTO'], $data['ID_USUARIO'])) {
-            $exists = $this->findComposite($data['ID_PROYECTO'], $data['ID_USUARIO']);
-            if ($exists) {
-                return false;
+        // Si los datos son válidos, proceder con la inserción
+        if ($this->validate($data)) {
+            // Usar el método insert de la clase padre
+            $result = parent::insert($data, $returnID);
+            
+            // Si la inserción fue exitosa y queremos el ID
+            if ($result !== false && $returnID) {
+                return $this->getInsertID();
+            }
+            
+            // Si la inserción fue exitosa pero no queremos el ID
+            if ($result !== false) {
+                return true;
             }
         }
-        return parent::insert($data, $returnID);
+        
+        // Si la validación falló o la inserción falló
+        return false;
     }
 }

@@ -54,6 +54,11 @@ class InvestmentController extends BaseController
 
         $projectModel = new ProjectModel();
         $project = $projectModel->find($ID_PROYECTO);
+
+        if (!$project) {
+            return redirect()->to('/investment')
+                        ->with('error', 'Proyecto no encontrado');
+        }
     
         $data = [
             'title' => 'Realizar Inversión',
@@ -70,7 +75,7 @@ class InvestmentController extends BaseController
 
     public function save()
     {
-        $this->checkSession(); // Verifica la sesión
+        $this->checkSession();
         
         $investmentModel = new InvestmentModel();
         $projectModel = new ProjectModel();
@@ -78,20 +83,21 @@ class InvestmentController extends BaseController
         $ID_PROYECTO = $this->request->getPost('id_proyecto');
         $MONTO = $this->request->getPost('monto');
 
+        // Validaciones iniciales
         if (empty($ID_PROYECTO) || empty($MONTO)) {
-            return redirect()->to('/investment/create')
+            return redirect()->to('/investment/create/' . $ID_PROYECTO)
                         ->with('error', 'Todos los campos son obligatorios');
         }
 
         if ($MONTO <= 0) {
-            return redirect()->to('/investment/create')
+            return redirect()->to('/investment/create/' . $ID_PROYECTO)
                         ->with('error', 'El monto debe ser mayor a 0');
         }
 
-        // Obtener información del proyecto
+        // Obtener información del proyecto - MOVIDO ANTES DE SU USO
         $project = $projectModel->find($ID_PROYECTO);
         if (!$project) {
-            return redirect()->to('/investment/create')
+            return redirect()->to('/investment/create/' . $ID_PROYECTO)
                         ->with('error', 'Proyecto no encontrado');
         }
 
@@ -107,7 +113,7 @@ class InvestmentController extends BaseController
 
         // Determinar el estado de la inversión
         $fechaActual = new DateTime();
-        $fechaLimite = new DateTime($project->FECHA_LIMITE);
+        $fechaLimite = new DateTime($project->FECHA_LIMITE); // Ahora $project ya está definido
         
         if ($fechaActual > $fechaLimite) {
             if ($totalRecaudado >= $project->PRESUPUESTO) {
@@ -124,8 +130,10 @@ class InvestmentController extends BaseController
             'ID_USUARIO' => session()->get('ID_USUARIO'),
             'MONTO' => $MONTO,
             'ESTADO' => $estado,
-            'FECHA' => date('Y-m-d')
+
+
         ];
+
 
         // Guardar la inversión
         if ($investmentModel->insert($data)) {
@@ -137,9 +145,16 @@ class InvestmentController extends BaseController
             }
             return redirect()->to('/investment')
                         ->with('mensaje', $mensaje);
-        } else {
-            return redirect()->to('/investment/create')
-                        ->with('error', 'Error al registrar la inversión');
-        }
+        } else 
+            {  
+                // Captura el error exacto
+                $errors = $investmentModel->errors();
+                $dbError = $investmentModel->db->error();
+                
+                return redirect()->to('/investment/create/' . $ID_PROYECTO)
+                    ->with('error', 'Error al registrar la inversión: ' 
+                        . json_encode($errors) 
+                        . ' - ' . json_encode($dbError));
+            }
     }
 }
