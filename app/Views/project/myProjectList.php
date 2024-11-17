@@ -57,11 +57,12 @@
 <!-- Projects Grid -->
 <div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
     <?php foreach ($projects as $project) : ?>
+
         <!-- Project Card Template -->
         <div class="col">
             <div class="card h-100">
-                <img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Project Image">
-                <div class="card-body">
+            <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+            <div class="card-body">
                     <h5 class="card-title"><?= esc($project->NOMBRE) ?></h5>
                     <div class="progress mb-2">
                         <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>

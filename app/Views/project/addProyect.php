@@ -33,8 +33,8 @@
                                             </div>
                                         <?php endif; ?>
                                         
-                                    <form id="projectForm" action="saveProject" method="POST">
-                                    <!-- Imagen de portada -->
+                                        <form id="projectForm" action="saveProject" method="POST" enctype="multipart/form-data">
+                                            <!-- Imagen de portada -->
                                             <div class="text-center mb-4">
                                                 <div class="upload-preview mb-3">
                                                     <img id="imagePreview" src="" alt="Vista previa de imagen">
@@ -43,11 +43,10 @@
                                                 <div class="upload-btn-wrapper">
                                                     <label class="upload-btn" for="imageUpload">
                                                         <i class="fas fa-upload mr-2"></i>CARGAR PORTADA
-                                                        <input type="file" id="imageUpload" accept="image/*" hidden>
+                                                        <input type="file" id="imageUpload" name="portada" accept="image/*" hidden>
                                                     </label>
                                                 </div>
                                             </div>
-
                                             <div class="row">
     <!-- Columna izquierda: Nombre, Presupuesto y Fecha -->
     <div class="col-md-6">
