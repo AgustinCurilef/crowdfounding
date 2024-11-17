@@ -31,9 +31,6 @@ class ProjectController extends BaseController
             'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
         ];
         
-       
-
-
         return view('estructura/header', $data)
             .view('estructura/navbar', $data)
             .view('estructura/sidebar')

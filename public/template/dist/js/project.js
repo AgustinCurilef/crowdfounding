@@ -132,3 +132,32 @@ function updateProjectsGrid(projects) {
         // Si el usuario cancela, no pasa nada
     }
 }
+//PARA FILTRAR POR CATEGORIA    
+
+function filterProjects() {
+    const selectedCategory = document.getElementById('categoryFilter').value.toLowerCase();
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+        const categories = JSON.parse(card.dataset.categories);
+        if (selectedCategory === 'todos') {
+            card.style.display = '';
+        } else {
+            const hasCategory = categories.some(category => 
+                category.toLowerCase() === selectedCategory
+            );
+            card.style.display = hasCategory ? '' : 'none';
+        }
+    });
+}
+
+// Llamar a la función al cargar la página para aplicar cualquier filtro inicial
+document.addEventListener('DOMContentLoaded', filterProjects);
+
+function confirmDelete(url) {
+    if (confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) {
+        // Si el usuario confirma, redirige a la URL de eliminación
+        window.location.href = url;
+    }
+    // Si el usuario cancela, no pasa nada
+}

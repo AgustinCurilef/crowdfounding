@@ -14,7 +14,8 @@
 
     
     <link rel="stylesheet" href="<?php echo base_url('template/dist/js/project.js'); ?>">
-
+     <!-- Bootstrap JS Bundle (algo de las ProjectList para que muestre ver mas en las card)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap JS Bundle (algo de las categorias)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
