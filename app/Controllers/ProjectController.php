@@ -3,7 +3,7 @@
 namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
-use App\Models\UserModels;
+
 
 class ProjectController extends BaseController
 {
@@ -15,7 +15,7 @@ class ProjectController extends BaseController
         $this->user = session()->get();
 
     }
-    public function list():String
+    public function listAllProjects():String
     {
         
         $ProjectModel = new ProjectModel();
@@ -37,6 +37,31 @@ class ProjectController extends BaseController
                 $project->imagen_base64 = ''; // Si no hay imagen, asignar vacío
             }
         }
+        
+       
+
+
+        return view('estructura/header', $data)
+            .view('estructura/navbar', $data)
+            .view('estructura/sidebar')
+            .view('project/myProjectList', $data)
+            .view('estructura/footer');
+    }
+    public function list():String
+    {
+        
+        $ProjectModel = new ProjectModel();
+        $categoryModel = new CategoryModel();
+        $projects = $ProjectModel->getProject( $this->user['USERNAME']);
+        $categories= $categoryModel-> findAll();
+       
+        
+        $data = [
+            'title' => 'Mis Proyectos',
+            'projects' => $projects,
+            'categories' => $categories,
+            'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
+        ];
         
         return view('estructura/header', $data)
             .view('estructura/navbar', $data)

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\UserModels;
+use App\Models\UserModel;
 
 class LoginController extends BaseController
 {
@@ -22,7 +22,7 @@ class LoginController extends BaseController
 
 
         // Crear una instancia del modelo UserModel
-        $userModel = new UserModels();
+        $userModel = new UserModel();
         $user = $userModel->getUserByEmail($email);  // Obtener el usuario por email
         log_message('debug', 'Usuario obtenido: ' . print_r($user, true));
 

@@ -2,7 +2,7 @@
     <!--begin::Sidebar Brand-->
             <div class="sidebar-brand" >
                  <!--begin::Brand Link--> 
-                 <a href="./index.html" class="brand-link"> 
+                 <a href="<?= base_url('inicio') ?>" class="brand-link"> 
                 <!--begin::Brand Image-->
                  <img src="../../dist/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow"> 
                  <!--end::Brand Image-->
