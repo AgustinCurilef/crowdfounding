@@ -62,10 +62,6 @@
             <div class="card h-100">
             <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
             <div class="card-body">
-                    <h5 class="card-title"><?= esc($project->NOMBRE) ?></h5>
-                <img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Project Image">
-
-                <div class="card-body">
                     <!-- Nombre y Presupuesto -->
                     <div class="mb-3">
                         <span class="text-muted">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>

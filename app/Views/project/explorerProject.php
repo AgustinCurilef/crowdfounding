@@ -53,66 +53,72 @@
                 </div>
             </div>
         </div>
-      
-<!-- Projects Grid -->
-        <div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
-            <?php foreach ($projects as $project) : ?>
-                <!-- Project Card Template -->
-                <div class="card h-100">
-                <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
-                <div class="card-body">
+        <!-- Projects Grid -->
+<div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
+    <?php foreach ($projects as $project) : ?>
 
-<div class="card-body">
-    <!-- Nombre y Presupuesto -->
-    <div class="mb-3">
-        <span class="text-muted">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>
-        <span class="text-muted">Presupuesto total: </span><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $
-    </div>
-    
-    <!-- Mi inversión y Monto recaudado -->
-    <div class="mb-2">
-        <span class="text-muted">Mi inversión: </span>
-        <span class="text-success"><?= number_format($project->monto_invertido, 2, ',', '.') ?> $</span>
-    </div>
+        <!-- Project Card Template -->
+        <div class="col">
+            <div class="card h-100">
+            <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+            <div class="card-body">
+                    <!-- Nombre y Presupuesto -->
+                    <div class="mb-3">
+                        <span class="text-muted">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>
+                        <span class="text-muted">Presupuesto total: </span><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $
+                    </div>
 
-    <!-- Barra de progreso -->
-    <div class="progress mb-2">
-        <div class="progress-bar bg-success" 
-             role="progressbar" 
-             style="width: <?= min(100, round($project->porcentaje_progreso, 1)) ?>%" 
-             aria-valuenow="<?= round($project->porcentaje_progreso, 1) ?>" 
-             aria-valuemin="0" 
-             aria-valuemax="100">
-             <?= round($project->porcentaje_progreso, 1) ?>%
-        </div>
-    </div>
-    
-    <!-- Monto recaudado -->
-    <div class="text-center mb-2">
-        <span class="text-muted">Recaudado: </span>
-        <strong><?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</strong>
-        <span class="text-muted"> de </span>
-        <strong><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</strong>
-    </div>
+                    <?php
+                    // Variables para cálculo
+                    $presupuesto = isset($project->PRESUPUESTO) ? (float)$project->PRESUPUESTO : 0;
+                    $recaudado = isset($project->monto_recaudado) ? (float)str_replace(',', '.', $project->monto_recaudado) : 0;
 
-    <!-- Descripción -->
-    <div class="mt-2">
-        <span class="text-muted">Descripción: </span><br>
-        <?= esc($project->DESCRIPCION) ?>
-    </div>
-</div>
+                    // Calcular el porcentaje de recaudación
+                    $porcentaje = $presupuesto > 0 ? ($recaudado / $presupuesto) * 100 : 0;
+
+                    // Limitar el porcentaje entre 0 y 100
+                    $porcentaje = min(max($porcentaje, 0), 100);
+                    ?>
+
+                    <!-- Barra de progreso -->
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-success" 
+                             role="progressbar" 
+                             style="width: <?= round($porcentaje, 1) ?>%" 
+                             aria-valuenow="<?= round($porcentaje, 1) ?>" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                             <?= round($porcentaje, 1) ?>%
+                        </div>
+                    </div>
+
+
+
+                    <!-- Descripción -->
+                    <div class="mt-2">
+                        <span class="text-muted">Descripción: </span><br>
+                        <?= esc($project->DESCRIPCION) ?>
+                    </div>
+                </div>
+
+                <!-- Footer con categorías y botones -->
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                <?php foreach ($project->categoria_nombre as $categoria) : ?>
+                    <?php foreach ($project->categoria_nombre as $categoria) : ?>
                         <span class="badge bg-primary"><?= esc($categoria) ?></span>
                     <?php endforeach; ?>
-                      <div class="btn-group">
-                    
-                    </div>
+                    <!-- Botón invertir -->
+                    <button type="button" class="btn btn-sm btn-success" 
+                            onclick="window.location.href='<?= base_url('ProjectController/invest/' . $project->ID_PROYECTO) ?>'">
+                        <i class="fas fa-dollar-sign"></i> Invertir
+                    </button>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
+
+      
+
         <!-- Pagination -->
         <div class="row mt-4">
             <div class="col-12">
@@ -135,3 +141,4 @@
 </section>
 
 </main>
+<script>

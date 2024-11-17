@@ -15,7 +15,8 @@ $routes->post('/login/authenticate', 'LoginController::authenticate');
 
 /*Usuarios */
 
-$routes->get('/inicio', 'UserController::index');
+$routes->get('/inicio', 'ProjectController::listAllProjects');
+
 $routes->get('/editProfile', 'UserController::editProfile');
 
 /*Proyectos */
@@ -31,6 +32,11 @@ $routes->get('/modifyProject/(:num)', 'ProjectController::modify/$1');
 $routes->post('/updateProject/(:num)', 'ProjectController::updateProject/$1');
 
 $routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
+
+$routes->get('explorerProjects', 'ProjectController::explorerProjects');
+
+
+
 
 
 /*Categoria */

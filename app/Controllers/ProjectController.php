@@ -38,13 +38,10 @@ class ProjectController extends BaseController
             }
         }
         
-       
-
-
         return view('estructura/header', $data)
             .view('estructura/navbar', $data)
             .view('estructura/sidebar')
-            .view('project/myProjectList', $data)
+            .view('project/explorerProject', $data)
             .view('estructura/footer');
     }
     public function list():String
@@ -52,10 +49,9 @@ class ProjectController extends BaseController
         
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
-        $projects = $ProjectModel->getProject( $this->user['USERNAME']);
+        $projects = $ProjectModel->getProject($this->user['USERNAME']);
         $categories= $categoryModel-> findAll();
        
-        
         $data = [
             'title' => 'Mis Proyectos',
             'projects' => $projects,
@@ -182,35 +178,36 @@ class ProjectController extends BaseController
         }
     }
     public function modify($id)
-    {
-        $ProjectModel = new ProjectModel();
-        $categoryModel = new CategoryModel();
+{
+    $ProjectModel = new ProjectModel();
+    $categoryModel = new CategoryModel();
     
-        // Obtener el proyecto por su ID
-        $project = $ProjectModel->getProjectById($id);
+    // Obtener el proyecto por su ID
+    $project = $ProjectModel->getProjectById($id);
     
-        // Obtener todas las categorías disponibles
-        $categories = $categoryModel->findAll();
+    // Obtener todas las categorías disponibles
+    $categories = $categoryModel->findAll();
     
-        // Obtener las categorías asociadas a este proyecto
-        $selectedCategories = $categoryModel->getCategory($id);
+    // Obtener las categorías asociadas a este proyecto
+    $selectedCategories = $categoryModel->getCategory($id);
 
-        // Preparar datos para la vista
-        $data = [
-            'title' => 'Modificar Proyecto',
-            'project' => $project,
-            'categories' => $categories,
-            'selectedCategories' => $selectedCategories ?? [], // Array vacío si no hay categorías seleccionadas
-            'user_name' => $this->user['USERNAME'] ?? null,
-        ];
+    // Preparar datos para la vista
+    $data = [
+        'title' => 'Modificar Proyecto',
+        'project' => $project,
+        'categories' => $categories,
+        'selectedCategories' => $selectedCategories ?? [], // Array vacío si no hay categorías seleccionadas
+        'user_name' => $this->user['USERNAME'] ?? null,
+    ];
     
-        // Cargar las vistas
-        return view('estructura/header', $data)
-            . view('estructura/navbar', $data)
-            . view('estructura/sidebar')
-            . view('project/modifyProject', $data)
-            . view('estructura/footer');
-    }
+    // Cargar las vistas
+    return view('estructura/header', $data)
+        . view('estructura/navbar', $data)
+        . view('estructura/sidebar')
+        . view('project/modifyProject', $data)
+        . view('estructura/footer');
+}
+
     
 
 public function updateProject($id)
@@ -263,5 +260,7 @@ public function deleteProject($id)
                        ->with('error', 'Error al eliminar el proyecto');
     }
 }
+
+
 
 }

@@ -30,6 +30,10 @@ class ProjectModel extends Model
         $builder = $this->db->table('proyectos');
         $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen'); // Seleccionamos el BLOB de la imagen
         $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
+        
+        // Filtrar proyectos con estado = true (1)
+        $builder->where('proyectos.ESTADO', true); // Aquí usamos true para filtrar los proyectos con ESTADO = 1
+    
         $query = $builder->get();
         $projects = $query->getResult();
     
@@ -40,16 +44,16 @@ class ProjectModel extends Model
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             log_message('debug', 'Proyectos obtenidos: ' . json_encode($projects));
-
-            // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
-            // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
+    
+            // Convertir la imagen a formato base64 si existe
             if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+                $project->imagen_base64 = base64_encode($project->imagen);
             }
         }
-        
+    
         return $projects;
     }
+     
     public function getProject($id) {
         $builder = $this->db->table('proyectos');
         $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen');
@@ -154,8 +158,10 @@ class ProjectModel extends Model
         $builder = $this->db->table('inversiones');
         $builder->select('proyectos.*, inversiones.MONTO as monto_invertido, 
                          (SELECT SUM(MONTO) FROM inversiones 
-                          WHERE ID_PROYECTO = proyectos.ID_PROYECTO) as monto_recaudado');
+                          WHERE ID_PROYECTO = proyectos.ID_PROYECTO) as monto_recaudado,
+                          imagenes_proyecto.ARCHIVO AS imagen');
         $builder->join('proyectos', 'inversiones.ID_PROYECTO = proyectos.ID_PROYECTO');
+        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
         $builder->where('inversiones.ID_USUARIO', $userId);
         $query = $builder->get();
         $projects = $query->getResult();
@@ -166,6 +172,9 @@ class ProjectModel extends Model
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             // Calculamos el porcentaje de progreso
             $project->porcentaje_progreso = ($project->monto_recaudado / $project->PRESUPUESTO) * 100;
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            }
         }
     
         return $projects;
@@ -173,18 +182,25 @@ class ProjectModel extends Model
 
 
     public function getProjectById($id)
-{
-    // Construimos la consulta para obtener un proyecto por su ID
-    $builder = $this->db->table('proyectos');
-    $builder->select('proyectos.*, proyecto_categoria.ID_CATEGORIA, categorias.nombre AS categoria_nombre');
-    $builder->join('proyecto_categoria', 'proyectos.ID_PROYECTO = proyecto_categoria.ID_PROYECTO', 'left');
-    $builder->join('categorias', 'proyecto_categoria.ID_CATEGORIA = categorias.ID_CATEGORIA', 'left');
-    $builder->where('proyectos.ID_PROYECTO', $id); // Filtramos por el ID del proyecto
-    $query = $builder->get();
+    {
+        // Construimos la consulta para obtener un proyecto por su ID
+        $builder = $this->db->table('proyectos');
+        $builder->select('proyectos.*, proyecto_categoria.ID_CATEGORIA, categorias.nombre AS categoria_nombre, imagenes_proyecto.ARCHIVO AS imagen');
+        $builder->join('proyecto_categoria', 'proyectos.ID_PROYECTO = proyecto_categoria.ID_PROYECTO', 'left');
+        $builder->join('categorias', 'proyecto_categoria.ID_CATEGORIA = categorias.ID_CATEGORIA', 'left');
+        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
+        $builder->where('proyectos.ID_PROYECTO', $id); // Filtramos por el ID del proyecto
+        $query = $builder->get();
+        $project = $query->getResult();
+        foreach ($project as $project) {
+
+        if ($project->imagen) {
+            $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+        }
+    }
+        return $project; 
+    }
     
-    // Retornamos el proyecto encontrado, o null si no existe
-    return $query->getRow(); // getRow() devuelve un solo resultado (objeto)
-}
 
 
 public function updateProject($data)
