@@ -22,13 +22,20 @@ class ProjectController extends BaseController
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-
+        $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
+        $perPage = 6; // Definimos cuántos ítems por página
+        helper('pagination');  // Carga el helper
+        // Llamada a paginateArray que devuelve los proyectos y los datos de paginación
+        $paginatedProjects = paginateArray($projects, $perPage, $currentPage);
 
         $data = [
             'title' => 'Mis Proyectos',
             'projects' => $projects,
             'categories' => $categories,
-            'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
+            'user_name' => $this->user['USERNAME'], // Usa el nombre de usuario directamente
+            'currentPage' => $currentPage, // Pasa la página actual
+            'totalPages' => $paginatedProjects['totalPages'], // Total de páginas
+            'totalItems' => $paginatedProjects['totalItems'], // Total de ítems
         ];
         foreach ($projects as $project) {
             if ($project->imagen) {
@@ -41,7 +48,7 @@ class ProjectController extends BaseController
         return view('estructura/header', $data)
             . view('estructura/navbar', $data)
             . view('estructura/sidebar')
-            . view('project/myProjectList', $data)
+            . view('project/explorerProject', $data)
             . view('estructura/footer');
     }
     public function list(): String

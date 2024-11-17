@@ -49,7 +49,9 @@ class ProjectModel extends Model
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             log_message('debug', 'Proyectos obtenidos: ' . json_encode($projects));
-
+            $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
+            $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
+            // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
             // Convertir la imagen a formato base64 si existe
             if ($project->imagen) {
                 $project->imagen_base64 = base64_encode($project->imagen);
