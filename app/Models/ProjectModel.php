@@ -52,7 +52,8 @@ class ProjectModel extends Model
     }
     public function getProject($id) {
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*');
+        $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen');
+        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
         $builder->join('usuarios', 'proyectos.USERNAME_USUARIO = usuarios.USERNAME');
 
         $builder->where('proyectos.USERNAME_USUARIO', $id);
@@ -66,6 +67,11 @@ class ProjectModel extends Model
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
+             // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
+            // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
+                if ($project->imagen) {
+                    $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+                }
         }
         
         return $projects;
