@@ -120,7 +120,7 @@
                                 </div>
 
                                 <!-- Modal para la descripción completa -->
-                                <div class="modal fade" id="modal-<?= $project->ID_PROYECTO ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $project->ID_PROYECTO ?>" aria-hidden="true">
+                                <div class="modal fade" id="modal-<?= $project->ID_PROYECTO ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $project->ID_PROYECTO ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -152,13 +152,32 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <!-- Footer con categorías y botones -->
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <?php foreach ($project->categoria_nombre as $categoria) : ?>
-                                    <span class="badge bg-primary"><?= esc($categoria) ?></span>
-                                <?php endforeach; ?>
+                            <div class="card-footer d-flex justify-content-between align-items-center flex-column">
+                                <!-- Categorías -->
+                                <div class="categories">
+                                    <?php foreach ($project->categoria_nombre as $categoria) : ?>
+                                        <span class="badge bg-primary"><?= esc($categoria) ?></span>
+                                    <?php endforeach; ?>
+
+                                    <!-- Ver más si hay más de 5 categorías -->
+                                    <?php if (count($project->categoria_nombre) > 5) : ?>
+                                        <button class="btn btn-sm btn-link" onclick="toggleCategories()">Ver más</button>
+                                        <div id="extraCategories" style="display: none;">
+                                            <?php
+                                            $extraCategories = array_slice($project->categoria_nombre, 5);
+                                            foreach ($extraCategories as $categoria) :
+                                            ?>
+                                                <span class="badge bg-primary"><?= esc($categoria) ?></span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Botones de acción -->
                                 <div class="btn-group">
                                     <a href="<?= base_url('modifyProject/' . $project->ID_PROYECTO) ?>" class="btn btn-sm btn-info">
                                         <i class="fas fa-edit"></i>
@@ -168,6 +187,9 @@
                                     </button>
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -181,19 +203,40 @@
                 <div class="col-12">
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Siguiente</a>
-                            </li>
+                            <!-- Botón Anterior -->
+                            <?php if ($currentPage > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?= $currentPage - 1 ?>" tabindex="-1">Anterior</a>
+                                </li>
+                            <?php else: ?>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                                </li>
+                            <?php endif; ?>
+
+                            <!-- Páginas -->
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?= ($currentPage == $i) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- Botón Siguiente -->
+                            <?php if ($currentPage < $totalPages): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=<?= $currentPage + 1 ?>">Siguiente</a>
+                                </li>
+                            <?php else: ?>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Siguiente</a>
+                                </li>
+                            <?php endif; ?>
                         </ul>
                     </nav>
                 </div>
             </div>
+
+
         </div>
     </section>
 
@@ -240,5 +283,18 @@
             window.location.href = url;
         }
         // Si el usuario cancela, no pasa nada
+    }
+
+    // Función para mostrar/ocultar las categorías adicionales
+    function toggleCategories() {
+        var extraCategories = document.getElementById('extraCategories');
+        var button = document.querySelector('.btn-link');
+        if (extraCategories.style.display === "none") {
+            extraCategories.style.display = "block";
+            button.textContent = "Ver menos"; // Cambiar texto del botón
+        } else {
+            extraCategories.style.display = "none";
+            button.textContent = "Ver más"; // Volver al texto original
+        }
     }
 </script>

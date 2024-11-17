@@ -144,7 +144,7 @@
         gap: 10px;
     }
 }
-<style>
+
 .description-truncate {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -171,4 +171,3 @@
 .btn-link:hover {
     text-decoration: underline;
 }
-</style>
