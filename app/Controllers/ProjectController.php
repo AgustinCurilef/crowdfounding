@@ -30,6 +30,13 @@ class ProjectController extends BaseController
             'categories' => $categories,
             'user_name' => $this->user['USERNAME']  // Usa el nombre de usuario directamente
         ];
+        foreach ($projects as $project) {
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen);
+            } else {
+                $project->imagen_base64 = ''; // Si no hay imagen, asignar vacío
+            }
+        }
         
        
 
@@ -105,6 +112,51 @@ class ProjectController extends BaseController
 
     public function saveProject()
     {
+         // Configuración para la subida del archivo
+
+    $validationRule = [
+        'portada' => [
+            'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
+            'errors' => [
+                'uploaded' => 'Debes seleccionar una imagen de portada.',
+                'is_image' => 'El archivo debe ser una imagen válida.',
+                'max_size' => 'El tamaño máximo permitido es de 2 MB.',
+                'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
+            ]
+        ]
+    ];
+
+    // Validar la imagen si se ha cargado
+    $file = $this->request->getFile('portada');
+    $imageName = null;
+
+    if ($file && $file->isValid() && !$file->hasMoved()) {
+        log_message('debug', 'Imagen subida: ' . $file->getName()); // Nombre del archivo
+        log_message('debug', 'Tamaño de la imagen: ' . $file->getSize() . ' bytes'); // Tamaño del archivo
+        log_message('debug', 'Tipo MIME de la imagen: ' . $file->getMimeType()); // Tipo MIME
+
+        if (!$this->validate($validationRule)) {
+            log_message('debug', 'no paso la valicion de las reglas: ' . $file->getMimeType()); // Tipo MIME
+
+            return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+        }
+
+        // Generar un nombre único para la imagen y moverla a la carpeta de subida
+        $imageName = $file->getRandomName();
+        $file->move(WRITEPATH . 'uploads', $imageName);
+         // Ya no necesitas usar getTempName()
+        // Leer el contenido binario del archivo
+        $imagePath = WRITEPATH . 'uploads/' . $imageName;
+        $imageData = file_get_contents($imagePath);
+
+        // Verificar si la imagen se cargó correctamente
+        if ($imageData === false) {
+            log_message('debug', 'Error al leer la imagen desde: ' . $imagePath);
+        } else {
+            log_message('debug', 'Imagen cargada correctamente, tamaño: ' . strlen($imageData) . ' bytes');
+        }
+    
+    }
         // Recogemos los datos del formulario
         $data = [
             'NOMBRE' => $this->request->getPost('NOMBRE'),
@@ -116,9 +168,13 @@ class ProjectController extends BaseController
             'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
-            'ESTADO' => $this->request->getPost('ESTADO')
+            'ESTADO' => $this->request->getPost('ESTADO'),
+            'ARCHIVO' => $imageData
+
         ];
         $projectModel = new ProjectModel();
+        log_message('debug', 'Datos recibidos: ' . json_encode($data));
+
         if ($projectModel->setProject($data)) {
             return redirect()->to('/myprojects')->with('success', 'Proyecto guardado exitosamente.');
         } else {
