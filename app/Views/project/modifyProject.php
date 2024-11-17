@@ -34,16 +34,18 @@
                                         <?php endif; ?>
 
                                         <!-- Formulario -->
-                                        <form id="projectForm" action="<?= base_url('/updateProject/'. $project->ID_PROYECTO) ?>" method="POST">
+                                        <form id="projectForm" action="<?= base_url('updateProject/' . $project->ID_PROYECTO) ?>" method="POST" enctype="multipart/form-data">
                                             <!-- Imagen de portada -->
                                             <div class="text-center mb-4">
                                                 <div class="upload-preview mb-3">
+                                                    <!-- Imagen con clase miniatura -->
+                                                    <img class="image-thumbnail" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image" id="imagePreview">
                                                     <i class="fas fa-cloud-upload-alt"></i>
                                                 </div>
                                                 <div class="upload-btn-wrapper">
                                                     <label class="upload-btn" for="imageUpload">
                                                         <i class="fas fa-upload mr-2"></i>CARGAR PORTADA
-                                                        <input type="file" id="imageUpload" name="PORTADA" accept="image/*" hidden>
+                                                        <input type="file" id="imageUpload" name="portada" accept="image/*" hidden>
                                                     </label>
                                                 </div>
                                             </div>
@@ -78,9 +80,7 @@
                                                         <label>Categorías</label>
                                                         <div class="categories-container border rounded p-3" style="max-height: 200px; overflow-y: auto;">
                                                             <div class="custom-control custom-checkbox mb-3 border-bottom pb-2">
-                                                                <input type="checkbox" 
-                                                                       class="custom-control-input" 
-                                                                       id="selectAllCategories">
+                                                                <input type="checkbox" class="custom-control-input" id="selectAllCategories">
                                                                 <label class="custom-control-label font-weight-bold" for="selectAllCategories">
                                                                     Seleccionar todas
                                                                 </label>
@@ -88,15 +88,8 @@
 
                                                             <?php foreach ($categories as $category) : ?>
                                                                 <div class="custom-control custom-checkbox mb-2">
-                                                                    <input type="checkbox" 
-                                                                        class="custom-control-input category-checkbox" 
-                                                                        id="category_<?= esc($category->ID_CATEGORIA) ?>" 
-                                                                        name="ID_CATEGORIA[]" 
-                                                                        value="<?= esc($category->ID_CATEGORIA) ?>"
-                                                                        <?php if (in_array($category->NOMBRE, $selectedCategories)): ?> checked <?php endif; ?>>
-                                                                    <label class="custom-control-label" for="category_<?= esc($category->ID_CATEGORIA) ?>">
-                                                                        <?= esc($category->NOMBRE) ?>
-                                                                    </label>
+                                                                    <input type="checkbox" class="custom-control-input category-checkbox" id="category_<?= esc($category->ID_CATEGORIA) ?>" name="ID_CATEGORIA[]" value="<?= esc($category->ID_CATEGORIA) ?>" <?php if (in_array($category->NOMBRE, $selectedCategories)): ?> checked <?php endif; ?>>
+                                                                    <label class="custom-control-label" for="category_<?= esc($category->ID_CATEGORIA) ?>"><?= esc($category->NOMBRE) ?></label>
                                                                 </div>
                                                             <?php endforeach; ?>
                                                         </div>
@@ -127,6 +120,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <!-- Campo de estado del proyecto -->
                                             <div class="row mt-4">
                                                 <div class="col-12">
@@ -171,32 +165,33 @@
     </div>
 </main>
 
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Preview de imagen
-    const imageUpload = document.getElementById('imageUpload');
-    const imagePreview = document.getElementById('imagePreview');
-    const uploadPreviewIcon = document.querySelector('.upload-preview i');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Preview de imagen
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadPreviewIcon = document.querySelector('.upload-preview i');
 
-    imageUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-                uploadPreviewIcon.style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadPreviewIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
-    // Botón cancelar
-    const cancelButton = document.getElementById('cancelButton');
-    cancelButton.addEventListener('click', function() {
-        if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
-            window.history.back();
-        }
+        // Botón cancelar
+        const cancelButton = document.getElementById('cancelButton');
+        cancelButton.addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
+                window.history.back();
+            }
+        });
     });
-});
 </script>

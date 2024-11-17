@@ -11,11 +11,12 @@ $routes->get('/login', 'LoginController::login');
 
 $routes->get('/register', 'registerController::register');
 
-$routes->post('/login/authenticate', 'LoginController::authenticate'); 
+$routes->post('/login/authenticate', 'LoginController::authenticate');
 
 /*Usuarios */
 
-$routes->get('/inicio', 'UserController::index');
+$routes->get('/inicio', 'ProjectController::listAllProjects');
+
 $routes->get('/editProfile', 'UserController::editProfile');
 
 /*Proyectos */
@@ -33,6 +34,10 @@ $routes->post('/updateProject/(:num)', 'ProjectController::updateProject/$1');
 $routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
 
 
+
+
+
+
 /*Categoria */
 $routes->get('categories', 'CategoryController::index');
 
@@ -47,7 +52,7 @@ $routes->post('categories/update/(:num)', 'CategoryController::update/$1');
 $routes->get('categories/delete/(:num)', 'CategoryController::delete/$1');
 
 /*Inversion */
-$routes->get('investment/create/(:num)', 'InvestmentController::create/$1');
+$routes->get('investment/create/(:num)', 'InvestmentController::create');
 
 $routes->post('investment/save', 'InvestmentController::save');
 
@@ -55,8 +60,3 @@ $routes->get('/myInvestments', 'ProjectController::listInvestments');
 
 
 $routes->post('/register', 'registerController::store');
-
-
-
-
-

@@ -123,12 +123,6 @@ function updateProjectsGrid(projects) {
         const card = createProjectCard(project);
         grid.append(card);
     });
-
-    function confirmDelete(url) {
-        if (confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) {
-            // Si el usuario confirma, redirige a la URL de eliminación
-            window.location.href = url;
-        }
-        // Si el usuario cancela, no pasa nada
-    }
 }
+
+
