@@ -20,10 +20,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
-    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
-    
+
 
     <!-- css de categorias -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -32,8 +30,8 @@
 
 
 
-    
-   
+
+
 
 </head> <!--end::Head--> <!--begin::Body-->
 
@@ -42,4 +40,3 @@
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper"> <!--begin::Header-->
         <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
-            

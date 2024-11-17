@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use CodeIgniter\Model;
@@ -14,7 +15,7 @@ class ProjectModel extends Model
     protected $returnType     =  'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO','PRESUPUESTO','OBJETIVO','DESCRIPCION','FECHA_LIMITE','RECOMPENSAS','SITIO_WEB','ESTADO'];
+    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO', 'PRESUPUESTO', 'OBJETIVO', 'DESCRIPCION', 'FECHA_LIMITE', 'RECOMPENSAS', 'SITIO_WEB', 'ESTADO'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -26,35 +27,40 @@ class ProjectModel extends Model
     protected $skipValidation     = false;
 
 
-    public function getProjects() {
+    public function getProjects()
+    {
         $builder = $this->db->table('proyectos');
         $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen'); // Seleccionamos el BLOB de la imagen
         $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
-        
+
         // Filtrar proyectos con estado = true (1)
         $builder->where('proyectos.ESTADO', true); // Aquí usamos true para filtrar los proyectos con ESTADO = 1
-    
+
         $query = $builder->get();
         $projects = $query->getResult();
-    
         // Instanciamos CategoryModel
         $categoryModel = new CategoryModel();
-    
+
+
+        // Instanciamos CategoryModel
+        $categoryModel = new CategoryModel();
+
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             log_message('debug', 'Proyectos obtenidos: ' . json_encode($projects));
-    
+
             // Convertir la imagen a formato base64 si existe
             if ($project->imagen) {
                 $project->imagen_base64 = base64_encode($project->imagen);
             }
         }
-    
+
         return $projects;
     }
-     
-    public function getProject($id) {
+
+    public function getProject($id)
+    {
         $builder = $this->db->table('proyectos');
         $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen');
         $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
@@ -62,92 +68,92 @@ class ProjectModel extends Model
 
         $builder->where('proyectos.USERNAME_USUARIO', $id);
         $query = $builder->get();
-    
+
         $projects = $query->getResult();
-         // Instanciamos CategoryModel
-         $categoryModel = new CategoryModel();
+        // Instanciamos CategoryModel
+        $categoryModel = new CategoryModel();
 
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
-             // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
+            // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
             // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
-                if ($project->imagen) {
-                    $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
-                }
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            }
         }
-        
+
         return $projects;
     }
-    
+
     public function getAmountInvestmentsByProject($idProject)
     {
         $builder = $this->db->table('inversiones');
         $builder->select('SUM(inversiones.MONTO) as monto_recaudado');
         $builder->where('inversiones.ID_PROYECTO', $idProject);
         $query = $builder->get();
-    
+
         // Obtener el resultado
         $result = $query->getRow(); // Obtiene una fila única en lugar de un arreglo
-    
+
         // Verificar y retornar el monto recaudado o 0 si está vacío
         return $result && $result->monto_recaudado !== null ? (float)$result->monto_recaudado : 0;
     }
-    
-    
+
+
 
     public function setProject($data)
-{
-    if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
-        log_message('debug', 'Faltan datos obligatorios. Retornando false.');
-        return false;
-    }
+    {
+        if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
+            log_message('debug', 'Faltan datos obligatorios. Retornando false.');
+            return false;
+        }
 
-    try {
-        $data['ESTADO'] = (int) ($data['ESTADO'] ?? 0);
-        // Insertar el proyecto en la tabla principal
-        $inserted = $this->insert($data);
+        try {
+            $data['ESTADO'] = (int) ($data['ESTADO'] ?? 0);
+            // Insertar el proyecto en la tabla principal
+            $inserted = $this->insert($data);
 
-        if ($inserted) {
-            // Obtener el ID del proyecto recién insertado
-            $projectId = $this->insertID();
+            if ($inserted) {
+                // Obtener el ID del proyecto recién insertado
+                $projectId = $this->insertID();
 
-            // Preparar los datos para la tabla intermedia 'proyecto_categoria'
-            if (!empty($data['CATEGORIAS']) && is_array($data['CATEGORIAS'])) {
-                $proyectoCategoriaData = [];
-                foreach ($data['CATEGORIAS'] as $categoryId) {
-                    $proyectoCategoriaData[] = [
+                // Preparar los datos para la tabla intermedia 'proyecto_categoria'
+                if (!empty($data['CATEGORIAS']) && is_array($data['CATEGORIAS'])) {
+                    $proyectoCategoriaData = [];
+                    foreach ($data['CATEGORIAS'] as $categoryId) {
+                        $proyectoCategoriaData[] = [
+                            'ID_PROYECTO' => $projectId,
+                            'ID_CATEGORIA' => $categoryId
+                        ];
+                    }
+
+                    // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                    $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                }
+                // Insertar la imagen en la tabla 'imagenes_proyecto'
+                if (!empty($data['ARCHIVO'])) {
+                    // Preparar los datos para la tabla 'imagenes_proyecto'
+                    $imageDataInsert = [
+                        'NOMBRE_PROYECTO' => $data['NOMBRE'],
                         'ID_PROYECTO' => $projectId,
-                        'ID_CATEGORIA' => $categoryId
+                        'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
                     ];
+
+                    // Insertar la imagen en la tabla 'imagenes_proyecto'
+                    $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
                 }
 
-                // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
-                $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                // Si todo fue exitoso, retornar true
+                return true;
             }
-            // Insertar la imagen en la tabla 'imagenes_proyecto'
-            if (!empty($data['ARCHIVO'])) {
-                // Preparar los datos para la tabla 'imagenes_proyecto'
-                $imageDataInsert = [
-                    'NOMBRE_PROYECTO' => $data['NOMBRE'],
-                    'ID_PROYECTO' => $projectId,
-                    'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
-                ];
-
-                // Insertar la imagen en la tabla 'imagenes_proyecto'
-                $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
-            }
-
-            // Si todo fue exitoso, retornar true
-            return true;
+        } catch (\Exception $e) {
+            log_message('error', 'Error al guardar el proyecto o en la tabla intermedia: ' . $e->getMessage());
         }
-    } catch (\Exception $e) {
-        log_message('error', 'Error al guardar el proyecto o en la tabla intermedia: ' . $e->getMessage());
-    }
 
-    return false;
-}
+        return false;
+    }
 
 
     public function getInvestmentsByUser($userId)
@@ -165,7 +171,7 @@ class ProjectModel extends Model
         $builder->where('inversiones.ID_USUARIO', $userId);
         $query = $builder->get();
         $projects = $query->getResult();
-    
+
         $categoryModel = new CategoryModel();
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
@@ -176,7 +182,7 @@ class ProjectModel extends Model
                 $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
             }
         }
-    
+
         return $projects;
     }
 
@@ -194,77 +200,73 @@ class ProjectModel extends Model
         $project = $query->getResult();
         foreach ($project as $project) {
 
-        if ($project->imagen) {
-            $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            }
         }
+        return $project;
     }
-        return $project; 
-    }
-    
 
 
-public function updateProject($data)
-{
-    if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
-        log_message('debug', 'Faltan datos obligatorios. Retornando false.');
+
+    public function updateProject($data)
+    {
+        if (empty($data['NOMBRE']) || empty($data['USERNAME_USUARIO'])) {
+            log_message('debug', 'Faltan datos obligatorios. Retornando false.');
+            return false;
+        }
+
+        try {
+            // Obtener el ID del proyecto
+            $id = $data['ID_PROYECTO'];
+
+            // Actualizar el proyecto en la tabla principal
+            $updated = $this->update($id, $data);
+
+            if ($updated) {
+                // Eliminar las categorías actuales asociadas con el proyecto
+                $this->db->table('proyecto_categoria')->where('ID_PROYECTO', $id)->delete();
+
+                // Verificar si 'CATEGORIAS' existe en los datos y es un arreglo
+                if (isset($data['CATEGORIAS']) && is_array($data['CATEGORIAS']) && !empty($data['CATEGORIAS'])) {
+                    // Preparar los datos para la tabla intermedia 'proyecto_categoria'
+                    $proyectoCategoriaData = [];
+                    foreach ($data['CATEGORIAS'] as $categoryId) {
+                        $proyectoCategoriaData[] = [
+                            'ID_PROYECTO' => $id,
+                            'ID_CATEGORIA' => $categoryId
+                        ];
+                    }
+
+                    // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                    $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                }
+
+                // Si la actualización fue exitosa, retornar true
+                return true;
+            }
+        } catch (\Exception $e) {
+            log_message('error', 'Error al actualizar el proyecto o en la tabla intermedia: ' . $e->getMessage());
+        }
+
         return false;
     }
 
-    try {
-        // Obtener el ID del proyecto
-        $id = $data['ID_PROYECTO'];
 
-        // Actualizar el proyecto en la tabla principal
-        $updated = $this->update($id, $data);
 
-        if ($updated) {
-            // Eliminar las categorías actuales asociadas con el proyecto
-            $this->db->table('proyecto_categoria')->where('ID_PROYECTO', $id)->delete();
 
-            // Verificar si 'CATEGORIAS' existe en los datos y es un arreglo
-            if (isset($data['CATEGORIAS']) && is_array($data['CATEGORIAS']) && !empty($data['CATEGORIAS'])) {
-                // Preparar los datos para la tabla intermedia 'proyecto_categoria'
-                $proyectoCategoriaData = [];
-                foreach ($data['CATEGORIAS'] as $categoryId) {
-                    $proyectoCategoriaData[] = [
-                        'ID_PROYECTO' => $id,
-                        'ID_CATEGORIA' => $categoryId
-                    ];
-                }
-
-                // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
-                $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+    public function deleteProject($id)
+    {
+        try {
+            // Usamos el método delete del modelo base de CodeIgniter
+            if ($this->delete($id)) {
+                return true; // Éxito en la eliminación
             }
-
-            // Si la actualización fue exitosa, retornar true
-            return true;
+        } catch (\Exception $e) {
+            // Si ocurre una excepción, registramos el error
+            log_message('error', 'Error al eliminar el proyecto con ID ' . $id . ': ' . $e->getMessage());
         }
 
-    } catch (\Exception $e) {
-        log_message('error', 'Error al actualizar el proyecto o en la tabla intermedia: ' . $e->getMessage());
+        return false; // Si algo falla, devolvemos false
     }
-
-    return false;
-}
-
-
-
-
-public function deleteProject($id)
-{
-    try {
-        // Usamos el método delete del modelo base de CodeIgniter
-        if ($this->delete($id)) {
-            return true; // Éxito en la eliminación
-        }
-    } catch (\Exception $e) {
-        // Si ocurre una excepción, registramos el error
-        log_message('error', 'Error al eliminar el proyecto con ID ' . $id . ': ' . $e->getMessage());
-    }
-
-    return false; // Si algo falla, devolvemos false
-}
-
-
-    
 }
