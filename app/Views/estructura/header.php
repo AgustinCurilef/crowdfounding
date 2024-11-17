@@ -22,6 +22,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
+    
 
     <!-- css de categorias -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +36,7 @@
    
 
 </head> <!--end::Head--> <!--begin::Body-->
+
 
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->

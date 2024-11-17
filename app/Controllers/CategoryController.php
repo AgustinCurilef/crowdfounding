@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Models\CategoryModel;
-use App\Models\UserModels;
+
 
 class CategoryController extends BaseController
 {

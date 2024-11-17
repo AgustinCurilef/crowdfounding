@@ -53,34 +53,73 @@
                 </div>
             </div>
         </div>
-      
-<!-- Projects Grid -->
+        <!-- Projects Grid -->
 <div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
     <?php foreach ($projects as $project) : ?>
         <!-- Project Card Template -->
         <div class="col">
             <div class="card h-100">
                 <img class="card-img-top" src="https://via.placeholder.com/350x200" alt="Project Image">
+
                 <div class="card-body">
-                    <h5 class="card-title"><?= esc($project->NOMBRE) ?></h5>
+                    <!-- Nombre y Presupuesto -->
+                    <div class="mb-3">
+                        <span class="text-muted">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>
+                        <span class="text-muted">Presupuesto total: </span><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $
+                    </div>
+
+                    <?php
+                    // Variables para cálculo
+                    $presupuesto = isset($project->PRESUPUESTO) ? (float)$project->PRESUPUESTO : 0;
+                    $recaudado = isset($project->monto_recaudado) ? (float)str_replace(',', '.', $project->monto_recaudado) : 0;
+
+                    // Calcular el porcentaje de recaudación
+                    $porcentaje = $presupuesto > 0 ? ($recaudado / $presupuesto) * 100 : 0;
+
+                    // Limitar el porcentaje entre 0 y 100
+                    $porcentaje = min(max($porcentaje, 0), 100);
+                    ?>
+
+                    <!-- Barra de progreso -->
                     <div class="progress mb-2">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" 
+                             role="progressbar" 
+                             style="width: <?= round($porcentaje, 1) ?>%" 
+                             aria-valuenow="<?= round($porcentaje, 1) ?>" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                             <?= round($porcentaje, 1) ?>%
+                        </div>
                     </div>
-                    <div class="project-stats d-flex justify-content-between">
-                        <span><?= esc($project->PRESUPUESTO) ?> objetivo</span>
-                        <span>75% completado</span>
+
+                    <!-- Monto recaudado -->
+                    <div class="text-center mb-2">
+                        <span class="text-muted">Recaudado: </span>
+                        <strong><?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</strong>
+                        <span class="text-muted"> de </span>
+                        <strong><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</strong>
                     </div>
-                    <p class="card-text mt-2"><?= esc($project->DESCRIPCION) ?></p>
+
+                    <!-- Descripción -->
+                    <div class="mt-2">
+                        <span class="text-muted">Descripción: </span><br>
+                        <?= esc($project->DESCRIPCION) ?>
+                    </div>
                 </div>
+
+                <!-- Footer con categorías y botones -->
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                <?php foreach ($project->categoria_nombre as $categoria) : ?>
+                    <?php foreach ($project->categoria_nombre as $categoria) : ?>
                         <span class="badge bg-primary"><?= esc($categoria) ?></span>
                     <?php endforeach; ?>
-                      <div class="btn-group">
+                    <!-- Modificar el ruteo de los botones editar y eliminar -->
+                    <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-info">
+                            <a href="<?= base_url('modifyProject/'.$project->ID_PROYECTO) ?>" class="btn btn-sm btn-info">
                             <i class="fas fa-edit"></i>
+                            </a>
                         </button>
-                        <button type="button" class="btn btn-sm btn-danger">
+                             <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?= base_url('deleteProject/'.$project->ID_PROYECTO) ?>')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -89,6 +128,9 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+      
+
         <!-- Pagination -->
         <div class="row mt-4">
             <div class="col-12">
@@ -111,3 +153,13 @@
 </section>
 
 </main>
+<script>
+function confirmDelete(url) {
+        if (confirm('¿Estás seguro de que deseas eliminar este proyecto? Esta acción no se puede deshacer.')) {
+            // Si el usuario confirma, redirige a la URL de eliminación
+            window.location.href = url;
+        }
+        // Si el usuario cancela, no pasa nada
+    }
+
+</script>

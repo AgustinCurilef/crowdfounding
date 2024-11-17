@@ -3,7 +3,7 @@
 namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
-use App\Models\UserModels;
+use App\Models\UserModel;
 
 class UserController extends BaseController
 
