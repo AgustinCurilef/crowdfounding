@@ -22,6 +22,7 @@ use CodeIgniter\Config\AutoloadConfig;
  */
 class Autoload extends AutoloadConfig
 {
+
     /**
      * -------------------------------------------------------------------
      * Namespaces
@@ -91,6 +92,8 @@ class Autoload extends AutoloadConfig
      * @var list<string>
      */
     public $helpers = [
-        'pagination', // Si estás usando un helper para paginación, por ejemplo.
+        'pagination',
+        'form',
+        'url' // Si estás usando un helper para paginación, por ejemplo.
     ];
 }

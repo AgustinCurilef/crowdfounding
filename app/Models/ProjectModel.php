@@ -30,15 +30,27 @@ class ProjectModel extends Model
     public function getProjects()
     {
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*');
+        $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen'); // Seleccionamos el BLOB de la imagen
+        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
         $query = $builder->get();
         $projects = $query->getResult();
+        // Instanciamos CategoryModel
+        $categoryModel = new CategoryModel();
+
+
         // Instanciamos CategoryModel
         $categoryModel = new CategoryModel();
 
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
+            log_message('debug', 'Proyectos obtenidos: ' . json_encode($projects));
+
+            // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
+            // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            }
         }
 
         return $projects;
@@ -46,7 +58,8 @@ class ProjectModel extends Model
     public function getProject($id)
     {
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*');
+        $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen');
+        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
         $builder->join('usuarios', 'proyectos.USERNAME_USUARIO = usuarios.USERNAME');
 
         $builder->where('proyectos.USERNAME_USUARIO', $id);
@@ -60,6 +73,11 @@ class ProjectModel extends Model
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
+            // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
+            // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
+            if ($project->imagen) {
+                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            }
         }
 
         return $projects;
@@ -78,6 +96,7 @@ class ProjectModel extends Model
         // Verificar y retornar el monto recaudado o 0 si está vacío
         return $result && $result->monto_recaudado !== null ? (float)$result->monto_recaudado : 0;
     }
+
 
 
     public function setProject($data)
@@ -108,6 +127,18 @@ class ProjectModel extends Model
 
                     // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
                     $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                }
+                // Insertar la imagen en la tabla 'imagenes_proyecto'
+                if (!empty($data['ARCHIVO'])) {
+                    // Preparar los datos para la tabla 'imagenes_proyecto'
+                    $imageDataInsert = [
+                        'NOMBRE_PROYECTO' => $data['NOMBRE'],
+                        'ID_PROYECTO' => $projectId,
+                        'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
+                    ];
+
+                    // Insertar la imagen en la tabla 'imagenes_proyecto'
+                    $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
                 }
 
                 // Si todo fue exitoso, retornar true
