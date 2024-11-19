@@ -33,7 +33,7 @@
                 </li>
                 <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
                         <p>
-                            Administracion General
+                            Administracion
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
@@ -85,19 +85,6 @@
                                 <p>Mis Inversiones</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('investment/create') ?>" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Realizar Inversion</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-
                     </ul>
                 </li>
 
@@ -114,6 +101,21 @@
                         <li class="nav-item"> <a href="<?= base_url('/categories/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                 <p>Crear Categorias (admin)</p>
                             </a> </li>
+                    </ul>
+
+                </li>
+
+                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                        <p>
+                            Notificaciones
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item"> <a href="<?= base_url('/notification') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                <p>Listar (admin)</p>
+                            </a> </li>
+                        
                     </ul>
 
                 </li>
