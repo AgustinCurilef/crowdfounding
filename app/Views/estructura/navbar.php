@@ -7,18 +7,24 @@
                     <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
                 
                          <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
-                    <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">15</span> </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <span class="dropdown-item dropdown-header">15 Notifications</span>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-envelope me-2"></i> 4 new messages
-                                <span class="float-end text-secondary fs-7">3 mins</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                                <span class="float-end text-secondary fs-7">12 hours</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                                <span class="float-end text-secondary fs-7">2 days</span> </a>
-                            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">
-                                See All Notifications
+                    <!-- En tu navbar -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="navbar-badge badge text-bg-warning" id="notification-count">0</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
+                            <span class="dropdown-item dropdown-header" id="notification-header">0 Notificaciones</span>
+                            <div class="dropdown-divider"></div>
+                            <div id="notification-list">
+                                <!-- Las notificaciones se cargarán aquí -->
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="<?= base_url('user/notifications') ?>" class="dropdown-item dropdown-footer">
+                                Ver todas las notificaciones
                             </a>
                         </div>
+                    </li>
                     </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
                     <li class="nav-item"> 
             <a class="nav-link" href="#" data-lte-toggle="fullscreen"> 

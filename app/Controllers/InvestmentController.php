@@ -125,6 +125,11 @@ class InvestmentController extends BaseController
         //////////
         // Guardar la inversión
         if ($investmentModel->saveInvestment($data)) {
+        
+            // Crear notificación para el dueño del proyecto
+            $notificationUserController = new NotificationUserController();
+            $notificationUserController->createInvestmentNotification($project, $MONTO);
+
             $mensaje = 'Inversión registrada exitosamente';
             if ($estado === 'Pagado') {
                 $mensaje .= '. El proyecto alcanzó su meta y la inversión ha sido marcada como pagada.';
@@ -135,6 +140,7 @@ class InvestmentController extends BaseController
             }
             return redirect()->to('/investment/create/'. $ID_PROYECTO)
                         ->with('mensaje', $mensaje);
+                        
         } else 
             {  
                 // Captura el error exacto

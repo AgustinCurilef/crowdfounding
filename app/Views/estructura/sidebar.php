@@ -39,7 +39,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                            <li class="nav-item"> <a href="<?= base_url('/notification') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                     <p>Notificaciones</p>
                                 </a> </li>
                             <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -86,19 +86,6 @@
                                 <p>Mis Inversiones</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('investment/create') ?>" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Realizar Inversion</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-
                     </ul>
                 </li>
                 <?php if (session()->get('ROL') == '1'): ?>

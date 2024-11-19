@@ -19,6 +19,20 @@ $routes->group('', ['filter' => ['login', 'role:1']], function ($routes) {
     $routes->post('categories/update/(:num)', 'CategoryController::update/$1');
 
     $routes->get('categories/delete/(:num)', 'CategoryController::delete/$1');
+
+    /*Notificaciones*/
+
+    $routes->get('notification', 'NotificationController::index');
+
+    $routes->get('notification/create', 'NotificationController::create');
+
+    $routes->post('notification/save', 'NotificationController::save');
+
+    $routes->get('notification/edit/(:num)', 'NotificationController::edit/$1');
+
+    $routes->post('notification/update/(:num)', 'NotificationController::update/$1');
+
+    $routes->get('notification/delete/(:num)', 'NotificationController::delete/$1');
 });
 
 /* Solo acceden los usuarios comunes */
@@ -49,6 +63,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
 
 
+
     /*Inversion */
     $routes->get('investment/create/(:num)', 'InvestmentController::create/$1');
 
@@ -57,7 +72,15 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     $routes->get('/myInvestments', 'ProjectController::listInvestments');
 
 
-    $routes->post('/register', 'registerController::store');
+
+    /*Notificaciones Usuario*/
+
+    $routes->group('user/notifications', ['namespace' => 'App\Controllers'], function ($routes) {
+        $routes->get('/', 'NotificationUserController::index');
+        $routes->get('unread-count', 'NotificationUserController::getUnreadCount');
+        $routes->get('recent', 'NotificationUserController::recent');
+        $routes->post('mark-read/(:num)', 'NotificationUserController::markAsRead/$1');
+    });
 });
 
 
@@ -73,3 +96,6 @@ $routes->get('/register', 'registerController::register');
 $routes->post('/login/authenticate', 'LoginController::authenticate');
 
 $routes->get('/unauthorized', 'LoginController::unauthorized');
+/*Registro*/
+
+$routes->post('/register', 'registerController::store');
