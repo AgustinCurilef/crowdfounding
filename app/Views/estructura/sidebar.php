@@ -31,26 +31,27 @@
                     </ul>
 
                 </li>
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            Administracion General
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Notificaciones</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Usuarios</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Privacidad</p>
-                            </a> </li>
-                    </ul>
+                <?php if (session()->get('ROL') == '1'): ?>
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                Gestión General
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"> <a href="./index.html" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Notificaciones</p>
+                                </a> </li>
+                            <li class="nav-item"> <a href="./index2.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Usuarios</p>
+                                </a> </li>
+                            <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Privacidad</p>
+                                </a> </li>
+                        </ul>
 
-                </li>
-
+                    </li>
+                <?php endif; ?>
 
 
                 <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
@@ -100,24 +101,24 @@
 
                     </ul>
                 </li>
+                <?php if (session()->get('ROL') == '1'): ?>
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                            <p>
+                                Categorias
+                                <i class="nav-arrow bi bi-chevron-right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item"> <a href="<?= base_url('/categories') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Explorar Categorias</p>
+                                </a> </li>
+                            <li class="nav-item"> <a href="<?= base_url('/categories/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+                                    <p>Crear Categorias (admin)</p>
+                                </a> </li>
+                        </ul>
 
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
-                        <p>
-                            Categorias
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item"> <a href="<?= base_url('/categories') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Explorar Categorias</p>
-                            </a> </li>
-                        <li class="nav-item"> <a href="<?= base_url('/categories/create') ?>" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Crear Categorias (admin)</p>
-                            </a> </li>
-                    </ul>
-
-                </li>
-
+                    </li>
+                <?php endif; ?>
                 <!--ACAAA LLEGUE -->
 
 
