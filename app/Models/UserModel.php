@@ -5,7 +5,8 @@ use CodeIgniter\Model;
 
 class UserModel extends Model {
     protected $table = 'usuarios';
-    protected $allowedFields = ['username', 'email', 'nombre', 'apellido', 'contrasenia'];
+    protected $allowedFields = ['APELLIDO', 'CONTRASENIA', 'EMAIL', 'FECHA_NACIMIENTO', 
+    'FOTO_PERFIL', 'ID_USUARIO', 'LINKEDIN', 'NACIONALIDAD', 'NOMBRE', 'TELEFONO'];
 
      // Método para obtener un usuario por su correo electrónico
      public function getUserByEmail($email)

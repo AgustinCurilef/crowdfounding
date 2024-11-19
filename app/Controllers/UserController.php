@@ -44,7 +44,8 @@ class UserController extends BaseController
         $data = ['title' => 'Mis Proyectos',
          'projects' => $projects, 
          'categories' => $categories,
-        'user_name' => $this->user['USERNAME'] ];
+        'user_name' => $this->user['USERNAME'],
+        'user' => $this->user];
 
         return view('estructura/header', $data)
             .view('estructura/navbar',$data)
