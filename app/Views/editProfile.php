@@ -4,7 +4,11 @@
             <!-- Sidebar con foto de perfil -->
             <div class="card">
                 <div class="card-body text-center">
-
+                    <div class="profile-image-container mb-3">
+                            <!-- Mostrar la foto de perfil actual -->
+                            <img src="<?= base_url('user/showImage/' . $user['ID_USUARIO']); ?>"
+                            class="rounded-circle profile-image" id="profileImagePreview">
+                    </div>
                 </div>
             </div>
         </div>

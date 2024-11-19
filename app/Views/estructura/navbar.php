@@ -44,7 +44,8 @@
                 </li>
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
-                <li class="user-body">
+                <li class="user-body"
+                >
                     <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> 
                 </li>
                 <!--end::Menu Body-->

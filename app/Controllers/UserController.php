@@ -23,7 +23,7 @@ class UserController extends BaseController
      
     {
      // Obtener el ID de usuario de la sesión
-        $data = ['title' => 'Home','user_name' => $this->user['USERNAME'] ];
+        $data = ['title' => 'Home','user_name' => $this->user['USERNAME']];
         return view('estructura/header', $data)
             .view('estructura/navbar',$data)
             .view('estructura/sidebar')
@@ -53,5 +53,21 @@ class UserController extends BaseController
             .view('editProfile', $data)
             .view('estructura/footer');
     }
+
+    public function showImage($idUsuario)
+    {
+        $userModel = new UserModel();
+        $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+
+        if ($imagenBlob) {
+            // Especificar el tipo MIME correcto para imágenes JPG
+            return $this->response->setHeader('Content-Type', 'image/jpeg')
+                                  ->setBody($imagenBlob); // Enviar la imagen al navegador
+        } else {
+            // Si no se encuentra la imagen, lanzar un error 404
+            throw new PageNotFoundException('Imagen no encontrada');
+        }
+    }
+    
     
 }

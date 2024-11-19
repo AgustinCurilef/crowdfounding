@@ -19,6 +19,8 @@ $routes->get('/inicio', 'ProjectController::listAllProjects');
 
 $routes->get('/editProfile', 'UserController::editProfile');
 
+$routes->get('/user/showImage/(:num)', 'UserController::showImage/$1');
+
 /*Proyectos */
 
 $routes->get('/myprojects', 'ProjectController::list');
