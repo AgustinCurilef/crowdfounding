@@ -22,6 +22,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
 
     <!--js notificaciones-->
     <!-- En tu header o footer -->

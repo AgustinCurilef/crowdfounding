@@ -1,7 +1,7 @@
 <main class="app-main">
     <div class="hold-transition sidebar-mini">
         <div class="wrapper">
-            <div class="content-wrapper">
+            <div>
                 <!-- Content Header -->
                 <section class="content-header">
                     <div class="container-fluid">

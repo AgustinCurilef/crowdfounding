@@ -68,15 +68,7 @@
     min-width: 120px;
 }
 
-@media (max-width: 768px) {
-    .content-wrapper {
-        padding: 10px;
-    }
-    
-    .card-body {
-        padding: 1rem;
-    }
-}
+
 
 /* ACA COMIENZAN LOS ESTILOS DEL LISTAR PROYECTO */
 /* Project Card Styles */
@@ -84,11 +76,7 @@
     transition: transform 0.2s ease-in-out;
     margin-bottom: 20px;
 }
-
-.project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
+/*  */
 
 .project-card .card-img-top {
     height: 200px;

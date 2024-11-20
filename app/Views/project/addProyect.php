@@ -1,7 +1,7 @@
 <main class="app-main">
     <div class="hold-transition sidebar-mini">
         <div class="wrapper">
-            <div class="content-wrapper">
+            <div>
                 <!-- Content Header -->
                 <section class="content-header">
                     <div class="container-fluid">
@@ -20,8 +20,8 @@
                             <div class="col-12">
                                 <div class="card project-form-card">
                                     <div class="card-body">
-                                          <!-- Mensajes flash de éxito o error -->
-                                          <?php if (session()->getFlashdata('success')): ?>
+                                        <!-- Mensajes flash de éxito o error -->
+                                        <?php if (session()->getFlashdata('success')): ?>
                                             <div class="alert alert-success">
                                                 <?= session()->getFlashdata('success'); ?>
                                             </div>
@@ -32,7 +32,7 @@
                                                 <?= session()->getFlashdata('error'); ?>
                                             </div>
                                         <?php endif; ?>
-                                        
+
                                         <form id="projectForm" action="saveProject" method="POST" enctype="multipart/form-data">
                                             <!-- Imagen de portada -->
                                             <div class="text-center mb-4">
@@ -48,68 +48,68 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-    <!-- Columna izquierda: Nombre, Presupuesto y Fecha -->
-    <div class="col-md-6">
-        <div class="form-group">
-            <label for="projectName">Nombre del Proyecto</label>
-            <input type="text" class="form-control" id="projectName" name="NOMBRE" placeholder="Nombre del Proyecto" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="budget">Presupuesto Requerido</label>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">$</span>
-                </div>
-                <input type="number" class="form-control" id="budget" name="PRESUPUESTO" placeholder="0.00" min="0" step="0.01" required>
-            </div>
-        </div>
+                                                <!-- Columna izquierda: Nombre, Presupuesto y Fecha -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="projectName">Nombre del Proyecto</label>
+                                                        <input type="text" class="form-control" id="projectName" name="NOMBRE" placeholder="Nombre del Proyecto" required>
+                                                    </div>
 
-        <div class="form-group">
-            <label for="deadline">Fecha límite</label>
-            <input type="datetime-local" class="form-control" id="deadline" name="FECHA_LIMITE" required>
-        </div>
-    </div>
-    
-    <!-- Columna derecha: Categorías -->
-    <div class="col-md-6">
-        <div class="form-group">
-            <label>Categorías</label>
-            <div class="categories-container border rounded p-3" style="max-height: 200px; overflow-y: auto;">
-                <div class="custom-control custom-checkbox mb-3 border-bottom pb-2">
-                    <input type="checkbox" 
-                           class="custom-control-input" 
-                           id="selectAllCategories">
-                    <label class="custom-control-label font-weight-bold" for="selectAllCategories">
-                        Seleccionar todas
-                    </label>
-                </div>
-                
-                <?php foreach ($categories as $category) : ?>
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox" 
-                               class="custom-control-input category-checkbox" 
-                               id="category_<?= esc($category->ID_CATEGORIA) ?>" 
-                               name="ID_CATEGORIA[]" 
-                               value="<?= esc($category->ID_CATEGORIA) ?>"
-                               <?= isset($project->ID_CATEGORIA) && $category->ID_CATEGORIA == $project->ID_CATEGORIA ? 'checked' : '' ?>>
-                        <label class="custom-control-label" for="category_<?= esc($category->ID_CATEGORIA) ?>">
-                            <?= esc($category->NOMBRE) ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <small class="text-muted mt-1">Seleccionadas: <span id="selectedCount">0</span> categorías</small>
-        </div>
-    </div>
+                                                    <div class="form-group">
+                                                        <label for="budget">Presupuesto Requerido</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span>
+                                                            </div>
+                                                            <input type="number" class="form-control" id="budget" name="PRESUPUESTO" placeholder="0.00" min="0" step="0.01" required>
+                                                        </div>
+                                                    </div>
 
-    <!-- El resto del formulario permanece igual -->
-    <div class="col-12">
-        <div class="form-group">
-            <label for="objective">Objetivo / Impacto esperado</label>
-            <input type="text" class="form-control" id="objective" name="OBJETIVO" placeholder="Describe el objetivo principal del proyecto" required>
-        </div>
-    </div>
+                                                    <div class="form-group">
+                                                        <label for="deadline">Fecha límite</label>
+                                                        <input type="datetime-local" class="form-control" id="deadline" name="FECHA_LIMITE" required>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Columna derecha: Categorías -->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Categorías</label>
+                                                        <div class="categories-container border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                                                            <div class="custom-control custom-checkbox mb-3 border-bottom pb-2">
+                                                                <input type="checkbox"
+                                                                    class="custom-control-input"
+                                                                    id="selectAllCategories">
+                                                                <label class="custom-control-label font-weight-bold" for="selectAllCategories">
+                                                                    Seleccionar todas
+                                                                </label>
+                                                            </div>
+
+                                                            <?php foreach ($categories as $category) : ?>
+                                                                <div class="custom-control custom-checkbox mb-2">
+                                                                    <input type="checkbox"
+                                                                        class="custom-control-input category-checkbox"
+                                                                        id="category_<?= esc($category->ID_CATEGORIA) ?>"
+                                                                        name="ID_CATEGORIA[]"
+                                                                        value="<?= esc($category->ID_CATEGORIA) ?>"
+                                                                        <?= isset($project->ID_CATEGORIA) && $category->ID_CATEGORIA == $project->ID_CATEGORIA ? 'checked' : '' ?>>
+                                                                    <label class="custom-control-label" for="category_<?= esc($category->ID_CATEGORIA) ?>">
+                                                                        <?= esc($category->NOMBRE) ?>
+                                                                    </label>
+                                                                </div>
+                                                            <?php endforeach; ?>
+                                                        </div>
+                                                        <small class="text-muted mt-1">Seleccionadas: <span id="selectedCount">0</span> categorías</small>
+                                                    </div>
+                                                </div>
+
+                                                <!-- El resto del formulario permanece igual -->
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="objective">Objetivo / Impacto esperado</label>
+                                                        <input type="text" class="form-control" id="objective" name="OBJETIVO" placeholder="Describe el objetivo principal del proyecto" required>
+                                                    </div>
+                                                </div>
 
                                                 <div class="col-12">
                                                     <div class="form-group">
@@ -178,50 +178,50 @@
 </main>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Preview de imagen
-    const imageUpload = document.getElementById('imageUpload');
-    const imagePreview = document.getElementById('imagePreview');
-    const uploadPreviewIcon = document.querySelector('.upload-preview i');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Preview de imagen
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadPreviewIcon = document.querySelector('.upload-preview i');
 
-    imageUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block';
-                uploadPreviewIcon.style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        }
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadPreviewIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Manejo del formulario
+        const projectForm = document.getElementById('projectForm');
+        projectForm.addEventListener('submit', function(e) {
+            // Validación (opcional)
+            const projectName = document.getElementById('projectName').value;
+            if (!projectName) {
+                alert('Por favor, ingrese el nombre del proyecto.');
+                e.preventDefault(); // Previene el envío si no hay nombre
+                return; // Salimos del evento
+            }
+
+            // Si la validación es exitosa, el formulario se enviará
+            // Puedes realizar cualquier otra validación necesaria aquí
+
+            // Dejar que el formulario se envíe normalmente
+        });
+
+        // Botón cancelar
+        const cancelButton = document.getElementById('cancelButton');
+        cancelButton.addEventListener('click', function() {
+            if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
+                projectForm.reset();
+                imagePreview.style.display = 'none';
+                uploadPreviewIcon.style.display = 'block';
+            }
+        });
     });
-
-  // Manejo del formulario
-const projectForm = document.getElementById('projectForm');
-projectForm.addEventListener('submit', function(e) {
-    // Validación (opcional)
-    const projectName = document.getElementById('projectName').value;
-    if (!projectName) {
-        alert('Por favor, ingrese el nombre del proyecto.');
-        e.preventDefault(); // Previene el envío si no hay nombre
-        return; // Salimos del evento
-    }
-
-    // Si la validación es exitosa, el formulario se enviará
-    // Puedes realizar cualquier otra validación necesaria aquí
-
-    // Dejar que el formulario se envíe normalmente
-});
-
-// Botón cancelar
-const cancelButton = document.getElementById('cancelButton');
-cancelButton.addEventListener('click', function() {
-    if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
-        projectForm.reset();
-        imagePreview.style.display = 'none';
-        uploadPreviewIcon.style.display = 'block';
-    }
-});
-});
 </script>
