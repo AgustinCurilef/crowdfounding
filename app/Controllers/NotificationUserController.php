@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\NotificationModel;
 use App\Models\NotificationUserModel;
-use App\Models\UserModel; 
+use App\Models\UserModel;
 
 
 class NotificationUserController extends BaseController
@@ -23,35 +25,23 @@ class NotificationUserController extends BaseController
         $this->userModel = new UserModel(); // Inicializamos el modelo
     }
 
-    public function createInvestmentNotification($projectData, $amount)
+    public function createInvestmentNotification($projectData)
     {
         // Primero obtenemos el ID_USUARIO a partir del USERNAME
         $usuario = $this->userModel->where('USERNAME', $projectData->USERNAME_USUARIO)
-                                 ->first();
-        
+            ->first();
+
         if (!$usuario) {
             // Si no encontramos el usuario, registramos el error y retornamos
             log_message('error', 'No se encontró el usuario con USERNAME: ' . $projectData->USERNAME_USUARIO);
             return false;
         }
 
-        // Crear la notificación
-        $notificationData = [
-            'NOMBRE' => 'Nueva Inversión',
-            'DESCRIPCION' => "Has recibido una nueva inversión de $" . $amount . " en tu proyecto '" . $projectData->NOMBRE . "'"
-        ];
 
-        $notificationId = $this->notificationModel->insert($notificationData);
-
-        // Asignar la notificación al dueño del proyecto usando su ID_USUARIO
-        if ($notificationId) {
-            $this->notificationUserModel->addUserNotification(
-            $notificationId,
+        $notification = $this->notificationUserModel->addUserNotification(
+            2,
             $usuario['ID_USUARIO'] // Usamos el índice en lugar de la notación de objeto
-            );
-        }
-
-        return $notificationId;
+        );
     }
 
     public function index()
@@ -61,7 +51,7 @@ class NotificationUserController extends BaseController
         }
 
         $notifications = $this->notificationUserModel->getUserNotifications($this->user['ID_USUARIO']);
-        
+
         $data = [
             'title' => 'Mis Notificaciones',
             'notifications' => $notifications,
@@ -86,36 +76,36 @@ class NotificationUserController extends BaseController
     }
 
     public function markAllAsRead()
-{
-    $NotificationUserModel = new NotificationUserModel();
+    {
+        $NotificationUserModel = new NotificationUserModel();
 
 
-    // Obtiene todas las notificaciones del usuario que no están leídas
-    $notifications = $NotificationUserModel->where('ID_USUARIO', $this->user['ID_USUARIO'])
-                                           ->where('ESTADO', 0)
-                                           ->findAll();
+        // Obtiene todas las notificaciones del usuario que no están leídas
+        $notifications = $NotificationUserModel->where('ID_USUARIO', $this->user['ID_USUARIO'])
+            ->where('ESTADO', 0)
+            ->findAll();
 
-    $errors = [];
+        $errors = [];
 
-    // Marca cada notificación como leída usando el método del modelo
-    foreach ($notifications as $notification) {
-        $result = $NotificationUserModel->markAsRead($notification['ID_NOTIFICACION'], $this->user['ID_USUARIO']);
-        if (!$result) {
-            $errors[] = $notification['ID_NOTIFICACION']; // Guarda el ID si no se pudo actualizar
+        // Marca cada notificación como leída usando el método del modelo
+        foreach ($notifications as $notification) {
+            $result = $NotificationUserModel->markAsRead($notification['ID_NOTIFICACION'], $this->user['ID_USUARIO']);
+            if (!$result) {
+                $errors[] = $notification['ID_NOTIFICACION']; // Guarda el ID si no se pudo actualizar
+            }
         }
-    }
 
-    // Respuesta según el éxito o error
-    if (empty($errors)) {
-        return $this->response->setJSON(['status' => 'success']);
-    }
+        // Respuesta según el éxito o error
+        if (empty($errors)) {
+            return $this->response->setJSON(['status' => 'success']);
+        }
 
-    return $this->response->setJSON([
-        'status' => 'error',
-        'message' => 'Algunas notificaciones no pudieron ser marcadas como leídas.',
-        'errors' => $errors
-    ]);
-}
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Algunas notificaciones no pudieron ser marcadas como leídas.',
+            'errors' => $errors
+        ]);
+    }
 
 
     public function recent()
