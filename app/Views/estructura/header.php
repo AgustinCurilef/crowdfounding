@@ -19,16 +19,17 @@
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/adminlte.css'); ?>"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/explore.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
+
 
     <!--js notificaciones-->
     <!-- En tu header o footer -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="<?= base_url('template/dist/js/notifications.js') ?>"></script>
+
 
 
 

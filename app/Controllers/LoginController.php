@@ -21,15 +21,12 @@ class LoginController extends BaseController
 
         $email = $this->request->getPost('email');  // Obtener el email desde el formulario
         $password = $this->request->getPost('password');  // Obtener la contraseña desde el formulario
-        log_message('debug', 'Contraseña: ' . print_r($password, true));
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        log_message('debug', 'Contraseña: ' . print_r($hashedPassword, true));
 
 
         // Crear una instancia del modelo UserModel
         $userModel = new UserModel();
         $user = $userModel->getUserByEmail($email);  // Obtener el usuario por email
-        log_message('debug', 'Usuario obtenido: ' . print_r($user, true));
 
         if ($user && password_verify($password, $user['CONTRASENIA'])) {
             // Si el usuario existe y la contraseña es correcta (asegúrate de usar `password_verify`)

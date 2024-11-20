@@ -22,43 +22,43 @@
                 </a> </div> <!-- /.register-logo -->
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="register-box-msg">¡ Regístrese por favor !</p>
+                <p class="register-box-msg">¡ Register now !</p>
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger">
                         <?= session()->getFlashdata('error') ?>
                     </div>
                 <?php endif; ?>
                 <form id="registerForm" action="<?= base_url('/register') ?>" method="post">
-                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Usuario" name="username" required>
+                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Username" name="username" required>
                         <div class="input-group-text"> <span class="bi bi-person"></span> </div>
                     </div>
-                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Nombre" name="nombre" required>
+                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="First Name" name="nombre" required>
                         <div class="input-group-text"> <span class="bi bi-person"></span> </div>
                     </div>
-                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Apellido" name="apellido" required>
+                    <div class="input-group mb-3"> <input type="text" class="form-control" placeholder="Last Name" name="apellido" required>
                         <div class="input-group-text"> <span class="bi bi-person"></span> </div>
                     </div>
-                    <div class="input-group mb-3"> <input type="email" class="form-control" placeholder="Correo" name="correo" required>
+                    <div class="input-group mb-3"> <input type="email" class="form-control" placeholder="Email" name="correo" required>
                         <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
                     </div>
-                    <div class="input-group mb-3"> <input type="password" class="form-control" placeholder="Contraseña" name="contrasenia" required>
+                    <div class="input-group mb-3"> <input type="password" class="form-control" placeholder="Password" name="contrasenia" required>
                         <div class="input-group-text"> <span class="bi bi-lock-fill"></span> </div>
                     </div>
-                    <div class="input-group mb-3"> <input type="password" class="form-control" placeholder="Repita su contraseña" name="contrasenia2" required>
+                    <div class="input-group mb-3"> <input type="password" class="form-control" placeholder="Repeat your password" name="contrasenia2" required>
                         <div class="input-group-text"> <span class="bi bi-lock-fill"></span> </div>
                     </div>
                     <div class="row">
                         <div class="col-8">
                             <div class="form-check"> <input class="form-check-input" type="checkbox" value="1" id="terminosCheck" name="terminos" required> 
-                                <label class="form-check-label" for="terminosCheck"> Acepto los <a href="#">terminos</a> </label>
+                                <label class="form-check-label" for="terminosCheck"> Accept the <a href="#">terms</a> </label>
                             </div>
                         </div> <!-- /.col -->
                         <div class="col-4">
-                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Registrarse</button> </div>
+                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Register</button> </div>
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
                 </form>
-                <p class="mb-0"> <a href="<?= base_url("/login")?>" class="text-center"> Ya tengo una cuenta de usuario </a> </p>
+                <p class="mb-0"> <a href="<?= base_url("/login")?>" class="text-center">I already have an account</a> </p>
             </div> <!-- /.register-card-body -->
         </div>
     </div> <!-- /.register-box -->
