@@ -4,17 +4,16 @@
                     <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
-                    <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
+                     <!--<li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> end::Navbar Search-->
                 
                          <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
                     <!-- En tu navbar -->
                     <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">                            <i class="bi bi-bell-fill"></i>
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">                            <i class="bi bi-bell-fill"></i>
                             <span class="navbar-badge badge text-bg-warning" id="notification-count">
-                             <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
-  </span>
+                                <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
+                            </span>
                         </a>
-                      
                         <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
                             
                             <div class="dropdown-divider"></div>
@@ -37,14 +36,14 @@
         <!--begin::User Menu Dropdown-->
         <li class="nav-item dropdown user-menu"> 
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> 
-                <img src="../../dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image">
+                <img src="<?= base_url('user/showImage/' . session()->get('ID_USUARIO')); ?>" class="user-image rounded-circle shadow" alt="User Image">
                 <!-- Aquí se reemplaza 'Alexander Pierce' con la variable PHP -->
                 <span class="d-none d-md-inline"><?= esc($user_name) ?></span> 
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
-                    <img src="../../dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
+                <img src="<?= base_url('user/showImage/' . session()->get('ID_USUARIO')); ?>" class="rounded-circle shadow" alt="User Image">
                     <p>
                         <!-- Aquí también utilizas la variable para mostrar el nombre -->
                         <?= esc($user_name) ?> - Web Developer
