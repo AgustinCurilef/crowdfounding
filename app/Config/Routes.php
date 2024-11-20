@@ -69,6 +69,9 @@ $routes->post('notification/update/(:num)', 'NotificationController::update/$1')
 
 $routes->get('notification/delete/(:num)', 'NotificationController::delete/$1');
 
+$routes->post('notification/mark-read', 'NotificationUserController::markAllAsRead');
+
+
 /*Notificaciones Usuario*/
 
 $routes->group('user/notifications', ['namespace' => 'App\Controllers'], function($routes) {

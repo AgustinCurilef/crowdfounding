@@ -37,7 +37,7 @@ class NotificationUserModel extends Model
     {
         return $this->where('ID_NOTIFICACION', $notificationId)
                     ->where('ID_USUARIO', $userId)
-                    ->set(['ESTADO' => 'LEIDO'])
+                    ->set(['ESTADO' => 1])
                     ->update();
     }
 

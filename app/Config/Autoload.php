@@ -94,6 +94,8 @@ class Autoload extends AutoloadConfig
     public $helpers = [
         'pagination',
         'form',
-        'url' // Si estás usando un helper para paginación, por ejemplo.
+        'url',
+        'global'//variable global de notificaciones
+ // Si estás usando un helper para paginación, por ejemplo.
     ];
 }

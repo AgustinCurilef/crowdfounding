@@ -9,12 +9,14 @@
                          <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
                     <!-- En tu navbar -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning" id="notification-count">0</span>
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">                            <i class="bi bi-bell-fill"></i>
+                            <span class="navbar-badge badge text-bg-warning" id="notification-count">
+                             <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
+  </span>
                         </a>
+                      
                         <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
-                            <span class="dropdown-item dropdown-header" id="notification-header">0 Notificaciones</span>
+                            
                             <div class="dropdown-divider"></div>
                             <div id="notification-list">
                                 <!-- Las notificaciones se cargarán aquí -->
@@ -59,3 +61,27 @@
                 </ul> --end::End Navbar Links-->
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
+
+        <script>
+    function markNotificationsAsRead() {
+        fetch('<?= base_url('notification/mark-read') ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest' // Para identificar que es una solicitud AJAX
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Notificaciones marcadas como leídas');
+                // Opcional: Actualizar el contador en la interfaz
+                document.getElementById('notification-count').textContent = '0';
+            } else {
+                console.error('Error al marcar notificaciones como leídas:', data.message);
+            }
+        })
+        .catch(error => console.error('Error en la solicitud:', error));
+    }
+</script>

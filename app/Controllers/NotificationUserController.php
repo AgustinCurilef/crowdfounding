@@ -85,15 +85,38 @@ class NotificationUserController extends BaseController
         return $this->response->setJSON(['count' => $count]);
     }
 
-    public function markAsRead($id)
-    {
-        if (!session()->get('ID_USUARIO')) {
-            return $this->response->setJSON(['success' => false]);
-        }
+    public function markAllAsRead()
+{
+    $NotificationUserModel = new NotificationUserModel();
 
-        $success = $this->notificationUserModel->markAsRead($id, $this->user['ID_USUARIO']);
-        return $this->response->setJSON(['success' => $success]);
+
+    // Obtiene todas las notificaciones del usuario que no están leídas
+    $notifications = $NotificationUserModel->where('ID_USUARIO', $this->user['ID_USUARIO'])
+                                           ->where('ESTADO', 0)
+                                           ->findAll();
+
+    $errors = [];
+
+    // Marca cada notificación como leída usando el método del modelo
+    foreach ($notifications as $notification) {
+        $result = $NotificationUserModel->markAsRead($notification['ID_NOTIFICACION'], $this->user['ID_USUARIO']);
+        if (!$result) {
+            $errors[] = $notification['ID_NOTIFICACION']; // Guarda el ID si no se pudo actualizar
+        }
     }
+
+    // Respuesta según el éxito o error
+    if (empty($errors)) {
+        return $this->response->setJSON(['status' => 'success']);
+    }
+
+    return $this->response->setJSON([
+        'status' => 'error',
+        'message' => 'Algunas notificaciones no pudieron ser marcadas como leídas.',
+        'errors' => $errors
+    ]);
+}
+
 
     public function recent()
     {
