@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Models;
+
 use CodeIgniter\Model;
 
-class UserModel extends Model {
+class UserModel extends Model
+{
     protected $table = 'usuarios';
+    protected $primaryKey = 'ID_USUARIO';
     protected $primaryKey = 'id_usuario';
-    protected $allowedFields = ['username', 'email', 'nombre', 'apellido', 'contrasenia', 'fecha_nacimiento', 'nacionalidad', 'telefono', 'linkedin', 'foto_perfil'];
+    protected $allowedFields = ['username', 'email', 'nombre', 'apellido', 'contrasenia', 'rol', 'fecha_nacimiento', 'nacionalidad', 'telefono', 'linkedin', 'foto_perfil'];
 
     // Método para obtener un usuario por su correo electrónico
     public function getUserByEmail($email)
@@ -44,4 +47,3 @@ class UserModel extends Model {
         return $query->countAllResults() > 0;
     }
 }
-

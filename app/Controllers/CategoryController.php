@@ -15,7 +15,6 @@ class CategoryController extends BaseController
     }
     public function index(): string
     {
-        // Cambiamos el index para que muestre el listado
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Lista de Categorías',
@@ -34,7 +33,6 @@ class CategoryController extends BaseController
 
     public function create(): string
     {
-        // Movemos la funcionalidad de agregar a un nuevo método
         $data = ['title' => 'Agregar Categoría','user_name' => $this->user['USERNAME'] ];
         return view('estructura/header', $data)
             . view('estructura/navbar',$data)
@@ -43,7 +41,6 @@ class CategoryController extends BaseController
             . view('estructura/footer');
     }
 
-    // El resto de métodos permanecen igual
     public function save()
     {
         $categoryModel = new CategoryModel();

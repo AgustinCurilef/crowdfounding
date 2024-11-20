@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
+use App\Models\NotificationUserModel;
 
 
 class ProjectController extends BaseController
@@ -57,6 +58,9 @@ class ProjectController extends BaseController
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProject($this->user['USERNAME']);
         $categories = $categoryModel->findAll();
+        $NotificationUserModel = new NotificationUserModel();
+        $amountNotification = $NotificationUserModel->getUnreadCount($this->user['ID_USUARIO']);
+       
 
         $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
         $perPage = 6; // Definimos cuántos ítems por página
@@ -73,6 +77,7 @@ class ProjectController extends BaseController
             'currentPage' => $currentPage, // Pasa la página actual
             'totalPages' => $paginatedProjects['totalPages'], // Total de páginas
             'totalItems' => $paginatedProjects['totalItems'], // Total de ítems
+            'amountNotification' => $amountNotification
         ];
 
         return view('estructura/header', $data)

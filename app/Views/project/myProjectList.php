@@ -33,8 +33,8 @@
                                 <label>Estado</label>
                                 <select class="form-control select2" id="statusFilter" onchange="filterProjects()">
                                     <option value="todos">Todos</option>
-                                    <option value="0">Publico</option>
-                                    <option value="1">Oculto</option>
+                                    <option value="1">Publico</option>
+                                    <option value="0">Oculto</option>
 
                                 </select>
                             </div>

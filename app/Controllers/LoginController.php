@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\UserModel;
 
 class LoginController extends BaseController
@@ -9,6 +10,10 @@ class LoginController extends BaseController
     {
         $data = ['title' => 'Iniciar Sesión'];
         return view('session/login', $data);
+    }
+    public function unauthorized()
+    {
+        return view('session/unauthorized');
     }
 
     public function authenticate()
@@ -25,7 +30,7 @@ class LoginController extends BaseController
 
         if ($user && password_verify($password, $user['CONTRASENIA'])) {
             // Si el usuario existe y la contraseña es correcta (asegúrate de usar `password_verify`)
-            
+
             // Aquí puedes guardar la sesión del usuario si usas sesiones
             session()->set($user);  // Usar el nombre correcto de la columna
             return redirect()->to('/inicio');  // Redirigir a la página de inicio
@@ -34,7 +39,4 @@ class LoginController extends BaseController
             return redirect()->to('/login')->with('error', 'Credenciales incorrectas');
         }
     }
-
-
-
 }

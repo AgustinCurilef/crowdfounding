@@ -27,7 +27,14 @@
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar Categoría</button>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="<?= base_url('notification') ?>" class="btn btn-secondary me-md-2">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                Guardar Categoria
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
