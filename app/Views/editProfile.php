@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="nacionalidad" class="form-label">Nationality</label>
-                                    <select name="nacionalidad" class="form-control" required>
+                                    <select name="nacionalidad" class="form-control">
                                         <option value="">Select your nationality</option>
                                         <option value="Argentina" <?= ($user['NACIONALIDAD'] == 'Argentina') ? 'selected' : '' ?>>Argentina</option>
                                         <option value="Chile" <?= ($user['NACIONALIDAD'] == 'Chile') ? 'selected' : '' ?>>Chile</option>
@@ -81,8 +81,12 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="<?= base_url('/inicio') ?>" class="btn btn-secondary me-md-2">Cancel</a>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
-                        </div>
                     </form>
+                            <!-- Formulario para eliminar el perfil -->
+                            <form action="<?= base_url('user/delete/') . $user['ID_USUARIO']?>" method="POST" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
+                                <button type="submit" class="btn btn-danger">Delete Profile</button>
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>

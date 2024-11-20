@@ -136,5 +136,16 @@ class UserController extends BaseController
         else {
             return redirect()->back()->withInput()->with('error', 'No se pudo actualizar');
         };
-    }      
+    }
+
+    public function delete($id)
+    {
+        $userModel = new UserModel();;
+        
+        if ($userModel->delete($id)) {
+            return redirect()->to('/')->with('success', 'Usuario eliminado correctamente.');
+        } else {
+            return redirect()->to('/editProfile')->with('error', 'No se pudo eliminar el usuario.');
+        }
+    }
 }

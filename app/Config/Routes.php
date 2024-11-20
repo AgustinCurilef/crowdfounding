@@ -47,6 +47,8 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->post('user/saveChanges', 'UserController::saveChanges');
 
+    $routes->post('/user/delete/(:num)', 'UserController::delete/$1');
+
     /*Proyectos */
 
     $routes->get('/myprojects', 'ProjectController::list');
