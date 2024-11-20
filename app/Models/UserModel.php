@@ -5,6 +5,7 @@ use CodeIgniter\Model;
 
 class UserModel extends Model {
     protected $table = 'usuarios';
+    protected $primaryKey = 'id_usuario';
     protected $allowedFields = ['username', 'email', 'nombre', 'apellido', 'contrasenia', 'fecha_nacimiento', 'nacionalidad', 'telefono', 'linkedin', 'foto_perfil'];
 
     // Método para obtener un usuario por su correo electrónico
@@ -21,7 +22,7 @@ class UserModel extends Model {
     {
         $builder = $this->builder();
         $builder->select('foto_perfil');
-        $builder->where('ID_USUARIO', $idUsuario);
+        $builder->where('id_usuario', $idUsuario);
         $query = $builder->get();
 
         if ($query->getNumRows() > 0) {
@@ -30,6 +31,17 @@ class UserModel extends Model {
         }
 
         return null; // Si no se encuentra la imagen
+    }
+
+    public function usernameExists(string $username, int $excludeId = null): bool
+    {
+        $query = $this->where('username', $username);
+
+        if ($excludeId !== null) {
+            $query->where('id_usuario !=', $excludeId);
+        }
+
+        return $query->countAllResults() > 0;
     }
 }
 

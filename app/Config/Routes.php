@@ -21,6 +21,8 @@ $routes->get('/editProfile', 'UserController::editProfile');
 
 $routes->get('/user/showImage/(:num)', 'UserController::showImage/$1');
 
+$routes->post('user/saveChanges', 'UserController::saveChanges');
+
 /*Proyectos */
 
 $routes->get('/myprojects', 'ProjectController::list');
