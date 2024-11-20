@@ -67,8 +67,8 @@
                         <li class="nav-item"> <a href="<?= base_url('addProyect') ?>" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                 <p>Crear Proyectos</p>
                             </a> </li>
-                        <li class="nav-item"> <a href="./index3.html" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v3</p>
+                        <li class="nav-item"> <a href="<?= base_url('inicio') ?>" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <p>Explorar Proyectos </p>
                             </a> </li>
                     </ul>
 

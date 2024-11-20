@@ -230,7 +230,7 @@ class ProjectModel extends Model
             $updated = $this->update($id, $data);
 
             if ($updated) {
-                // Eliminar las categorías actuales asociadas con el proyecto
+                // Eliminar las categorías actuales asociadas con el proyecto y las imagenes
                 $this->db->table('proyecto_categoria')->where('ID_PROYECTO', $id)->delete();
 
                 // Verificar si 'CATEGORIAS' existe en los datos y es un arreglo
@@ -246,6 +246,19 @@ class ProjectModel extends Model
 
                     // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
                     $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                }
+                // Insertar la imagen en la tabla 'imagenes_proyecto'
+                if (!empty($data['ARCHIVO'])) {
+                    // Preparar los datos para la tabla 'imagenes_proyecto'
+                    $this->db->table('imagenes_proyecto')->where('ID_PROYECTO', $id)->delete();
+                    $imageDataInsert = [
+                        'NOMBRE_PROYECTO' => $data['NOMBRE'],
+                        'ID_PROYECTO' => $id,
+                        'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
+                    ];
+
+                    // Insertar la imagen en la tabla 'imagenes_proyecto'
+                    $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
                 }
 
                 // Si la actualización fue exitosa, retornar true

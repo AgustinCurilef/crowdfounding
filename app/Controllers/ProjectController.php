@@ -60,7 +60,7 @@ class ProjectController extends BaseController
         $categories = $categoryModel->findAll();
         $NotificationUserModel = new NotificationUserModel();
         $amountNotification = $NotificationUserModel->getUnreadCount($this->user['ID_USUARIO']);
-       
+
 
         $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
         $perPage = 6; // Definimos cuántos ítems por página
@@ -135,7 +135,6 @@ class ProjectController extends BaseController
     public function saveProject()
     {
         // Configuración para la subida del archivo
-
         $validationRule = [
             'portada' => [
                 'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
@@ -166,7 +165,6 @@ class ProjectController extends BaseController
             // Generar un nombre único para la imagen y moverla a la carpeta de subida
             $imageName = $file->getRandomName();
             $file->move(WRITEPATH . 'uploads', $imageName);
-            // Ya no necesitas usar getTempName()
             // Leer el contenido binario del archivo
             $imagePath = WRITEPATH . 'uploads/' . $imageName;
             $imageData = file_get_contents($imagePath);
@@ -237,6 +235,48 @@ class ProjectController extends BaseController
 
     public function updateProject($id)
     {
+        // Configuración para la subida del archivo
+        $validationRule = [
+            'portada' => [
+                'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Debes seleccionar una imagen de portada.',
+                    'is_image' => 'El archivo debe ser una imagen válida.',
+                    'max_size' => 'El tamaño máximo permitido es de 2 MB.',
+                    'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
+                ]
+            ]
+        ];
+
+        // Inicializa $imageData como null por defecto
+        $imageData = null;
+
+        // Validar la imagen si se ha cargado
+        $file = $this->request->getFile('portada');
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Si la imagen fue subida, validar y procesarla
+            if (!$this->validate($validationRule)) {
+                log_message('debug', 'no pasó la validación de las reglas: ' . $file->getMimeType()); // Tipo MIME
+                return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
+            }
+
+            // Generar un nombre único para la imagen y moverla a la carpeta de subida
+            $imageName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads', $imageName);
+
+            // Leer el contenido binario del archivo
+            $imagePath = WRITEPATH . 'uploads/' . $imageName;
+            $imageData = file_get_contents($imagePath);
+
+            // Verificar si la imagen se cargó correctamente
+            if ($imageData === false) {
+                log_message('error', 'Error al cargar la imagen.');
+            } else {
+                log_message('debug', 'Imagen cargada correctamente, tamaño: ' . strlen($imageData) . ' bytes');
+            }
+        }
+
         // Recogemos los datos del formulario
         $data = [
             'ID_PROYECTO' => $id,
@@ -249,14 +289,12 @@ class ProjectController extends BaseController
             'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
-            'ESTADO' => $this->request->getPost('ESTADO')
-
+            'ESTADO' => $this->request->getPost('ESTADO'),
+            'ARCHIVO' => $imageData // Puede ser null si no se subió imagen
         ];
-        log_message('debug', 'controlador: ' . print_r($data, true));
 
         $projectModel = new ProjectModel();
         if ($projectModel->updateProject($data)) {
-            log_message('debug', 'supuestamente guarda.');
             return redirect()->to('/myprojects')->with('success', 'Proyecto guardado exitosamente.');
         } else {
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto.');
