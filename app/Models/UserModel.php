@@ -14,7 +14,7 @@ class UserModel extends Model
     public function getUserByEmail($email)
     {
         return $this->db->table('usuarios')
-                        ->select('ID_USUARIO, USERNAME, EMAIL, NOMBRE, APELLIDO, CONTRASENIA, FECHA_NACIMIENTO, NACIONALIDAD, LINKEDIN, TELEFONO') // Excluye FOTO_PERFIL
+                        ->select('ID_USUARIO, USERNAME, EMAIL, NOMBRE, APELLIDO, CONTRASENIA, FECHA_NACIMIENTO, NACIONALIDAD, LINKEDIN, TELEFONO, ROL') // Excluye FOTO_PERFIL
                         ->where('email', $email)
                         ->get()
                         ->getRowArray();

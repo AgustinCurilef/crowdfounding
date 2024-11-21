@@ -10,7 +10,7 @@
                     <!-- En tu navbar -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">                            <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning" id="notification-count">
+                            <span class="navbar-badge badge text-bg-warning bi bi-bell-fill" id="notification-count">
                                 <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
                             </span>
                         </a>
@@ -51,9 +51,8 @@
                 </li>
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
-                <li class="user-body"
-                >
-                    <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> 
+                <li class="user-body">
+                    <a href="<?= base_url('/logout') ?>" class="btn btn-default btn-flat float-end">Sign out</a> 
                 </li>
                 <!--end::Menu Body-->
             </ul>
