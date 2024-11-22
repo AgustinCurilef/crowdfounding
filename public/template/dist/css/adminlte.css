@@ -14456,6 +14456,15 @@ html.maximized-card {
   --lte-card-variant-color-rgb: 255, 255, 255;
 }
 
+.card-personalized,
+.bg-primary,
+.text-bg-primary {
+  --lte-card-variant-bg: #4A4B4A;
+  --lte-card-variant-bg-rgb: 13, 110, 253;
+  --lte-card-variant-color: #fff;
+  --lte-card-variant-color-rgb: 255, 255, 255;
+}
+
 .card-secondary,
 .bg-secondary,
 .text-bg-secondary {

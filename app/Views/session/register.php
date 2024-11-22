@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous"><!--end::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="<?= base_url('template/dist/css/adminlte.css') ?>"><!--end::Required Plugin(AdminLTE)-->
 </head> <!--end::Head-->
-<body class="register-page bg-body-secondary">
+<body class="register-page" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <div class="register-box">
-    <div class="card card-outline card-primary">
+    <div class="card card-outline card-personalized">
         <div class="card-header">
-             <a href="<?= base_url('template/dist/pages/index2.html') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+             <a href="<?= base_url('/') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                     <h1 class="mb-0"> <b>Fund4Futures</b>
                     </h1>
                 </a> </div> <!-- /.register-logo -->

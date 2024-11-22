@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="<?= base_url('template/dist/css/adminlte.css') ?>"><!--end::Required Plugin(AdminLTE)-->
 </head> <!--end::Head--> <!--begin::Body-->
 
-<body class="login-page bg-body-secondary">
+<body class="login-page" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <div class="login-box">
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-personalized">
             <div class="card-header"> 
-                <a href="<?= base_url('template/dist/pages/index2.html') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+                <a href="<?= base_url('/') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                     <h1 class="mb-0"> <b>Fund4Futures</b></h1>
                 </a> 
             </div>
