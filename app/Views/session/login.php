@@ -24,7 +24,7 @@
                 </a> 
             </div>
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">Inicia sesión</p>
                 <form action="<?= base_url('login/authenticate') ?>" method="post">
     <div class="input-group mb-1">
         <div class="form-floating">
@@ -38,7 +38,7 @@
     <div class="input-group mb-1">
         <div class="form-floating">
             <input id="loginPassword" type="password" class="form-control" name="password" placeholder="">
-            <label for="loginPassword">Password</label>
+            <label for="loginPassword">Contraseña</label>
         </div>
         <div class="input-group-text">
             <span class="bi bi-lock-fill"></span>
@@ -49,26 +49,19 @@
         <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
 
-    <div class="row">
+    <div class="row" style="padding-top: 10px;">
         <div class="col-8">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Remember Me
-                </label>
-            </div>
+                <p class="mb-0"> <a href="register.html" class="text-center">
+                        <a href="<?= base_url('/register') ?>">Crear cuenta de usuario</a>
         </div>
         <div class="col-4">
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
             </div>
         </div>
     </div>
 </form>
-                <p class="mb-1"> <a href="forgot-password.html">I forgot my password</a> </p>
-                <p class="mb-0"> <a href="register.html" class="text-center">
-                        <a href="<?= base_url('/register') ?>">Register a new membership</a></li>
-
+               
                         </div> <!-- /.login-card-body -->
         </div>
     </div> <!-- /.login-box --> <!--begin::Third Party Plugin(OverlayScrollbars)-->
