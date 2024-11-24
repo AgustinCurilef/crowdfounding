@@ -74,20 +74,11 @@ class UserController extends BaseController
     
     public function saveChanges()
     {
-        $rules = [
-            'file' => [
-                'uploaded[file]',  // Verifica si el archivo fue subido
-                'max_size[file,2048]',  // Tamaño máximo de 2 MB (2048 KB)
-                'is_image[file]',  // Verifica si el archivo es una imagen (opcional)
-                'mime_in[file,image/jpg,image/jpeg,image/png]'  // Verifica el tipo de archivo
-            ]
-        ];
-
         $username = $this->request->getPost('username');
-        $userId = $this->request->getPost('id_usuario'); // Suponiendo que el ID de usuario está en la sesión
+        $userId = $this->request->getPost('id_usuario'); 
         $file = $this->request->getFile('foto_perfil');
         $userModel = new UserModel();
-
+    
         $userData = [
             'username' => $this->request->getPost('username'),
             'nombre' => $this->request->getPost('nombre'),
@@ -97,46 +88,34 @@ class UserController extends BaseController
             'telefono' => $this->request->getPost('telefono'),
             'linkedin' => $this->request->getPost('linkedin')
         ];
-
+    
         // Username ya existe, regresar con error
         if ($userModel->usernameExists($username, $userId)) {
             return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
         }
-
-        log_message('debug', 'controlador: ' . print_r($file, true));
+    
         // Validación del archivo
-        if ($file->isValid() && !$this->validate($rules)) {
-            $mimeType = $file->getMimeType();
-            // Verificar si el tipo MIME es el correcto
-            if ($mimeType != 'image/jpeg') {
-                return redirect()->to('/editProfile')
-                    ->withInput()
-                    ->with('error', 'El archivo debe ser una imagen JPG.');
+        if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
+    
+            if ($file->isValid()) {
+                $userData['foto_perfil'] = file_get_contents($file->getTempName());
+            } else {
+                return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
             }
-            // Si es válido, guarda el archivo en el formato adecuado
-            $userData = array_merge($userData, [
-                'foto_perfil' => file_get_contents($file->getTempName())
-            ]);
         }
-        else {
-            return redirect()->back()->withInput()->with('error', 'The image cannot be larger than 2MB');
-        };
-        
-
+    
+        // Actualizar los datos del usuario
         $updateSuccess = $userModel->update($userId, $userData);
-        // Redirigir con mensaje de éxito
+    
         if ($updateSuccess) {
             $session = session();
-            // Recuperar los datos actualizados
             $userData = $userModel->find($userId);
-            // Actualizar los datos de la sesión
             $session->set($userData);
-            return redirect()->to('/editProfile')->with('success', 'Perfil actualizado correctamente');
+            return redirect()->to('/editProfile')->with('success', 'Perfil actualizado correctamente.');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'No se pudo actualizar.');
         }
-        else {
-            return redirect()->back()->withInput()->with('error', 'No se pudo actualizar');
-        };
-    }
+    }    
 
     public function delete($id)
     {
