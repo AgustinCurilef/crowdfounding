@@ -12,7 +12,7 @@
     <div class="sidebar-wrapper">
         <nav class="mt-2"> <!--begin::Sidebar Menu-->
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-person-circle";></i>
                         <p>
                             Perfil
                             <i class="nav-arrow bi bi-chevron-right"></i>
@@ -32,7 +32,7 @@
 
                 </li>
                 <?php if (session()->get('ROL') == '1'): ?>
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-pie-chart"></i>
                             <p>
                                 Gestión General
                                 <i class="nav-arrow bi bi-chevron-right"></i>
@@ -54,7 +54,7 @@
                 <?php endif; ?>
 
 
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-journal-bookmark"></i>
                         <p>
                             Proyectos
                             <i class="nav-arrow bi bi-chevron-right"></i>
@@ -73,7 +73,7 @@
                     </ul>
 
                 </li>
-                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-graph-up"></i>
                         <p>
                             Inversiones
                             <i class="nav-arrow bi bi-chevron-right"></i>
@@ -89,7 +89,7 @@
                     </ul>
                 </li>
                 <?php if (session()->get('ROL') == '1'): ?>
-                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+                    <li class="nav-item"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-tags"></i>
                             <p>
                                 Categorias
                                 <i class="nav-arrow bi bi-chevron-right"></i>

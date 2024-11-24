@@ -100,6 +100,8 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
+$routes->get('/logout', 'LoginController::login');
+
 $routes->get('/register', 'registerController::register');
 
 $routes->post('/login/authenticate', 'LoginController::authenticate');

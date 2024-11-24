@@ -1,7 +1,8 @@
-<div class="container-fluid"> <!--begin::Start Navbar Links-->
+<div class="container-fluid">
+<!--begin::Start Navbar Links-->
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Home</a> </li>
+                    <li class="nav-item d-none d-md-block">  </li>
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
                      <!--<li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> end::Navbar Search-->
@@ -9,13 +10,12 @@
                          <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
                     <!-- En tu navbar -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">                            <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning" id="notification-count">
-                                <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="markNotificationsAsRead()">
+                            <span id="campanita" class="navbar-badge badge text-bg-warning bi bi-bell-fill" id="notification-count">
+                                    <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
-                            
                             <div class="dropdown-divider"></div>
                             <div id="notification-list">
                                 <!-- Las notificaciones se cargarán aquí -->
@@ -51,9 +51,8 @@
                 </li>
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
-                <li class="user-body"
-                >
-                    <a href="#" class="btn btn-default btn-flat float-end">Sign out</a> 
+                <li class="user-body">
+                    <a href="<?= base_url('/logout') ?>" class="btn btn-default btn-flat float-end">Sign out</a> 
                 </li>
                 <!--end::Menu Body-->
             </ul>
@@ -65,6 +64,7 @@
         <script>
     function markNotificationsAsRead() {
         fetch('<?= base_url('notification/mark-read') ?>', {
+            
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

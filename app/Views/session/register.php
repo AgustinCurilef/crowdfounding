@@ -13,16 +13,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous"><!--end::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="<?= base_url('template/dist/css/adminlte.css') ?>"><!--end::Required Plugin(AdminLTE)-->
 </head> <!--end::Head-->
-<body class="register-page bg-body-secondary">
+<body class="register-page" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <div class="register-box">
-        <div class="register-logo">
-             <a href="<?= base_url('template/dist/pages/index2.html') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+    <div class="card card-outline card-personalized">
+        <div class="card-header">
+             <a href="<?= base_url('/') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                     <h1 class="mb-0"> <b>Fund4Futures</b>
                     </h1>
                 </a> </div> <!-- /.register-logo -->
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="register-box-msg">¡ Register now !</p>
+                <p class="register-box-msg">¡ Unete a nosotros !</p>
                 <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger">
                         <?= session()->getFlashdata('error') ?>
@@ -50,15 +51,16 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="form-check"> <input class="form-check-input" type="checkbox" value="1" id="terminosCheck" name="terminos" required> 
-                                <label class="form-check-label" for="terminosCheck"> Accept the <a href="#">terms</a> </label>
+                                <label class="form-check-label" for="terminosCheck"> Acepta los <a href="#">términos</a> </label>
                             </div>
                         </div> <!-- /.col -->
                         <div class="col-4">
-                            <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary">Register</button> </div>
+                            
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
+                    <div class="d-grid gap-2" style="padding-top: 10px;" > <button type="submit" class="btn btn-primary">Registrar</button> </div>
                 </form>
-                <p class="mb-0"> <a href="<?= base_url("/login")?>" class="text-center">I already have an account</a> </p>
+                <p class="mb-0" style="padding-top: 10px;"> <a href="<?= base_url("/login")?>" class="text-center">Ya tengo una cuenta de usuario</a> </p>
             </div> <!-- /.register-card-body -->
         </div>
     </div> <!-- /.register-box -->
