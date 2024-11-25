@@ -1,20 +1,56 @@
-<main class="app-main">
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Filtros y Búsqueda -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h3 class="card-title">Filtros</h3>
-                    </div>
+<style>
+    .description-cell {
+        max-width: 300px;
+        /* Ancho máximo de la columna */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Para mostrar la descripción completa al hacer hover */
+    .description-cell:hover {
+        white-space: normal;
+        overflow: visible;
+        position: relative;
+        background-color: white;
+        z-index: 1;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        padding: 5px;
+        border-radius: 4px;
+    }
+
+    /* Ajustar el ancho de otras columnas */
+    .project-name {
+        width: 200px;
+    }
+
+    .categories-cell {
+        width: 150px;
+    }
+
+    .progress-cell {
+        width: 150px;
+    }
+
+    .amount-cell {
+        width: 120px;
+    }
+</style>
+<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+    <section class="content" style="padding-top : 20px">
+        <div class=" container-fluid">
+            <!-- Filtros -->
+            <div class="card mb-4">
+                <div class="card-header text-black">
+                    <h3 class="card-title">Filtros</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Categoría</label>
-                                <select class="form-select" id="categoryFilter" onchange="filterProjects()">
-                                    <option value="todos">Todos</option>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="">Todos</option>
                                     <?php foreach ($categories as $category) : ?>
                                         <option value="<?= esc($category->NOMBRE) ?>"><?= esc($category->NOMBRE) ?></option>
                                     <?php endforeach; ?>
@@ -24,155 +60,116 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Estado</label>
-                                <select class="form-control select2" id="statusFilter" onchange="filterProjects()">
-                                    <option value="todos">Todos</option>
-                                    <option value="1">Publico</option>
+                                <select class="form-select" id="statusFilter">
+                                    <option value="">Todos</option>
+                                    <option value="1">Público</option>
                                     <option value="0">Oculto</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Buscar</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar proyectos..." oninput="filterProjects()">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-default" type="button">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Projects Grid -->
-            <div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
-                <?php foreach ($projects as $project) : ?>
-                    <div class="col">
-                        <div class="card h-100" data-status="<?= esc($project->ESTADO) ?>">
-                            <?php if (isset($project->imagen_base64)) : ?>
-                                <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
-                            <?php endif; ?>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <span class="text-muted">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>
-                                    <span class="text-muted">Presupuesto total: </span><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $
-                                </div>
+            <!-- Tabla de Proyectos -->
+            <div class="card">
 
-                                <div class="mb-2">
-                                    <span class="text-muted">Mi inversión: </span>
-                                    <span class="text-success"><?= number_format($project->monto_invertido, 2, ',', '.') ?> $</span>
-                                </div>
+                <div class="card-body">
 
-                                <div class="progress mb-2">
-                                    <div class="progress-bar bg-success"
-                                        role="progressbar"
-                                        style="width: <?= min(100, round($project->porcentaje_progreso, 1)) ?>%"
-                                        aria-valuenow="<?= round($project->porcentaje_progreso, 1) ?>"
-                                        aria-valuemin="0"
-                                        aria-valuemax="100">
-                                        <?= round($project->porcentaje_progreso, 1) ?>%
-                                    </div>
-                                </div>
+                    <table id="projectsTable" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="project-name">Proyecto</th>
+                                <th class="categories-cell">Categorías</th>
+                                <th class="amount-cell">Presupuesto</th>
+                                <th class="amount-cell">Recaudado</th>
+                                <th class="amount-cell">Mi Inversión</th>
+                                <th class="progress-cell">Progreso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($projects as $project) : ?>
+                                <tr>
+                                    <td class="project-name">
+                                        <div class="d-flex align-items-center">
+                                            <?php if (isset($project->imagen_base64)) : ?>
+                                                <img src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>"
+                                                    class="rounded me-2"
+                                                    style="width: 50px; height: 50px; object-fit: cover;">
+                                            <?php endif; ?>
+                                            <div>
+                                                <strong><?= esc($project->NOMBRE) ?></strong>
+                                                <div class="description-cell">
+                                                    <?= esc($project->DESCRIPCION) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="categories-cell">
+                                        <?php foreach ($project->categoria_nombre as $categoria) : ?>
+                                            <span class="badge bg-primary"><?= esc($categoria) ?></span>
+                                        <?php endforeach; ?>
+                                    </td>
+                                    <td class="amount-cell"><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</td>
+                                    <td class="amount-cell"><?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</td>
+                                    <td class="amount-cell"><?= number_format($project->monto_invertido, 2, ',', '.') ?> $</td>
+                                    <td class="progress-cell">
+                                        <div class="progress" style="height: 20px;">
+                                            <div class="progress-bar bg-success"
+                                                role="progressbar"
+                                                style="width: <?= min(100, round($project->porcentaje_progreso, 1)) ?>%"
+                                                aria-valuenow="<?= round($project->porcentaje_progreso, 1) ?>"
+                                                aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <?= round($project->porcentaje_progreso, 1) ?>%
+                                            </div>
+                                        </div>
+                                    </td>
 
-                                <div class="text-center mb-2">
-                                    <span class="text-muted">Recaudado: </span>
-                                    <strong><?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</strong>
-                                    <span class="text-muted"> de </span>
-                                    <strong><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</strong>
-                                </div>
-
-                                <div class="mt-2">
-                                    <span class="text-muted">Descripción: </span><br>
-                                    <?= esc($project->DESCRIPCION) ?>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex justify-content-between align-items-center">
-                                <?php foreach ($project->categoria_nombre as $categoria) : ?>
-                                    <span class="badge bg-primary"><?= esc($categoria) ?></span>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
 <script>
-    function filterProjects() {
-        // Obtener valores de los filtros
-        const categoryFilter = document.getElementById('categoryFilter').value.toLowerCase();
-        const statusFilter = document.getElementById('statusFilter').value;
-        const searchQuery = document.getElementById('searchInput').value.toLowerCase();
-
-        // Obtener todos los proyectos
-        const projectCards = document.querySelectorAll('#projectsGrid .col');
-        let visibleCount = 0; // Contador para proyectos visibles
-
-        projectCards.forEach(card => {
-            let showProject = true;
-            const projectCard = card.querySelector('.card');
-            const projectContent = projectCard.textContent.toLowerCase();
-            const projectCategories = Array.from(projectCard.querySelectorAll('.badge'))
-                .map(badge => badge.textContent.toLowerCase());
-            const projectStatus = projectCard.getAttribute('data-status');
-
-            // Filtrar por categoría
-            if (categoryFilter !== 'todos' && !projectCategories.includes(categoryFilter)) {
-                showProject = false;
-            }
-
-            // Filtrar por estado
-            if (statusFilter !== 'todos' && projectStatus !== statusFilter) {
-                showProject = false;
-            }
-
-            // Filtrar por búsqueda de texto
-            if (searchQuery && !projectContent.includes(searchQuery)) {
-                showProject = false;
-            }
-
-            // Mostrar u ocultar el proyecto
-            card.style.display = showProject ? '' : 'none';
-            if (showProject) visibleCount++; // Incrementar contador si el proyecto es visible
+    $(document).ready(function() {
+        // Inicializar DataTables
+        let table = $('#projectsTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+            },
+            pageLength: 10,
+            ordering: true,
+            responsive: true
         });
 
-        // Comprobar si hay resultados visibles usando el contador
-        const noResultsMessage = document.getElementById('noResultsMessage') || createNoResultsMessage();
-        if (visibleCount === 0) {
-            noResultsMessage.style.display = 'block';
-        } else {
-            noResultsMessage.style.display = 'none';
-        }
-    }
+        // Aplicar filtros personalizados
+        $('#categoryFilter, #statusFilter').on('change', function() {
+            let categoryVal = $('#categoryFilter').val().toLowerCase();
+            let statusVal = $('#statusFilter').val();
 
-    function createNoResultsMessage() {
-        const message = document.createElement('div');
-        message.id = 'noResultsMessage';
-        message.className = 'col-12 text-center mt-4';
-        message.innerHTML = '<h4>No se encontraron proyectos que coincidan con los filtros seleccionados</h4>';
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                let row = $(table.row(dataIndex).node());
+                let categories = data[1].toLowerCase();
+                let status = row.find('td:last span.badge').text() === 'Público' ? '1' : '0';
 
-        const grid = document.getElementById('projectsGrid');
-        grid.appendChild(message); // Cambiado a appendChild para asegurar la posición correcta
+                let categoryMatch = !categoryVal || categories.includes(categoryVal);
+                let statusMatch = !statusVal || status === statusVal;
 
-        return message;
-    }
+                return categoryMatch && statusMatch;
+            });
 
-    // Asegurarnos de que el mensaje no aparezca al cargar la página si hay proyectos
-    document.addEventListener('DOMContentLoaded', () => {
-        // Solo inicializar si hay algún filtro seleccionado
-        const categoryFilter = document.getElementById('categoryFilter');
-        const statusFilter = document.getElementById('statusFilter');
-        const searchInput = document.getElementById('searchInput');
-
-        if (categoryFilter.value !== 'todos' ||
-            statusFilter.value !== 'todos' ||
-            searchInput.value.trim() !== '') {
-            filterProjects();
-        }
+            table.draw();
+            $.fn.dataTable.ext.search.pop();
+        });
     });
 </script>

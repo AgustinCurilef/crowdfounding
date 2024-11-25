@@ -1,6 +1,6 @@
 <main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <!-- Main content -->
-    <section class="content" style="padding-top : 20px">
+    <section class="content" style="padding : 20px">
         <div class="container-fluid">
             <!-- Filters and Search -->
             <div class="card">
@@ -184,43 +184,7 @@
 
 
 
-            <!-- Pagination -->
-            <div class="row mt-4">
-                <div class="col-12">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <!-- Botón Anterior -->
-                            <?php if ($currentPage > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $currentPage - 1 ?>" tabindex="-1">Anterior</a>
-                                </li>
-                            <?php else: ?>
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                                </li>
-                            <?php endif; ?>
 
-                            <!-- Páginas -->
-                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <li class="page-item <?= ($currentPage == $i) ? 'active' : '' ?>">
-                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endfor; ?>
-
-                            <!-- Botón Siguiente -->
-                            <?php if ($currentPage < $totalPages): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="?page=<?= $currentPage + 1 ?>">Siguiente</a>
-                                </li>
-                            <?php else: ?>
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#">Siguiente</a>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
 
         </div>
     </section>

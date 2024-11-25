@@ -1,18 +1,5 @@
-<main class="app-main">
-    <div class="hold-transition sidebar-mini">
-        <div class="wrapper">
-            <div>
-                <!-- Content Header -->
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1>Alta de Proyecto</h1>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
+<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+    <div class="hold-transition sidebar-mini" style="padding : 20px">
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
@@ -218,7 +205,7 @@
         const cancelButton = document.getElementById('cancelButton');
         cancelButton.addEventListener('click', function() {
             if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
-                projectForm.reset();
+                window.history.back();
                 imagePreview.style.display = 'none';
                 uploadPreviewIcon.style.display = 'block';
             }

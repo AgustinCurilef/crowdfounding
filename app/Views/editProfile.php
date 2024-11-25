@@ -20,7 +20,7 @@
                             </div>
                         <?php endif; ?>
                     <!-- Formulario para editar perfil -->
-                    <form action="<?= base_url('user/saveChanges') ?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?= 'user/saveChanges' ?>" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id_usuario" value="<?= session()->get('ID_USUARIO'); ?>" />
                         <!-- Información básica -->
                         <div class="mb-4">

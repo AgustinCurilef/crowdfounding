@@ -52,8 +52,7 @@ class ProjectModel extends Model
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
             $fechaHoy = (new \DateTime())->format('Y-m-d');
-            $project->habilitadoParaInversion =
-                ($project->monto_recaudado < $project->PRESUPUESTO) && ($project->FECHA_LIMITE > $fechaHoy) ? '1' : '0';
+            $project->habilitadoParaInversion = ($project->FECHA_LIMITE > $fechaHoy) ? '1' : '0';
 
             // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
             // Convertir la imagen a formato base64 si existe

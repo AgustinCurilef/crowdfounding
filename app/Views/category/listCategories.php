@@ -1,5 +1,5 @@
-<div class="content-wrapper">
-    <div class="container-fluid mt-4 px-4">
+<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+    <div class="container-fluid mt-4 px-4" style="padding : 20px; padding-bottom: 40vh;">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center bg-light py-3">
                 <h4 class="m-0">Lista de Categorías</h4>
@@ -8,14 +8,14 @@
                 </a>
             </div>
             <div class="card-body">
-                <?php if(session()->getFlashdata('mensaje')): ?>
+                <?php if (session()->getFlashdata('mensaje')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <?= session()->getFlashdata('mensaje') ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
-                
-                <?php if(session()->getFlashdata('error')): ?>
+
+                <?php if (session()->getFlashdata('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <?= session()->getFlashdata('error') ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -42,12 +42,12 @@
                                         <td class="px-4">
                                             <div class="btn-group" role="group">
                                                 <a href="<?= base_url('categories/edit/' . $category->ID_CATEGORIA) ?>"
-                                                   class="btn btn-warning btn-sm me-2">
+                                                    class="btn btn-warning btn-sm me-2">
                                                     <i class="fas fa-edit"></i> Editar
                                                 </a>
                                                 <a href="<?= base_url('categories/delete/' . $category->ID_CATEGORIA) ?>"
-                                                   class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?')">
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?')">
                                                     <i class="fas fa-trash"></i> Eliminar
                                                 </a>
                                             </div>
@@ -65,4 +65,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>

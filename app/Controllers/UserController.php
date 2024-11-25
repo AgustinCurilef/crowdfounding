@@ -36,11 +36,12 @@ class UserController extends BaseController
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
-        $categories= $categoryModel-> findAll();
-        
-        
-        $data = ['title' => 'Mis Proyectos',
-            'projects' => $projects, 
+        $categories = $categoryModel->findAll();
+
+
+        $data = [
+            'title' => 'Mis Proyectos',
+            'projects' => $projects,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'],
             'user' => $this->user
@@ -65,13 +66,12 @@ class UserController extends BaseController
         if ($imagenBlob) {
             // Especificar el tipo MIME correcto para imágenes JPG
             return $this->response->setHeader('Content-Type', 'image/jpeg')
-                                  ->setBody($imagenBlob); // Enviar la imagen al navegador
+                ->setBody($imagenBlob); // Enviar la imagen al navegador
         } else {
-            // Si no se encuentra la imagen, lanzar un error 404
-            throw new PageNotFoundException('Imagen no encontrada');
+            return $this->response->setStatusCode(404); // Imagen no encontrada
         }
     }
-    
+
     public function saveChanges()
     {
         $username = $this->request->getPost('username');
@@ -120,7 +120,7 @@ class UserController extends BaseController
     public function delete($id)
     {
         $userModel = new UserModel();;
-        
+
         if ($userModel->delete($id)) {
             return redirect()->to('/')->with('success', 'Usuario eliminado correctamente.');
         } else {

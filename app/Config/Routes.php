@@ -69,7 +69,6 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
 
 
-
     /*Inversion */
     $routes->get('investment/create/(:num)', 'InvestmentController::create/$1');
 
@@ -79,7 +78,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
 
 
-$routes->post('notification/mark-read', 'NotificationUserController::markAllAsRead');
+    $routes->post('notification/mark-read', 'NotificationUserController::markAllAsRead');
 
 
     /*Notificaciones Usuario*/
