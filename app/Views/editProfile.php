@@ -12,13 +12,24 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
                     <!-- Mostrar el mensaje de error si existe -->
-                        <?php if (session()->getFlashdata('error')): ?>
-                            <div class="alert alert-danger">
-                                <?= session()->getFlashdata('error') ?>
-                            </div>
-                        <?php endif; ?>
+                    <?php if (session()->has('errors')): ?>
+                    <div class="alert alert-danger">
+                        <ul>
+                            <?php foreach (session('errors') as $error): ?>
+                                <li><?= esc($error) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
+
+
+
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger">
+                            <?= session()->getFlashdata('error') ?>
+                        </div>
+                    <?php endif; ?>
                     <!-- Formulario para editar perfil -->
                     <form action="<?= 'user/saveChanges' ?>" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="id_usuario" value="<?= session()->get('ID_USUARIO'); ?>" />

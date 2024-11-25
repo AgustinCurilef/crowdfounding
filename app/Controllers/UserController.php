@@ -78,6 +78,17 @@ class UserController extends BaseController
         $userId = $this->request->getPost('id_usuario'); 
         $file = $this->request->getFile('foto_perfil');
         $userModel = new UserModel();
+
+        $validationRule = [
+            'foto_perfil' => [
+                'rules' => 'is_image[foto_perfil]|max_size[foto_perfil,2048]|mime_in[foto_perfil,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'is_image' => 'El archivo debe ser una imagen válida.',
+                    'max_size' => 'El tamaño máximo permitido es de 2 MB.',
+                    'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
+                ]
+            ]
+        ];
     
         $userData = [
             'username' => $this->request->getPost('username'),
@@ -94,6 +105,16 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
         }
     
+
+        if (!$this->validate($validationRule)) {
+            // Obtén los mensajes de error
+            $errors = \Config\Services::validation()->getErrors();
+            
+            // Muestra los errores o redirige con ellos
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        
         // Validación del archivo
         if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
     
