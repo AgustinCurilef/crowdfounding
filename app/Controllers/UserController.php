@@ -58,7 +58,7 @@ class UserController extends BaseController
             . view('estructura/footer');
     }
 
-    public function showImage($idUsuario)
+    /*public function showImage($idUsuario)
     {
         $userModel = new UserModel();
         $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
@@ -70,7 +70,34 @@ class UserController extends BaseController
         } else {
             return $this->response->setStatusCode(404); // Imagen no encontrada
         }
+    }*/
+
+    public function showImage($idUsuario)
+    {
+        $userModel = new UserModel();
+        $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+
+        if ($imagenBlob) {
+            // Especificar el tipo MIME correcto para imágenes JPG
+            return $this->response->setHeader('Content-Type', 'image/jpeg')
+                ->setBody($imagenBlob); // Enviar la imagen al navegador
+        } else {
+            // Ruta de la imagen por defecto
+            $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/foto_perfil_default.jpg';
+            
+            if (file_exists($defaultImagePath)) {
+                // Leer el contenido de la imagen predeterminada
+                $defaultImage = file_get_contents($defaultImagePath);
+
+                return $this->response->setHeader('Content-Type', 'image/jpeg')
+                    ->setBody($defaultImage); // Enviar la imagen por defecto al navegador
+            } else {
+                // Si la imagen predeterminada no existe, retornar un error 404
+                return $this->response->setStatusCode(404, 'Default image not found');
+            }
+        }
     }
+
 
     public function saveChanges()
     {

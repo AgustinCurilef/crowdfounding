@@ -1,6 +1,6 @@
 <main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <!-- Main content -->
-    <section class="content" style="padding : 20px">
+    <section class="content" style="padding : 20px; padding-bottom: 55vh;">
         <div class=" container-fluid">
             <!-- Filters and Search -->
             <div class="card">
