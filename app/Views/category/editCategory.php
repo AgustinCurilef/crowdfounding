@@ -1,5 +1,5 @@
 <main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
-    <section class="content" style="padding-top : 20px ; padding-left: 20px ; padding-right: 20px ">
+    <section class="content" style="padding : 20px; padding-bot : 10hv>
         <div class="form-container">
             <div class="card">
                 <div class="card-header">
