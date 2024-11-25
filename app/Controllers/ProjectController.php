@@ -18,26 +18,18 @@ class ProjectController extends BaseController
     }
     public function listAllProjects(): String
     {
-
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
-        $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-        $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
-        $perPage = 6; // Definimos cuántos ítems por página
-        helper('pagination');  // Carga el helper
-        // Llamada a paginateArray que devuelve los proyectos y los datos de paginación
-        $paginatedProjects = paginateArray($projects, $perPage, $currentPage);
-
+        $projects = $ProjectModel->getProjects();
         $data = [
             'title' => 'Mis Proyectos',
             'projects' => $projects,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'], // Usa el nombre de usuario directamente
-            'currentPage' => $currentPage, // Pasa la página actual
-            'totalPages' => $paginatedProjects['totalPages'], // Total de páginas
-            'totalItems' => $paginatedProjects['totalItems'], // Total de ítems
+
         ];
+
         foreach ($projects as $project) {
             if ($project->imagen) {
                 $project->imagen_base64 = base64_encode($project->imagen);
@@ -100,10 +92,7 @@ class ProjectController extends BaseController
             'user_name' => $this->user['USERNAME'] ?? null
         ];
 
-        //       @log_message('debug', 'Proyectos recuperados para usuario {id}: {projects}', [
-        //           'id' => $userId,
-        //           'projects' => json_encode($projects, JSON_PRETTY_PRINT)
-        //       ]);
+
 
         return view('estructura/header', $data)
             . view('estructura/navbar', $data)

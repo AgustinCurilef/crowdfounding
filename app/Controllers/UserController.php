@@ -36,11 +36,12 @@ class UserController extends BaseController
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
-        $categories= $categoryModel-> findAll();
-        
-        
-        $data = ['title' => 'Mis Proyectos',
-            'projects' => $projects, 
+        $categories = $categoryModel->findAll();
+
+
+        $data = [
+            'title' => 'Mis Proyectos',
+            'projects' => $projects,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'],
             'user' => $this->user
@@ -65,13 +66,12 @@ class UserController extends BaseController
         if ($imagenBlob) {
             // Especificar el tipo MIME correcto para imágenes JPG
             return $this->response->setHeader('Content-Type', 'image/jpeg')
-                                  ->setBody($imagenBlob); // Enviar la imagen al navegador
+                ->setBody($imagenBlob); // Enviar la imagen al navegador
         } else {
-            // Si no se encuentra la imagen, lanzar un error 404
-            throw new PageNotFoundException('Imagen no encontrada');
+            return $this->response->setStatusCode(404); // Imagen no encontrada
         }
     }
-    
+
     public function saveChanges()
     {
         $rules = [
@@ -105,7 +105,7 @@ class UserController extends BaseController
 
         log_message('debug', 'controlador: ' . print_r($file, true));
         // Validación del archivo
-        if ($file->isValid() && !$this->validate($rules)) {
+        if ($file->isValid()) {
             $mimeType = $file->getMimeType();
             // Verificar si el tipo MIME es el correcto
             if ($mimeType != 'image/jpeg') {
@@ -117,11 +117,10 @@ class UserController extends BaseController
             $userData = array_merge($userData, [
                 'foto_perfil' => file_get_contents($file->getTempName())
             ]);
-        }
-        else {
-            return redirect()->back()->withInput()->with('error', 'The image cannot be larger than 2MB');
+        } else {
+            return redirect()->back()->withInput()->with('error', 'No se pudo subir la imagen.');
         };
-        
+
 
         $updateSuccess = $userModel->update($userId, $userData);
         // Redirigir con mensaje de éxito
@@ -132,8 +131,7 @@ class UserController extends BaseController
             // Actualizar los datos de la sesión
             $session->set($userData);
             return redirect()->to('/editProfile')->with('success', 'Perfil actualizado correctamente');
-        }
-        else {
+        } else {
             return redirect()->back()->withInput()->with('error', 'No se pudo actualizar');
         };
     }
@@ -141,7 +139,7 @@ class UserController extends BaseController
     public function delete($id)
     {
         $userModel = new UserModel();;
-        
+
         if ($userModel->delete($id)) {
             return redirect()->to('/')->with('success', 'Usuario eliminado correctamente.');
         } else {

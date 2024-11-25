@@ -7,7 +7,7 @@
 .project-form-card {
     background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
     margin-bottom: 1rem;
 }
 
@@ -71,8 +71,23 @@
     .content-wrapper {
         padding: 10px;
     }
-    
+
     .card-body {
         padding: 1rem;
     }
+}
+
+.image-thumbnail {
+    width: 150px;
+    /* Ajusta el tamaño según necesites */
+    height: 150px;
+    border-radius: 50%;
+    /* Hace que la imagen sea circular */
+    object-fit: cover;
+    /* Escala la imagen para que cubra todo el círculo */
+    border: 2px solid #ccc;
+    /* Opcional: Borde para destacar */
+    display: block;
+    margin: 0 auto;
+    /* Centrar la imagen */
 }

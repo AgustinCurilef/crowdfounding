@@ -1,7 +1,7 @@
-<main class="app-main">
+<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+    <section class="content" style="padding-top : 20px">
+        <div class=" container-fluid">
             <!-- Filters and Search -->
             <div class="card">
                 <div class="card-header">

@@ -1,5 +1,5 @@
 <main class="app-main">
-    <div class="hold-transition sidebar-mini">
+    <div class="hold-transition sidebar-mini" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
         <div class="wrapper">
             <div>
                 <!-- Content Header -->
@@ -37,10 +37,9 @@
                                         <form id="projectForm" action="<?= base_url('updateProject/' . $project->ID_PROYECTO) ?>" method="POST" enctype="multipart/form-data">
                                             <!-- Imagen de portada -->
                                             <div class="text-center mb-4">
-                                                <div class="upload-preview mb-3">
+                                                <div class="upload-preview-wrapper mb-3">
                                                     <!-- Imagen con clase miniatura -->
                                                     <img class="image-thumbnail" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image" id="imagePreview">
-                                                    <i class="fas fa-cloud-upload-alt"></i>
                                                 </div>
                                                 <div class="upload-btn-wrapper">
                                                     <label class="upload-btn" for="imageUpload">

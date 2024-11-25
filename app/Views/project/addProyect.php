@@ -1,4 +1,4 @@
-<main class="app-main">
+<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
     <div class="hold-transition sidebar-mini">
         <div class="wrapper">
             <div>

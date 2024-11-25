@@ -20,9 +20,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous"><!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/addProject.css'); ?>">
+
+    <link rel="stylesheet" href="<?= base_url('template/dist/css/project/addProyect.css') ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/explore.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
+    <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
 
     <!--js notificaciones-->
@@ -43,4 +45,4 @@
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
     <div class="app-wrapper"> <!--begin::Header-->
-        <nav class="app-header navbar navbar-expand bg-body"> <!--begin::Container-->
+        <nav class="app-header navbar navbar-expand bg-body" data-bs-theme="dark"> <!--begin::Container-->
