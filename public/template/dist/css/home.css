@@ -156,10 +156,7 @@
             border: 1px solid #e2e8f0;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-        }
+
 
         .project-image {
             width: 100%;

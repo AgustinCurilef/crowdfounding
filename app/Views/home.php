@@ -8,6 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/home.css'); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 
 </head>
@@ -109,16 +111,7 @@
                                             <h6 class="text-muted mt-3">Detalles del proyecto:</h6>
                                             <p>Presupuesto total: <?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</p>
                                             <p>Monto recaudado: <?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</p>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar bg-success"
-                                                    role="progressbar"
-                                                    style="width: <?= round($porcentaje, 1) ?>%"
-                                                    aria-valuenow="<?= round($porcentaje, 1) ?>"
-                                                    aria-valuemin="0"
-                                                    aria-valuemax="100">
-                                                    <?= round($porcentaje, 1) ?>%
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
