@@ -1,26 +1,26 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
-<div class="container py-5" style="width: 800px; display: flex; justify-content: center;">
-    <div class="row" >
-            <div class="card card-outline card-personalized" >
-            <!-- Sidebar con foto de perfil -->
-            <div class="card-body text-center">
+<main class="app-main background-impulsa">
+    <div class="container py-5" style="width: 800px; display: flex; justify-content: center;">
+        <div class="row">
+            <div class="card card-outline card-personalized">
+                <!-- Sidebar con foto de perfil -->
+                <div class="card-body text-center">
 
                     <div class="profile-image-container mb-3">
-                            <!-- Mostrar la foto de perfil actual -->
-                            <img src="<?= base_url('user/showImage/' . $user['ID_USUARIO']); ?>"
+                        <!-- Mostrar la foto de perfil actual -->
+                        <img src="<?= base_url('user/showImage/' . $user['ID_USUARIO']); ?>"
                             class="rounded-circle profile-image" style="border: 4px solid #fff; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); border-color: black" id="profileImagePreview">
                     </div>
                 </div>
                 <div class="card-body">
                     <!-- Mostrar el mensaje de error si existe -->
                     <?php if (session()->has('errors')): ?>
-                    <div class="alert alert-danger">
-                        <ul>
-                            <?php foreach (session('errors') as $error): ?>
-                                <li><?= esc($error) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                <?php foreach (session('errors') as $error): ?>
+                                    <li><?= esc($error) ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     <?php endif; ?>
                     <?php if (session()->getFlashdata('error')): ?>
                         <div class="alert alert-danger">
@@ -60,16 +60,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="telefono" class="form-label">Número telefónico</label>
-                                    <input type="tel" 
-                                        class="form-control" 
-                                        id="telefono" 
-                                        name="telefono" 
-                                        value="<?= old('telefono', $user['TELEFONO']) ?>" 
+                                    <input type="tel"
+                                        class="form-control"
+                                        id="telefono"
+                                        name="telefono"
+                                        value="<?= old('telefono', $user['TELEFONO']) ?>"
                                         maxlength="15">
                                     <small class="form-text text-muted">
                                         Formato: <code>XXX-XXX-XXX-XXX-XXX</code> .
                                     </small>
-                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <label for="linkedin" class="form-label">LinkedIn</label>
                                     <input type="url" class="form-control" name="linkedin" value="<?= old('linkedin', $user['LINKEDIN']) ?>">
@@ -87,48 +87,48 @@
                             <a href="<?= base_url('/inicio') ?>" class="btn btn-secondary me-md-2">Cancelar</a>
                             <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </form>
-                            <!-- Formulario para eliminar el perfil -->
-                            <form action="<?= base_url('user/delete/') . $user['ID_USUARIO']?>" method="POST" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
-                                <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
-                            </form>
-                        </div>
+                    <!-- Formulario para eliminar el perfil -->
+                    <form action="<?= base_url('user/delete/') . $user['ID_USUARIO'] ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
+                        <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
+    </div>
 </main>
 
 <script>
     document.querySelector('input[name="foto_perfil"]').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('profileImagePreview').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileImagePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 </script>
 <script>
-document.getElementById('telefono').addEventListener('input', function (e) {
-    let input = e.target.value.replace(/\D/g, ''); // Solo permite números
+    document.getElementById('telefono').addEventListener('input', function(e) {
+        let input = e.target.value.replace(/\D/g, ''); // Solo permite números
 
-    // Limitar a 15 dígitos
-    if (input.length > 15) {
-        input = input.slice(0, 15);
-    }
-
-    // Autoformatear con guiones cada 3 dígitos
-    let formatted = '';
-    for (let i = 0; i < input.length; i++) {
-        if (i > 0 && i % 3 === 0) {
-            formatted += '-';
+        // Limitar a 15 dígitos
+        if (input.length > 15) {
+            input = input.slice(0, 15);
         }
-        formatted += input[i];
-    }
 
-    e.target.value = formatted;
-});
+        // Autoformatear con guiones cada 3 dígitos
+        let formatted = '';
+        for (let i = 0; i < input.length; i++) {
+            if (i > 0 && i % 3 === 0) {
+                formatted += '-';
+            }
+            formatted += input[i];
+        }
+
+        e.target.value = formatted;
+    });
 </script>

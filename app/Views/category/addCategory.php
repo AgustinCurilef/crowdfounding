@@ -1,4 +1,4 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890); min-height: 100vh; padding: 20px 0;">
+<main class="app-main background-impulsa" style="min-height: 100vh; padding: 20px 0;">
     <section class="content">
         <div class="container-fluid mt-4 px-4">
             <div class="row justify-content-center">

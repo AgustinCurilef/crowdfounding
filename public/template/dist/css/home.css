@@ -1,5 +1,5 @@
         :root {
-            --primary-color: #2563eb;
+            --primary-color: #199890;
             --secondary-color: #1e293b;
             --accent-color: #3b82f6;
             --background-light: #f8fafc;
@@ -23,7 +23,7 @@
             align-items: center;
             padding: 1rem 5%;
             background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
@@ -55,7 +55,7 @@
 
         .btn-primary {
             background: var(--primary-color);
-            color: white;
+            color: var(--text-dark);
             padding: 0.7rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
@@ -70,7 +70,7 @@
         .hero {
             position: relative;
             height: 600px;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: radial-gradient(ellipse, #0e4642, #1a2020);
             margin-top: 70px;
             overflow: hidden;
         }
@@ -97,7 +97,7 @@
         .hero-title {
             font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #60a5fa, #3b82f6);
+            background: linear-gradient(45deg, #d3dbe6, #c9d3e2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -110,7 +110,7 @@
         }
 
         .category-badge {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -151,14 +151,14 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid #e2e8f0;
         }
 
         .project-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
 
         .project-image {
@@ -217,7 +217,7 @@
             padding: 2rem;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border: 1px solid #e2e8f0;
             text-align: center;
             transition: transform 0.3s ease;
@@ -235,7 +235,7 @@
 
         .features-section {
             padding: 4rem 5%;
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: radial-gradient(ellipse, #0e4642, #1a2020);
             color: white;
         }
 
@@ -248,14 +248,14 @@
 
         .feature-card {
             padding: 2rem;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         footer {
-            background: var(--secondary-color);
+            background: radial-gradient(ellipse, #0e4642, #1a2020);
             color: white;
             padding: 4rem 5% 2rem;
         }

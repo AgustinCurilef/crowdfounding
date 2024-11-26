@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Found4Futures - Crowdfunding Tecnológico</title>
+    <title>Impulsa - Crowdfunding Tecnológico</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/home.css'); ?>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    
+
 </head>
+
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="<?php echo base_url('template/dist/assets/img/AdminLTELogo.png'); ?>" alt="Found4Futures">
+            <img src="<?= base_url('/template/dist/assets/img/LogoImpulsa.png') ?>" alt="Impulsa">
         </div>
         <div class="nav-links">
             <li><a href="#proyectos">Proyectos</a></li>
             <li><a href="#como-funciona">Cómo Funciona</a></li>
-            <li><a href="<?= base_url('/login') ?>">Iniciar Sesión</a></li>
-            <li><a href="#" class="btn-primary">Iniciar Proyecto</a></li>
+            <li><a class="btn-primary" href="<?= base_url('/login') ?>">Iniciar Sesión</a></li>
         </div>
     </nav>
 
@@ -32,63 +34,131 @@
                 <span class="category-badge">Big Data</span>
                 <span class="category-badge">IoT</span>
             </div>
-            <a href="#" class="btn-primary">Descubre Proyectos</a>
         </div>
     </section>
 
     <section class="featured-projects" id="proyectos">
         <h2 class="section-title">Proyectos Destacados</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <img src="/api/placeholder/400/200" alt="Proyecto IA" class="project-image">
-                <div class="project-info">
-                    <div class="project-category">Inteligencia Artificial</div>
-                    <h3 class="project-title">Sistema de IA para Agricultura Inteligente</h3>
-                    <p>Revolucionando la agricultura con IA predictiva y automatización</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 75%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <span>$75,000 recaudados</span>
-                        <span>75%</span>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="projectsGrid">
+            <?php for ($i = 0; $i < min(count($projects), 3); $i++) :
+                $project = $projects[$i];
+            ?>
+                <!-- Project Card Template -->
+                <div class="project-card" data-categories="<?= esc(implode(',', $project->categoria_nombre)) ?>" data-status="<?= esc($project->ESTADO) ?>" data-name="<?= esc($project->NOMBRE) ?>">
 
-            <div class="project-card">
-                <img src="/api/placeholder/400/200" alt="Proyecto Robótica" class="project-image">
-                <div class="project-info">
-                    <div class="project-category">Robótica</div>
-                    <h3 class="project-title">Robot Asistencial para Hospitales</h3>
-                    <p>Automatización de tareas hospitalarias con robots inteligentes</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 60%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <span>$120,000 recaudados</span>
-                        <span>60%</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="project-card">
-                <img src="/api/placeholder/400/200" alt="Proyecto Big Data" class="project-image">
-                <div class="project-info">
-                    <div class="project-category">Big Data</div>
-                    <h3 class="project-title">Plataforma de Análisis Predictivo</h3>
-                    <p>Solución empresarial basada en análisis de datos masivos</p>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 85%"></div>
-                    </div>
-                    <div class="project-stats">
-                        <span>$170,000 recaudados</span>
-                        <span>85%</span>
+                    <div class="card h-100">
+                        <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+                        <div class="card-body">
+                            <!-- Nombre y Presupuesto -->
+                            <div class="mb-3">
+                                <span class="fw-bold">Nombre del Proyecto: </span><?= esc($project->NOMBRE) ?><br>
+                                <span class="fw-semibold">Objetivo: </span><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $
+                            </div>
+
+                            <?php
+                            // Variables para cálculo
+                            $presupuesto = isset($project->PRESUPUESTO) ? (float)$project->PRESUPUESTO : 0;
+                            $recaudado = isset($project->monto_recaudado) ? (float)str_replace(',', '.', $project->monto_recaudado) : 0;
+
+                            // Calcular el porcentaje de recaudación
+                            $porcentaje = $presupuesto > 0 ? ($recaudado / $presupuesto) * 100 : 0;
+                            $porcentaje = min(max($porcentaje, 0), 100);
+                            ?>
+
+
+                            <!-- Monto recaudado -->
+                            <div class="text-center mb-2">
+                                <span class="text-muted">Recaudado: </span>
+                                <strong><?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</strong>
+                                <span class="text-muted"> de </span>
+                                <strong><?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</strong>
+                            </div>
+
+
+
+                            <!-- Descripción truncada -->
+                            <div class="mt-2">
+                                <span class="text-muted">Descripción: </span><br>
+                                <div class="description-truncate">
+                                    <?= esc(strlen($project->DESCRIPCION) > 80 ? substr($project->DESCRIPCION, 0, 80) . '...' : $project->DESCRIPCION) ?>
+                                </div>
+
+                                <?php if (strlen($project->DESCRIPCION) > 80): ?>
+                                    <button type="button" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
+                                        Ver más...
+                                    </button>
+                                <?php endif; ?>
+
+
+                            </div>
+
+                            <!-- Modal para la descripción completa -->
+                            <div class="modal fade" id="modal-<?= $project->ID_PROYECTO ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $project->ID_PROYECTO ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalLabel-<?= $project->ID_PROYECTO ?>"><?= esc($project->NOMBRE) ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6 class="text-muted">Descripción completa:</h6>
+                                            <p><?= esc($project->DESCRIPCION) ?></p>
+
+                                            <!-- Información adicional en el modal -->
+                                            <h6 class="text-muted mt-3">Detalles del proyecto:</h6>
+                                            <p>Presupuesto total: <?= number_format($project->PRESUPUESTO, 2, ',', '.') ?> $</p>
+                                            <p>Monto recaudado: <?= number_format($project->monto_recaudado, 2, ',', '.') ?> $</p>
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-success"
+                                                    role="progressbar"
+                                                    style="width: <?= round($porcentaje, 1) ?>%"
+                                                    aria-valuenow="<?= round($porcentaje, 1) ?>"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="100">
+                                                    <?= round($porcentaje, 1) ?>%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Footer con categorías y botones -->
+                        <div class="card-footer d-flex justify-content-between align-items-center flex-column">
+                            <!-- Categorías -->
+                            <div class="categories">
+                                <?php foreach ($project->categoria_nombre as $categoria) : ?>
+                                    <span class="badge bg-primary"><?= esc($categoria) ?></span>
+                                <?php endforeach; ?>
+
+                                <!-- Ver más si hay más de 5 categorías -->
+                                <?php if (count($project->categoria_nombre) > 5) : ?>
+                                    <button class="btn btn-sm btn-link" onclick="toggleCategories()">Ver más</button>
+                                    <div id="extraCategories" style="display: none;">
+                                        <?php
+                                        $extraCategories = array_slice($project->categoria_nombre, 5);
+                                        foreach ($extraCategories as $categoria) :
+                                        ?>
+                                            <span class="badge bg-primary"><?= esc($categoria) ?></span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
-            </div>
+            <?php endfor; ?>
         </div>
     </section>
-
     <section class="how-it-works" id="como-funciona">
         <h2 class="section-title">¿Cómo Funciona?</h2>
         <div class="steps-container">
@@ -102,26 +172,25 @@
                 <h3>Invierte</h3>
                 <p>Contribuye al desarrollo tecnológico con inversiones desde que se adaptan a tu bolsillo</p>
             </div>
-            <div class="step-card">
     </section>
 
     <section class="features-section">
-        <h2 class="section-title" style="color: white;">¿Por qué Found4Futures?</h2>
+        <h2 class="section-title" style="color: white;">¿Por qué Impulsa?</h2>
         <div class="features-grid">
             <div class="feature-card">
                 <i class="fas fa-shield-alt step-icon"></i>
                 <h3>Inversiones Seguras</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                <p>Proyectos con bajo riesgo y rentabilidad confiable para cuidar tu inversión. Apuesta por la estabilidad y la transparencia.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-chart-line step-icon"></i>
                 <h3>Alto Potencial</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                <p>Invierte en proyectos emergentes con grandes oportunidades de crecimiento. Sé parte del futuro de las grandes ideas.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-users step-icon"></i>
                 <h3>Comunidad Tech</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                <p>Apoya iniciativas tecnológicas creadas por comunidades con impacto social. Impulsa la innovación y transforma vidas.</p>
             </div>
         </div>
     </section>
@@ -129,7 +198,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h4>Found4Futures</h4>
+                <img src="<?= base_url('/template/dist/assets/img/LogoImpulsa.png') ?>" alt="Logo" class="brand-image opacity-100" style="max-width: 150px;">
                 <p>Impulsando la innovación tecnológica a través del crowdfunding.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-linkedin"></i></a>
@@ -138,7 +207,7 @@
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Explorar</h4>
                 <a href="#">Todos los Proyectos</a>
@@ -147,7 +216,7 @@
                 <a href="#">Big Data</a>
                 <a href="#">IoT</a>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Recursos</h4>
                 <a href="#">Centro de Ayuda</a>
@@ -156,7 +225,7 @@
                 <a href="#">Para Inversores</a>
                 <a href="#">Para Creadores</a>
             </div>
-            
+
             <div class="footer-section">
                 <h4>Legal</h4>
                 <a href="#">Términos y Condiciones</a>
@@ -166,8 +235,9 @@
             </div>
         </div>
         <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-            <p>&copy; 2024 Found4Futures. Todos los derechos reservados.</p>
+            <p>&copy; 2024 Impulsa. Todos los derechos reservados.</p>
         </div>
     </footer>
 </body>
+
 </html>

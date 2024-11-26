@@ -1,4 +1,4 @@
-<div class="content-wrapper" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+<div class="content-wrapper background-impulsa">
     <div class="container-fluid mt-4 px-4">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center bg-light py-3">

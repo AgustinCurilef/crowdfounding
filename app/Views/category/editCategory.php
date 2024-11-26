@@ -1,6 +1,6 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
-    <section class="content" style="padding : 20px; padding-bot : 10hv>
-        <div class="form-container">
+<main class="app-main background-impulsa">
+    <section class="content" style="padding : 20px; padding-bottom : 30vh;">
+        <div class=" form-container">
             <div class="card">
                 <div class="card-header">
                     <h4>Editar Categoría</h4>

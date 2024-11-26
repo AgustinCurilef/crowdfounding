@@ -99,7 +99,7 @@ $routes->get('/', 'HomeController::index');
 
 $routes->get('/login', 'LoginController::login');
 
-$routes->get('/logout', 'LoginController::login');
+$routes->get('/logout', 'LoginController::logout');
 
 $routes->get('/register', 'registerController::register');
 

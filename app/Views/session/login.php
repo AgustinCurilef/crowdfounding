@@ -13,56 +13,57 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/styles/overlayscrollbars.min.css" integrity="sha256-dSokZseQNT08wYEWiz5iLI8QPlKxG+TswNRD8k35cpg=" crossorigin="anonymous"><!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.min.css" integrity="sha256-Qsx5lrStHZyR9REqhUF8iQt73X06c8LGIUPzpOhwRrI=" crossorigin="anonymous"><!--end::Third Party Plugin(Bootstrap Icons)--><!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="<?= base_url('template/dist/css/adminlte.css') ?>"><!--end::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/general.css'); ?>">
 </head> <!--end::Head--> <!--begin::Body-->
 
-<body class="login-page" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+<body class="login-page background-impulsa">
     <div class="login-box">
         <div class="card card-outline card-personalized">
-            <div class="card-header"> 
+            <div class="card-header">
                 <a href="<?= base_url('/') ?>" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
-                    <h1 class="mb-0"> <b>Fund4Futures</b></h1>
-                </a> 
+                    <h1 class="mb-0"> <img src="<?= base_url('/template/dist/assets/img/LogoImpulsa.png') ?>" alt="Logo" class="brand-image opacity-100" style="max-width: 150px;"></h1>
+                </a>
             </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Inicia sesión</p>
                 <form action="<?= base_url('login/authenticate') ?>" method="post">
-    <div class="input-group mb-1">
-        <div class="form-floating">
-            <input id="loginEmail" type="email" class="form-control" name="email" value="" placeholder="">
-            <label for="loginEmail">Email</label>
-        </div>
-        <div class="input-group-text">
-            <span class="bi bi-envelope"></span>
-        </div>
-    </div>
-    <div class="input-group mb-1">
-        <div class="form-floating">
-            <input id="loginPassword" type="password" class="form-control" name="password" placeholder="">
-            <label for="loginPassword">Contraseña</label>
-        </div>
-        <div class="input-group-text">
-            <span class="bi bi-lock-fill"></span>
-        </div>
-    </div>
+                    <div class="input-group mb-1">
+                        <div class="form-floating">
+                            <input id="loginEmail" type="email" class="form-control" name="email" value="" placeholder="">
+                            <label for="loginEmail">Email</label>
+                        </div>
+                        <div class="input-group-text">
+                            <span class="bi bi-envelope"></span>
+                        </div>
+                    </div>
+                    <div class="input-group mb-1">
+                        <div class="form-floating">
+                            <input id="loginPassword" type="password" class="form-control" name="password" placeholder="">
+                            <label for="loginPassword">Contraseña</label>
+                        </div>
+                        <div class="input-group-text">
+                            <span class="bi bi-lock-fill"></span>
+                        </div>
+                    </div>
 
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
-    <?php endif; ?>
+                    <?php if (session()->getFlashdata('error')): ?>
+                        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                    <?php endif; ?>
 
-    <div class="row" style="padding-top: 10px;">
-        <div class="col-8">
-                <p class="mb-0"> <a href="register.html" class="text-center">
-                        <a href="<?= base_url('/register') ?>">Crear cuenta de usuario</a>
-        </div>
-        <div class="col-4">
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Ingresar</button>
-            </div>
-        </div>
-    </div>
-</form>
-               
-                        </div> <!-- /.login-card-body -->
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="col-8">
+                            <p class="mb-0"> <a href="register.html" class="text-center">
+                                    <a href="<?= base_url('/register') ?>">Crear cuenta de usuario</a>
+                        </div>
+                        <div class="col-4">
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Ingresar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div> <!-- /.login-card-body -->
         </div>
     </div> <!-- /.login-box --> <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->

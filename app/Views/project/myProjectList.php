@@ -1,4 +1,4 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+<main class="app-main background-impulsa">
     <!-- Main content -->
     <section class="content" style="padding : 20px; padding-bottom: 55vh;">
         <div class=" container-fluid">
@@ -10,8 +10,6 @@
                         <button class="btn btn-primary" onclick="window.location.href='<?= base_url('/addProyect') ?>'">
                             <i class="fas fa-plus"></i> Nuevo Proyecto
                         </button>
-
-
                     </div>
                 </div>
                 <div class="card-body">

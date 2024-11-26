@@ -1,4 +1,4 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+<main class="app-main background-impulsa">
     <div class="container mt-4" style="min-height: calc(100vh - 200px); ">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">

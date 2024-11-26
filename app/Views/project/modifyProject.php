@@ -1,8 +1,8 @@
 <main class="app-main">
-    <div class="hold-transition sidebar-mini" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
-        <div class="wrapper" style="padding : 20px;>
+    <div class="hold-transition sidebar-mini background-impulsa">
+        <div class="wrapper" style="padding : 20px;">
             <!-- Main content -->
-            <section class="content">
+            <section class=" content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">

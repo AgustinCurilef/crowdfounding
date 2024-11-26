@@ -56,7 +56,7 @@
 <footer>
     <div class="footer-content">
         <div class="footer-section">
-            <h4>Found4Futures</h4>
+            <img src="<?= base_url('/template/dist/assets/img/LogoImpulsa.png') ?>" alt="Logo" class="brand-image opacity-100" style="max-width: 150px;">
             <p>Impulsando la innovación tecnológica a través del crowdfunding.</p>
             <div class="social-links">
                 <a href="#"><i class="fab fa-linkedin"></i></a>
@@ -87,7 +87,7 @@
         </div>
     </div>
     <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <p>&copy; 2024 Found4Futures. Todos los derechos reservados.</p>
+        <p>&copy; 2024 Impulsa. Todos los derechos reservados.</p>
     </div>
 </footer>
 

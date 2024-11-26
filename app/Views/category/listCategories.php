@@ -1,5 +1,5 @@
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
-    <div class="container-fluid mt-4 px-4" style="padding : 20px; padding-bottom: 40vh;">
+<main class="app-main background-impulsa">
+    <div class=" container-fluid mt-4 px-4" style="padding : 20px; padding-bottom: 40vh;">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center bg-light py-3">
                 <h4 class="m-0">Lista de Categorías</h4>

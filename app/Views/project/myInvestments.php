@@ -36,7 +36,7 @@
         width: 120px;
     }
 </style>
-<main class="app-main" style="background: radial-gradient(ellipse, #99CBC8, #199890);">
+<main class="app-main background-impulsa">
     <section class="content" style="padding-top : 20px">
         <div class=" container-fluid">
             <!-- Filtros -->

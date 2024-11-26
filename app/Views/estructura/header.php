@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/explore.css'); ?>">
     <link rel="stylesheet" href="<?php echo base_url('template/dist/css/project/projectList.css'); ?>">
     <link href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="<?php echo base_url('template/dist/css/general.css'); ?>">
 
     <!--js notificaciones-->
     <!-- En tu header o footer -->
