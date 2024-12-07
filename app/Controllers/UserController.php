@@ -75,14 +75,25 @@ class UserController extends BaseController
     public function showImage($idUsuario)
     {
         $userModel = new UserModel();
-        $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+        $imageName = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+        $urlImage = WRITEPATH . 'uploads\\profile_pictures\\' . $imageName;
+        //log_message('si:', $urlImage);
+        if ($imageName) {
 
-        if ($imagenBlob) {
+                    // Obtener el tipo MIME de la imagen
+            $mime = mime_content_type($urlImage);
+
+            // Leer el contenido de la imagen
+            $imageData = file_get_contents($urlImage);
+
             // Especificar el tipo MIME correcto para imágenes JPG
-            return $this->response->setHeader('Content-Type', 'image/jpeg')
-                ->setBody($imagenBlob); // Enviar la imagen al navegador
+            return $this->response
+                ->setHeader('Content-Type', $mime)
+                ->setBody($imageData);// Enviar la imagen al navegador
+                
         } else {
             // Ruta de la imagen por defecto
+            
             $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/foto_perfil_default.jpg';
             
             if (file_exists($defaultImagePath)) {
@@ -100,70 +111,90 @@ class UserController extends BaseController
 
 
     public function saveChanges()
-    {
-        $username = $this->request->getPost('username');
-        $userId = $this->request->getPost('id_usuario'); 
-        $file = $this->request->getFile('foto_perfil');
-        $userModel = new UserModel();
+{
+    $username = $this->request->getPost('username');
+    $userId = $this->request->getPost('id_usuario'); 
+    $file = $this->request->getFile('foto_perfil');
+    $userModel = new UserModel();
 
-        $validationRule = [
-            'foto_perfil' => [
-                'rules' => 'is_image[foto_perfil]|max_size[foto_perfil,2048]|mime_in[foto_perfil,image/jpg,image/jpeg,image/png]',
-                'errors' => [
-                    'is_image' => 'El archivo debe ser una imagen válida.',
-                    'max_size' => 'El tamaño máximo permitido es de 2 MB.',
-                    'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
-                ]
+
+    $validationRule = [
+        'foto_perfil' => [
+            'rules' => 'is_image[foto_perfil]|max_size[foto_perfil,2048]|mime_in[foto_perfil,image/jpg,image/jpeg,image/png]',
+            'errors' => [
+                'is_image' => 'El archivo debe ser una imagen válida.',
+                'max_size' => 'El tamaño máximo permitido es de 2 MB.',
+                'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
             ]
-        ];
-    
-        $userData = [
-            'username' => $this->request->getPost('username'),
-            'nombre' => $this->request->getPost('nombre'),
-            'apellido' => $this->request->getPost('apellido'),
-            'nacionalidad' => $this->request->getPost('nacionalidad'),
-            'fecha_nacimiento' => $this->request->getPost('fecha_nacimiento'),
-            'telefono' => $this->request->getPost('telefono'),
-            'linkedin' => $this->request->getPost('linkedin')
-        ];
-    
-        // Username ya existe, regresar con error
-        if ($userModel->usernameExists($username, $userId)) {
-            return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
-        }
-    
+        ]
+    ];
 
-        if (!$this->validate($validationRule)) {
-            // Obtén los mensajes de error
-            $errors = \Config\Services::validation()->getErrors();
-            
-            // Muestra los errores o redirige con ellos
-            return redirect()->back()->withInput()->with('errors', $errors);
-        }
+    $userData = [
+        'username' => $this->request->getPost('username'),
+        'nombre' => $this->request->getPost('nombre'),
+        'apellido' => $this->request->getPost('apellido'),
+        'nacionalidad' => $this->request->getPost('nacionalidad'),
+        'fecha_nacimiento' => $this->request->getPost('fecha_nacimiento'),
+        'telefono' => $this->request->getPost('telefono'),
+        'linkedin' => $this->request->getPost('linkedin')
+    ];
 
+
+
+    // Username ya existe, regresar con error
+    if ($userModel->usernameExists($username, $userId)) {
+        return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
+    }
+
+    if (!$this->validate($validationRule)) {
+        // Obtén los mensajes de error
+        $errors = \Config\Services::validation()->getErrors();
         
-        // Validación del archivo
-        if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
-    
-            if ($file->isValid()) {
-                $userData['foto_perfil'] = file_get_contents($file->getTempName());
-            } else {
-                return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
+        // Muestra los errores o redirige con ellos
+        return redirect()->back()->withInput()->with('errors', $errors);
+    }
+
+    // Validación del archivo
+    if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
+        if ($file->isValid()) {
+            $uploadPath = WRITEPATH . 'uploads/profile_pictures/'; // Ruta donde se guardará la imagen
+            // Crea el directorio si no existe
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
             }
-        }
-    
-        // Actualizar los datos del usuario
-        $updateSuccess = $userModel->update($userId, $userData);
-    
-        if ($updateSuccess) {
-            $session = session();
-            $userData = $userModel->find($userId);
-            $session->set($userData);
-            return redirect()->to('/editProfile')->with('success', 'Perfil actualizado correctamente.');
+            //verificar si el usuario ya tiene una imagen cargada
+            $imageName = $userModel->getImage($userId); // Obtener imagen BLOB desde el modelo
+            if(empty($imageName)) {
+                $imageName = $file->getRandomName();
+            }
+            else {
+                unlink($uploadPath . $imageName);
+            }
+            // Mueve el archivo al directorio de destino
+            if ($file->move($uploadPath, $imageName)) {
+                // Guarda la ruta de la imagen en el campo correspondiente
+                $userData['foto_perfil'] = $imageName;
+            } else {
+                return redirect()->back()->withInput()->with('error', 'No se pudo mover el archivo subido.');
+            }
         } else {
-            return redirect()->back()->withInput()->with('error', 'No se pudo actualizar.');
+            return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
         }
-    }    
+    }
+
+    // Actualizar los datos del usuario
+    $updateSuccess = $userModel->update($userId, $userData);
+
+    if ($updateSuccess) {
+        $session = session();
+        $userData = $userModel->find($userId);
+        $session->set($userData);
+        return redirect()->to('/editProfile')->with('success', 'Perfil actualizado correctamente.');
+    } else {
+        return redirect()->back()->withInput()->with('error', 'No se pudo actualizar.');
+    }
+}
+
 
     public function delete($id)
     {
