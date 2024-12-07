@@ -3,12 +3,19 @@
         <div class="row">
             <div class="card card-outline card-personalized">
                 <!-- Sidebar con foto de perfil -->
+                <!-- Formulario para editar perfil -->
+                <form action="<?= 'user/saveChanges' ?>" method="POST" enctype="multipart/form-data">
                 <div class="card-body text-center">
-
                     <div class="profile-image-container mb-3">
                         <!-- Mostrar la foto de perfil actual -->
                         <img src="<?= base_url('user/showImage/' . $user['ID_USUARIO']); ?>"
                             class="rounded-circle profile-image" style="border: 4px solid #fff; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); border-color: black" id="profileImagePreview">
+                    </div>
+                    <div class="upload-btn-wrapper">
+                        <label class="upload-btn" for="imageUpload">
+                            <i class="fas fa-upload mr-2"></i> Cargar foto
+                            <input type="file" id="imageUpload" name="foto_perfil" class="form-control" accept="image/*" hidden>
+                        </label>
                     </div>
                 </div>
                 <div class="card-body">
@@ -27,8 +34,7 @@
                             <?= session()->getFlashdata('error') ?>
                         </div>
                     <?php endif; ?>
-                    <!-- Formulario para editar perfil -->
-                    <form action="<?= 'user/saveChanges' ?>" method="POST" enctype="multipart/form-data">
+
                         <input type="hidden" name="id_usuario" value="<?= session()->get('ID_USUARIO'); ?>" />
                         <!-- Información básica -->
                         <div class="mb-4">
@@ -77,20 +83,15 @@
                             </div>
                         </div>
 
-                        <!-- Foto de perfil -->
-                        <div class="mb-4">
-                            <h5>Foto de perfil</h5>
-                            <input type="file" id="foto_perfil" name="foto_perfil" class="form-control" accept="image/*">
-                        </div>
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="<?= base_url('/inicio') ?>" class="btn btn-secondary me-md-2">Cancelar</a>
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                    </form>
-                    <!-- Formulario para eliminar el perfil -->
-                    <form action="<?= base_url('user/delete/') . $user['ID_USUARIO'] ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
-                        <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
-                    </form>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="<?= base_url('/inicio') ?>" class="btn btn-secondary me-md-2">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </form>
+                        <!-- Formulario para eliminar el perfil -->
+                        <form action="<?= base_url('user/delete/') . $user['ID_USUARIO'] ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete your profile? This action cannot be undone.')">
+                            <button type="submit" class="btn btn-danger">Eliminar cuenta</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,7 +99,7 @@
     </div>
     </div>
 </main>
-
+<!--
 <script>
     document.querySelector('input[name="foto_perfil"]').addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -111,6 +112,7 @@
         }
     });
 </script>
+-->
 <script>
     document.getElementById('telefono').addEventListener('input', function(e) {
         let input = e.target.value.replace(/\D/g, ''); // Solo permite números
@@ -130,5 +132,27 @@
         }
 
         e.target.value = formatted;
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+        // Preview de imagen
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('profileImagePreview');
+        const uploadPreviewIcon = document.querySelector('.upload-preview i');
+
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadPreviewIcon.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        })
     });
 </script>
