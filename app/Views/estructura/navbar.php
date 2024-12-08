@@ -47,8 +47,20 @@
                     <p>
                         <!-- Aquí también utilizas la variable para mostrar el nombre -->
                         <?= esc($user_name) ?>
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="star-rating average-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="ms-2 average-rating">(4.2)</span>
+                    </div>
                     </p>
                 </li>
+
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
                 <li class="user-body">

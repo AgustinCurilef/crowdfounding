@@ -84,7 +84,7 @@ class UserController extends BaseController
         } else {
             // Ruta de la imagen por defecto
             $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/foto_perfil_default.jpg';
-            
+
             if (file_exists($defaultImagePath)) {
                 // Leer el contenido de la imagen predeterminada
                 $defaultImage = file_get_contents($defaultImagePath);
@@ -102,7 +102,7 @@ class UserController extends BaseController
     public function saveChanges()
     {
         $username = $this->request->getPost('username');
-        $userId = $this->request->getPost('id_usuario'); 
+        $userId = $this->request->getPost('id_usuario');
         $file = $this->request->getFile('foto_perfil');
         $userModel = new UserModel();
 
@@ -116,7 +116,7 @@ class UserController extends BaseController
                 ]
             ]
         ];
-    
+
         $userData = [
             'username' => $this->request->getPost('username'),
             'nombre' => $this->request->getPost('nombre'),
@@ -126,35 +126,35 @@ class UserController extends BaseController
             'telefono' => $this->request->getPost('telefono'),
             'linkedin' => $this->request->getPost('linkedin')
         ];
-    
+
         // Username ya existe, regresar con error
         if ($userModel->usernameExists($username, $userId)) {
             return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
         }
-    
+
 
         if (!$this->validate($validationRule)) {
             // Obtén los mensajes de error
             $errors = \Config\Services::validation()->getErrors();
-            
+
             // Muestra los errores o redirige con ellos
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-        
+
         // Validación del archivo
         if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
-    
+
             if ($file->isValid()) {
                 $userData['foto_perfil'] = file_get_contents($file->getTempName());
             } else {
                 return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
             }
         }
-    
+
         // Actualizar los datos del usuario
         $updateSuccess = $userModel->update($userId, $userData);
-    
+
         if ($updateSuccess) {
             $session = session();
             $userData = $userModel->find($userId);
@@ -163,7 +163,7 @@ class UserController extends BaseController
         } else {
             return redirect()->back()->withInput()->with('error', 'No se pudo actualizar.');
         }
-    }    
+    }
 
     public function delete($id)
     {
@@ -174,5 +174,15 @@ class UserController extends BaseController
         } else {
             return redirect()->to('/editProfile')->with('error', 'No se pudo eliminar el usuario.');
         }
+    }
+    public function scoreEntrepreneur()
+    {
+        $data = ['title' => 'Home', 'user_name' => $this->user['USERNAME']];
+
+        return view('estructura/header', $data)
+            . view('estructura/navbar', $data)
+            . view('estructura/sidebar')
+            . view('user/scoreEntrepreneur', $data)
+            . view('estructura/footer');
     }
 }

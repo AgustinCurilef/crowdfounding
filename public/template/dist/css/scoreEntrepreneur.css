@@ -1,0 +1,87 @@
+ .profile-container {
+
+     max-width: 500px;
+     min-width: 400px;
+     margin: 50px auto;
+     background-color: white;
+     border: 2px solid #199890;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+     border-radius: 12px;
+     overflow: hidden;
+
+     /* Nuevo código */
+     min-height: 450px;
+     /* Altura mínima para que no colapse */
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     /* Distribuye elementos uniformemente */
+ }
+
+ .profile-header {
+     background-color: #199890;
+     color: white;
+     text-align: center;
+     padding: 20px;
+ }
+
+ .profile-photo {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     object-fit: cover;
+     border: 3px solid white;
+     margin-bottom: 10px;
+ }
+
+ .profile-name {
+     font-size: 20px;
+     font-weight: bold;
+     margin-bottom: 5px;
+ }
+
+ .profile-description {
+     font-size: 14px;
+     color: #e0f7f4;
+ }
+
+ .rating-section {
+     padding: 20px;
+     text-align: center;
+ }
+
+ .star-rating {
+     font-size: 24px;
+     color: #ddd;
+     /* Color gris claro por defecto */
+     cursor: pointer;
+     transition: color 0.2s;
+ }
+
+ .star-rating.hover,
+ .star-rating.active {
+     color: #199890;
+     /* Color verde resaltado */
+ }
+
+
+ .average-rating {
+     font-size: 16px;
+     color: #65676b;
+     margin-top: 10px;
+ }
+
+ .submit-rating {
+     background-color: #199890;
+     color: white;
+     border: none;
+     padding: 10px 20px;
+     font-size: 16px;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+ }
+
+ .submit-rating:hover {
+     background-color: #157f71;
+ }

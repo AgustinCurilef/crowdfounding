@@ -109,3 +109,5 @@ $routes->get('/unauthorized', 'LoginController::unauthorized');
 /*Registro*/
 
 $routes->post('/register', 'registerController::store');
+
+$routes->get('/profile', 'UserController::scoreEntrepreneur');
