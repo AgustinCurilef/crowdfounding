@@ -16,6 +16,31 @@ class ProjectController extends BaseController
         // Inicializa el modelo de usuario una sola vez en el constructor
         $this->user = session()->get();
     }
+
+    public function showFront($idProyect)
+    {
+        $projectModel = new ProjectModel();
+        $imageName = $projectModel->getImage($idProyect); // Obtener imagen BLOB desde el modelo
+        $urlImage = WRITEPATH . 'uploads\\proyecto\\portada\\' . $imageName;
+        //log_message('si:', $urlImage);
+        if ($imageName) {
+
+                    // Obtener el tipo MIME de la imagen
+            $mime = mime_content_type($urlImage);
+
+            // Leer el contenido de la imagen
+            $imageData = file_get_contents($urlImage);
+
+            // Especificar el tipo MIME correcto para imágenes JPG
+            return $this->response
+                ->setHeader('Content-Type', $mime)
+                ->setBody($imageData);// Enviar la imagen al navegador
+                
+        } else {
+            return $this->response->setStatusCode(404, 'Default image not found');
+        }      
+    }
+
     public function listAllProjects(): String
     {
         $ProjectModel = new ProjectModel();
@@ -31,8 +56,8 @@ class ProjectController extends BaseController
         ];
 
         foreach ($projects as $project) {
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen);
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA);
             } else {
                 $project->imagen_base64 = ''; // Si no hay imagen, asignar vacío
             }
@@ -139,31 +164,17 @@ class ProjectController extends BaseController
         // Validar la imagen si se ha cargado
         $file = $this->request->getFile('portada');
         $imageName = null;
-
-        if ($file && $file->isValid() && !$file->hasMoved()) {
-            log_message('debug', 'Imagen subida: ' . $file->getName()); // Nombre del archivo
-            log_message('debug', 'Tamaño de la imagen: ' . $file->getSize() . ' bytes'); // Tamaño del archivo
-            log_message('debug', 'Tipo MIME de la imagen: ' . $file->getMimeType()); // Tipo MIME
-
+        if ($file && $file->isValid()) {
             if (!$this->validate($validationRule)) {
-                log_message('debug', 'no paso la valicion de las reglas: ' . $file->getMimeType()); // Tipo MIME
-
                 return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
             }
-
+            $uploadPath = WRITEPATH . 'uploads/proyecto/portada';
             // Generar un nombre único para la imagen y moverla a la carpeta de subida
-            $imageName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $imageName);
-            // Leer el contenido binario del archivo
-            $imagePath = WRITEPATH . 'uploads/' . $imageName;
-            $imageData = file_get_contents($imagePath);
-
-            // Verificar si la imagen se cargó correctamente
-            if ($imageData === false) {
-                log_message('debug', 'Error al leer la imagen desde: ' . $imagePath);
-            } else {
-                log_message('debug', 'Imagen cargada correctamente, tamaño: ' . strlen($imageData) . ' bytes');
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
             }
+            $imageName = $file->getRandomName();
+            $file->move($uploadPath, $imageName);
         }
         // Recogemos los datos del formulario
         $data = [
@@ -177,7 +188,7 @@ class ProjectController extends BaseController
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
             'ESTADO' => $this->request->getPost('ESTADO'),
-            'ARCHIVO' => $imageData
+            'PORTADA' => $imageName // Puede ser null si no se subió imagen
 
         ];
         $projectModel = new ProjectModel();
@@ -220,11 +231,12 @@ class ProjectController extends BaseController
             . view('estructura/footer');
     }
 
-
-
+    
+    
     public function updateProject($id)
     {
         // Configuración para la subida del archivo
+        $projectModel = new ProjectModel();
         $validationRule = [
             'portada' => [
                 'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
@@ -237,9 +249,6 @@ class ProjectController extends BaseController
             ]
         ];
 
-        // Inicializa $imageData como null por defecto
-        $imageData = null;
-
         // Validar la imagen si se ha cargado
         $file = $this->request->getFile('portada');
 
@@ -249,21 +258,19 @@ class ProjectController extends BaseController
                 log_message('debug', 'no pasó la validación de las reglas: ' . $file->getMimeType()); // Tipo MIME
                 return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
             }
-
-            // Generar un nombre único para la imagen y moverla a la carpeta de subida
-            $imageName = $file->getRandomName();
-            $file->move(WRITEPATH . 'uploads', $imageName);
-
-            // Leer el contenido binario del archivo
-            $imagePath = WRITEPATH . 'uploads/' . $imageName;
-            $imageData = file_get_contents($imagePath);
-
-            // Verificar si la imagen se cargó correctamente
-            if ($imageData === false) {
-                log_message('error', 'Error al cargar la imagen.');
-            } else {
-                log_message('debug', 'Imagen cargada correctamente, tamaño: ' . strlen($imageData) . ' bytes');
+            $uploadPath = WRITEPATH . 'uploads/proyecto/portada/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
             }
+            $imageName = $projectModel->getImage($id);
+            // Generar un nombre único para la imagen y moverla a la carpeta de subida
+            if(empty($imageName)) {
+                $imageName = $file->getRandomName();
+            }
+            else {
+                unlink($uploadPath . $imageName);
+            }
+            $file->move($uploadPath, $imageName);
         }
 
         // Recogemos los datos del formulario
@@ -279,14 +286,16 @@ class ProjectController extends BaseController
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
             'ESTADO' => $this->request->getPost('ESTADO'),
-            'ARCHIVO' => $imageData // Puede ser null si no se subió imagen
+            'PORTADA' => $imageName // Puede ser null si no se subió imagen
         ];
-
-        $projectModel = new ProjectModel();
-        if ($projectModel->updateProject($data)) {
+        $updateSuccess = $projectModel->updateProject($data);
+        if ($updateSuccess) {
             return redirect()->to('/myprojects')->with('success', 'Proyecto guardado exitosamente.');
         } else {
-            return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto.');
+            $dbError = $projectModel->db->error(); // Retorna un array con 'code' y 'message'
+            // Registrar o mostrar el error
+            log_message('error', 'Error en la actualización del proyecto: ' . $dbError['message']);
+            return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto. Error: ' . $dbError['message']);
         }
     }
 

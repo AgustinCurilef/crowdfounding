@@ -63,6 +63,8 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
 
+    $routes->get('/project/showFront/(:num)', 'ProjectController::showFront/$1');
+
 
 
 

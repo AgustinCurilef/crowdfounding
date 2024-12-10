@@ -58,10 +58,8 @@
                 <?php foreach ($projects as $project) : ?>
                     <!-- Project Card Template -->
                     <div class="project-card" data-categories="<?= esc(implode(',', $project->categoria_nombre)) ?>" data-status="<?= esc($project->ESTADO) ?>" data-name="<?= esc($project->NOMBRE) ?>">
-
-
                         <div class="card h-100">
-                            <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+                            <img class="card-img-top" src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>" alt="Project Image">
                             <div class="card-body">
                                 <!-- Nombre y Presupuesto -->
                                 <div class="mb-3">

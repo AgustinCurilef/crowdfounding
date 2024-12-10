@@ -20,8 +20,8 @@ class HomeController extends BaseController
         ];
 
         foreach ($projects as $project) {
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen);
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA);
             } else {
                 $project->imagen_base64 = ''; // Si no hay imagen, asignar vacío
             }

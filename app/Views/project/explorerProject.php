@@ -58,7 +58,7 @@
                     <div class="project-card" data-categories="<?= esc(implode(',', $project->categoria_nombre)) ?>" data-status="<?= esc($project->habilitadoParaInversion) ?>" data-name="<?= esc($project->NOMBRE) ?>">
                         <div class="card h-100">
                             <div>
-                                <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+                                <img class="card-img-top" src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>" alt="Project Image">
 
                             </div>
                             <div class="card-body">
