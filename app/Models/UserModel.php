@@ -14,10 +14,10 @@ class UserModel extends Model
     public function getUserByEmail($email)
     {
         return $this->db->table('usuarios')
-                        ->select('ID_USUARIO, USERNAME, EMAIL, NOMBRE, APELLIDO, CONTRASENIA, FECHA_NACIMIENTO, NACIONALIDAD, LINKEDIN, TELEFONO, ROL') // Excluye FOTO_PERFIL
-                        ->where('email', $email)
-                        ->get()
-                        ->getRowArray();
+            ->select('ID_USUARIO, USERNAME, EMAIL, NOMBRE, APELLIDO, CONTRASENIA, FECHA_NACIMIENTO, NACIONALIDAD, LINKEDIN, TELEFONO, ROL') // Excluye FOTO_PERFIL
+            ->where('email', $email)
+            ->get()
+            ->getRowArray();
     }
 
     public function getImage($idUsuario)
@@ -44,5 +44,14 @@ class UserModel extends Model
         }
 
         return $query->countAllResults() > 0;
+    }
+    public function
+    getUserByNickname($nickname_user)
+    {
+        return $this->db->table('usuarios')
+            ->select('ID_USUARIO, USERNAME, EMAIL, NOMBRE, APELLIDO, CONTRASENIA, FECHA_NACIMIENTO, NACIONALIDAD, LINKEDIN, TELEFONO, ROL') // Excluye FOTO_PERFIL
+            ->where('username', $nickname_user)
+            ->get()
+            ->getRowArray();
     }
 }

@@ -32,8 +32,10 @@
                                                 <i class="fas fa-upload mr-2"></i>CARGAR PORTADA
                                                 <input type="file" id="imageUpload" name="portada" accept="image/*" hidden>
                                             </label>
+                                            <div id="error-message" style="color: red; display: none;">Por favor, cargue una imagen de portada.</div>
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <!-- Columna izquierda: Nombre, Presupuesto y Fecha -->
                                         <div class="col-md-6">
@@ -147,7 +149,7 @@
                                             <button type="button" class="btn btn-secondary mr-2" id="cancelButton">
                                                 <i class="fas fa-times mr-2"></i>Cancelar
                                             </button>
-                                            <button type="submit" class="btn btn-primary btn-submit">
+                                            <button type="submit" class="btn btn-primary btn-submit" id="submitButton">
                                                 <i class="fas fa-check mr-2"></i>Confirmar
                                             </button>
                                         </div>
@@ -210,5 +212,27 @@
                 uploadPreviewIcon.style.display = 'block';
             }
         });
+    });
+
+    document.getElementById("submitButton").addEventListener("click", function(event) {
+        var imageInput = document.getElementById("imageUpload");
+        var errorMessage = document.getElementById("error-message");
+
+        // Si no hay archivos seleccionados, muestra el mensaje de error
+        if (!imageInput.files.length) {
+            errorMessage.style.display = "block"; // Muestra el mensaje de error
+            imageInput.style.border = "2px solid red"; // Resalta el campo con borde rojo
+
+            // Desplaza hacia el mensaje de error
+            errorMessage.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+            event.preventDefault(); // Prevenir el envío del formulario
+        } else {
+            errorMessage.style.display = "none"; // Oculta el mensaje de error
+            imageInput.style.border = ""; // Restaura el borde original
+        }
     });
 </script>

@@ -92,11 +92,12 @@
                                 <tr>
                                     <td class="project-name">
                                         <div class="d-flex align-items-center">
-                                            <?php if (isset($project->imagen_base64)) : ?>
-                                                <img src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>"
-                                                    class="rounded me-2"
-                                                    style="width: 50px; height: 50px; object-fit: cover;">
-                                            <?php endif; ?>
+
+                                            <img src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>"
+                                                class="rounded me-2"
+                                                style="width: 50px; height: 50px; object-fit: cover;">
+
+
                                             <div>
                                                 <strong><?= esc($project->NOMBRE) ?></strong>
                                                 <div class="description-cell">

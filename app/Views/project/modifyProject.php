@@ -27,7 +27,7 @@
                                         <div class="text-center mb-4">
                                             <div class="upload-preview-wrapper mb-3">
                                                 <!-- Imagen con clase miniatura -->
-                                                <img class="image-thumbnail" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image" id="imagePreview">
+                                                <img class="image-thumbnail" src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>" alt="Project Image" id="imagePreview">
                                             </div>
                                             <div class="upload-btn-wrapper">
                                                 <label class="upload-btn" for="imageUpload">

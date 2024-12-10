@@ -63,7 +63,10 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
 
+    $routes->get('/project/showFront/(:num)', 'ProjectController::showFront/$1');
 
+    $routes->get('project/details/(:num)', 'ProjectController::details/$1');
+    $routes->get('project/showFrontUpdates/(:num)/(:num)/(:any)', 'ProjectController::showFrontUpdates/$1/$2/$3');
 
 
 
@@ -110,4 +113,6 @@ $routes->get('/unauthorized', 'LoginController::unauthorized');
 
 $routes->post('/register', 'registerController::store');
 
-$routes->get('/profile', 'UserController::scoreEntrepreneur');
+$routes->get('/profile/(:segment)', 'UserController::scoreEntrepreneur/$1');
+
+$routes->post('rating/submit', 'UserController::submitRating');

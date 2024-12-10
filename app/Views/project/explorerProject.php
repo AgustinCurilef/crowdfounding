@@ -58,7 +58,7 @@
                     <div class="project-card" data-categories="<?= esc(implode(',', $project->categoria_nombre)) ?>" data-status="<?= esc($project->habilitadoParaInversion) ?>" data-name="<?= esc($project->NOMBRE) ?>">
                         <div class="card h-100">
                             <div>
-                                <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+                                <img class="card-img-top" src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>" alt="Project Image">
 
                             </div>
                             <div class="card-body">
@@ -112,6 +112,9 @@
                                         <button type="button" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
                                             Ver más...
                                         </button>
+                                        <a href="<?= base_url('project/details/' . $project->ID_PROYECTO) ?>" class="btn btn-link p-0 mt-2">
+                                            Ver más...
+                                        </a>
                                     <?php endif; ?>
 
 

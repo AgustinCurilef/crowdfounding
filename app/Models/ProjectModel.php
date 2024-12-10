@@ -15,7 +15,7 @@ class ProjectModel extends Model
     protected $returnType     =  'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO', 'PRESUPUESTO', 'OBJETIVO', 'DESCRIPCION', 'FECHA_LIMITE', 'RECOMPENSAS', 'SITIO_WEB', 'ESTADO'];
+    protected $allowedFields = ['NOMBRE', 'USERNAME_USUARIO', 'PRESUPUESTO', 'OBJETIVO', 'DESCRIPCION', 'FECHA_LIMITE', 'RECOMPENSAS', 'SITIO_WEB', 'ESTADO', 'PORTADA'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -26,12 +26,25 @@ class ProjectModel extends Model
     protected $validationMessages = [];
     protected $skipValidation     = false;
 
+    public function getImage($idProject)
+    {
+        $builder = $this->builder();
+        $builder->select('portada');
+        $builder->where('ID_PROYECTO', $idProject);
+        $query = $builder->get();
+
+        if ($query->getNumRows() > 0) {
+            $row = $query->getRow();
+            return $row->portada; // Devuelve el BLOB de la imagen
+        }
+
+        return null; // Si no se encuentra la imagen
+    }
 
     public function getProjects()
     {
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen'); // Seleccionamos el BLOB de la imagen
-        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
+        $builder->select('proyectos.*'); // Seleccionamos el BLOB de la imagen
 
         // Filtrar proyectos con estado = true (1)
         $builder->where('proyectos.ESTADO', true); // Aquí usamos true para filtrar los proyectos con ESTADO = 1
@@ -56,8 +69,8 @@ class ProjectModel extends Model
 
             // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
             // Convertir la imagen a formato base64 si existe
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen);
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA);
             }
         }
 
@@ -67,8 +80,7 @@ class ProjectModel extends Model
     public function getProject($id)
     {
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*, imagenes_proyecto.ARCHIVO AS imagen');
-        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
+        $builder->select('proyectos.*'); // Unimos con la tabla de imágenes
         $builder->join('usuarios', 'proyectos.USERNAME_USUARIO = usuarios.USERNAME');
 
         $builder->where('proyectos.USERNAME_USUARIO', $id);
@@ -84,8 +96,8 @@ class ProjectModel extends Model
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
             // Aquí puedes optar por procesar o mostrar la imagen, por ejemplo:
             // Si quieres convertir el BLOB a un formato adecuado para mostrarlo como imagen:
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA); // Convierte a base64 para mostrar en HTML
             }
         }
 
@@ -133,10 +145,10 @@ class ProjectModel extends Model
                             'ID_CATEGORIA' => $categoryId
                         ];
                     }
-
                     // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
                     $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
                 }
+                /*
                 // Insertar la imagen en la tabla 'imagenes_proyecto'
                 if (!empty($data['ARCHIVO'])) {
                     // Preparar los datos para la tabla 'imagenes_proyecto'
@@ -148,15 +160,13 @@ class ProjectModel extends Model
 
                     // Insertar la imagen en la tabla 'imagenes_proyecto'
                     $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
-                }
-
-                // Si todo fue exitoso, retornar true
-                return true;
+                */
             }
+            // Si todo fue exitoso, retornar true
+            return true;
         } catch (\Exception $e) {
             log_message('error', 'Error al guardar el proyecto o en la tabla intermedia: ' . $e->getMessage());
         }
-
         return false;
     }
 
@@ -169,10 +179,8 @@ class ProjectModel extends Model
         $builder = $this->db->table('inversiones');
         $builder->select('proyectos.*, inversiones.MONTO as monto_invertido, 
                          (SELECT SUM(MONTO) FROM inversiones 
-                          WHERE ID_PROYECTO = proyectos.ID_PROYECTO) as monto_recaudado,
-                          imagenes_proyecto.ARCHIVO AS imagen');
-        $builder->join('proyectos', 'inversiones.ID_PROYECTO = proyectos.ID_PROYECTO');
-        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
+                          WHERE ID_PROYECTO = proyectos.ID_PROYECTO) as monto_recaudado');
+        $builder->join('proyectos', 'inversiones.ID_PROYECTO = proyectos.ID_PROYECTO'); // Unimos con la tabla de imágenes
         $builder->where('inversiones.ID_USUARIO', $userId);
         $query = $builder->get();
         $projects = $query->getResult();
@@ -183,8 +191,8 @@ class ProjectModel extends Model
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             // Calculamos el porcentaje de progreso
             $project->porcentaje_progreso = ($project->monto_recaudado / $project->PRESUPUESTO) * 100;
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA ); // Convierte a base64 para mostrar en HTML
             }
         }
 
@@ -196,17 +204,16 @@ class ProjectModel extends Model
     {
         // Construimos la consulta para obtener un proyecto por su ID
         $builder = $this->db->table('proyectos');
-        $builder->select('proyectos.*, proyecto_categoria.ID_CATEGORIA, categorias.nombre AS categoria_nombre, imagenes_proyecto.ARCHIVO AS imagen');
+        $builder->select('proyectos.*, proyecto_categoria.ID_CATEGORIA, categorias.nombre AS categoria_nombre');
         $builder->join('proyecto_categoria', 'proyectos.ID_PROYECTO = proyecto_categoria.ID_PROYECTO', 'left');
         $builder->join('categorias', 'proyecto_categoria.ID_CATEGORIA = categorias.ID_CATEGORIA', 'left');
-        $builder->join('imagenes_proyecto', 'imagenes_proyecto.ID_PROYECTO = proyectos.ID_PROYECTO', 'left'); // Unimos con la tabla de imágenes
         $builder->where('proyectos.ID_PROYECTO', $id); // Filtramos por el ID del proyecto
         $query = $builder->get();
         $project = $query->getResult();
         foreach ($project as $project) {
 
-            if ($project->imagen) {
-                $project->imagen_base64 = base64_encode($project->imagen); // Convierte a base64 para mostrar en HTML
+            if ($project->PORTADA) {
+                $project->imagen_base64 = base64_encode($project->PORTADA); // Convierte a base64 para mostrar en HTML
             }
         }
         return $project;
@@ -242,27 +249,27 @@ class ProjectModel extends Model
                             'ID_CATEGORIA' => $categoryId
                         ];
                     }
-
-                    // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
-                    $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
-                }
-                // Insertar la imagen en la tabla 'imagenes_proyecto'
-                if (!empty($data['ARCHIVO'])) {
-                    // Preparar los datos para la tabla 'imagenes_proyecto'
-                    $this->db->table('imagenes_proyecto')->where('ID_PROYECTO', $id)->delete();
-                    $imageDataInsert = [
-                        'NOMBRE_PROYECTO' => $data['NOMBRE'],
-                        'ID_PROYECTO' => $id,
-                        'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
-                    ];
-
+                        // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                        $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                    }
+                    /*
                     // Insertar la imagen en la tabla 'imagenes_proyecto'
-                    $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
-                }
+                    if (!empty($data['ARCHIVO'])) {
+                        // Preparar los datos para la tabla 'imagenes_proyecto'
+                        $this->db->table('imagenes_proyecto')->where('ID_PROYECTO', $id)->delete();
+                        $imageDataInsert = [
+                            'NOMBRE_PROYECTO' => $data['NOMBRE'],
+                            'ID_PROYECTO' => $id,
+                            'ARCHIVO' => $data['ARCHIVO'] // Aquí guardamos los datos binarios de la imagen
+                        ];
 
-                // Si la actualización fue exitosa, retornar true
-                return true;
-            }
+                        // Insertar la imagen en la tabla 'imagenes_proyecto'
+                        $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
+                    }
+                    */
+                    // Si la actualización fue exitosa, retornar true
+                    return true;
+                }
         } catch (\Exception $e) {
             log_message('error', 'Error al actualizar el proyecto o en la tabla intermedia: ' . $e->getMessage());
         }

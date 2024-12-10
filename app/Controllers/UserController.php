@@ -5,11 +5,11 @@ namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
 use App\Models\UserModel;
+use App\Models\PuntuarUsuarioModel;
 
 class UserController extends BaseController
-
 {
-    protected  $user;
+    protected $user;
 
     public function __construct()
     {
@@ -17,9 +17,7 @@ class UserController extends BaseController
         $this->user = session()->get();
     }
 
-
     public function index(): String
-
     {
         // Obtener el ID de usuario de la sesión
         $data = ['title' => 'Home', 'user_name' => $this->user['USERNAME']];
@@ -32,12 +30,10 @@ class UserController extends BaseController
 
     public function editProfile(): String
     {
-
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-
 
         $data = [
             'title' => 'Mis Proyectos',
@@ -51,6 +47,7 @@ class UserController extends BaseController
             'max-age' => 0, // No cache
             'no-store' => true, // No almacenar
         ]);
+
         return view('estructura/header', $data)
             . view('estructura/navbar', $data)
             . view('estructura/sidebar')
@@ -58,29 +55,24 @@ class UserController extends BaseController
             . view('estructura/footer');
     }
 
-    /*public function showImage($idUsuario)
-    {
-        $userModel = new UserModel();
-        $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
-
-        if ($imagenBlob) {
-            // Especificar el tipo MIME correcto para imágenes JPG
-            return $this->response->setHeader('Content-Type', 'image/jpeg')
-                ->setBody($imagenBlob); // Enviar la imagen al navegador
-        } else {
-            return $this->response->setStatusCode(404); // Imagen no encontrada
-        }
-    }*/
-
     public function showImage($idUsuario)
     {
         $userModel = new UserModel();
-        $imagenBlob = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+        $imageName = $userModel->getImage($idUsuario); // Obtener imagen BLOB desde el modelo
+        $urlImage = WRITEPATH . 'uploads\\profile_pictures\\' . $imageName;
 
-        if ($imagenBlob) {
-            // Especificar el tipo MIME correcto para imágenes JPG
-            return $this->response->setHeader('Content-Type', 'image/jpeg')
-                ->setBody($imagenBlob); // Enviar la imagen al navegador
+        if ($imageName) {
+            // Obtener el tipo MIME de la imagen
+            $mime = mime_content_type($urlImage);
+
+            // Leer el contenido de la imagen
+            $imageData = file_get_contents($urlImage);
+
+            // Especificar el tipo MIME correcto para imágenes
+            return $this->response
+                ->setHeader('Content-Type', $mime)
+                ->setBody($imageData); // Enviar la imagen al navegador
+
         } else {
             // Ruta de la imagen por defecto
             $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/foto_perfil_default.jpg';
@@ -97,7 +89,6 @@ class UserController extends BaseController
             }
         }
     }
-
 
     public function saveChanges()
     {
@@ -132,7 +123,6 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('error', 'El username ya está en uso.');
         }
 
-
         if (!$this->validate($validationRule)) {
             // Obtén los mensajes de error
             $errors = \Config\Services::validation()->getErrors();
@@ -141,12 +131,28 @@ class UserController extends BaseController
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-
         // Validación del archivo
         if ($file->getError() !== UPLOAD_ERR_NO_FILE) { // Verifica si el archivo fue cargado
-
             if ($file->isValid()) {
-                $userData['foto_perfil'] = file_get_contents($file->getTempName());
+                $uploadPath = WRITEPATH . 'uploads/profile_pictures/'; // Ruta donde se guardará la imagen
+                // Crea el directorio si no existe
+                if (!is_dir($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                // Verificar si el usuario ya tiene una imagen cargada
+                $imageName = $userModel->getImage($userId); // Obtener imagen
+                if (empty($imageName)) {
+                    $imageName = $file->getRandomName();
+                } else {
+                    unlink($uploadPath . $imageName);
+                }
+                // Mueve el archivo al directorio de destino
+                if ($file->move($uploadPath, $imageName)) {
+                    // Guarda la ruta de la imagen en el campo correspondiente
+                    $userData['foto_perfil'] = $imageName;
+                } else {
+                    return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
+                }
             } else {
                 return redirect()->back()->withInput()->with('error', 'El archivo subido no es válido.');
             }
@@ -167,7 +173,7 @@ class UserController extends BaseController
 
     public function delete($id)
     {
-        $userModel = new UserModel();;
+        $userModel = new UserModel();
 
         if ($userModel->delete($id)) {
             return redirect()->to('/')->with('success', 'Usuario eliminado correctamente.');
@@ -175,14 +181,52 @@ class UserController extends BaseController
             return redirect()->to('/editProfile')->with('error', 'No se pudo eliminar el usuario.');
         }
     }
-    public function scoreEntrepreneur()
+
+    public function scoreEntrepreneur($nickname_user)
     {
-        $data = ['title' => 'Home', 'user_name' => $this->user['USERNAME']];
+        $userModel = new UserModel();
+        $emprendedor = $userModel->getUserByNickname($nickname_user);
+        $data = [
+            'title' => 'Home',
+            'user_name' => $this->user['USERNAME'],
+            'emprendedor' => $emprendedor
+        ];
 
         return view('estructura/header', $data)
             . view('estructura/navbar', $data)
             . view('estructura/sidebar')
             . view('user/scoreEntrepreneur', $data)
             . view('estructura/footer');
+    }
+    public function submitRating()
+    {
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+
+        $data = $this->request->getJSON(true);
+        $idUsuarioPuntador = $data['id_usuario_puntador'];
+        $idUsuarioPuntuado = $data['id_usuario_puntuado'];
+        $puntaje = $data['puntaje'];
+
+        // Validaciones
+        if ($idUsuarioPuntador === $idUsuarioPuntuado) {
+            return $this->response->setJSON(['success' => false, 'message' => 'No puedes calificarte a ti mismo.']);
+        }
+
+        // Lógica de almacenamiento de calificación
+        $resultado = $puntuarUsuarioModel->insert([
+            'id_usuario_puntador' => $idUsuarioPuntador,
+            'id_usuario_puntuado' => $idUsuarioPuntuado,
+            'puntaje' => $puntaje
+        ]);
+
+        // Calcula promedio y número de votos
+        $promedio = $puntuarUsuarioModel->getPromedioPuntuacion($idUsuarioPuntuado);
+        $totalVotos = $puntuarUsuarioModel->getNumeroVotos($idUsuarioPuntuado);
+
+        return $this->response->setJSON([
+            'success' => $resultado,
+            'promedio' => $promedio,
+            'totalVotos' => $totalVotos
+        ]);
     }
 }
