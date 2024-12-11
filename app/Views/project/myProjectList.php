@@ -98,22 +98,37 @@
                                     </div>
                                 </div>
 
-                                <!-- Descripción truncada -->
                                 <div class="mt-2">
                                     <span class="text-muted">Descripción: </span><br>
                                     <div class="description-truncate">
                                         <?= esc(strlen($project->DESCRIPCION) > 80 ? substr($project->DESCRIPCION, 0, 80) . '...' : $project->DESCRIPCION) ?>
                                     </div>
+                                    <div class="description-full d-flex justify-content-between align-items-center mt-2">
+                                        <?php if (strlen($project->DESCRIPCION) > 80): ?>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
+                                                Resumen
+                                            </button>
 
-                                    <?php if (strlen($project->DESCRIPCION) > 80): ?>
-                                        <button type="button" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
-                                            Ver más...
+                                        <?php endif; ?>
+                                        <a href="<?= base_url('project/details/' . $project->ID_PROYECTO) ?> "
+                                            class="btn btn-outline-primary btn-sm me-2">
+                                            Actualizaciones
+                                        </a></span></p>
+
+                                        <button class="btn btn-outline-danger btn-sm toggle-visibility"
+                                            data-project-id="<?= $project->ID_PROYECTO ?>"
+                                            data-visible="<?= $project->ESTADO ?>"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title="<?= $project->ESTADO == '1' ? 'Ocultar' : 'Mostrar' ?>">
+                                            <i class="bi <?= $project->ESTADO == '1' ? 'bi-eye' : 'bi-eye-slash' ?>"></i>
                                         </button>
-                                    <?php endif; ?>
+
+
+                                    </div>
 
 
                                 </div>
-
                                 <!-- Modal para la descripción completa -->
                                 <div class="modal fade" id="modal-<?= $project->ID_PROYECTO ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $project->ID_PROYECTO ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                     <div class="modal-dialog">
@@ -174,13 +189,36 @@
 
                                 <!-- Botones de acción -->
                                 <div class="btn-group">
-                                    <a href="<?= base_url('modifyProject/' . $project->ID_PROYECTO) ?>" class="btn btn-sm btn-info">
-                                        <i class="fas fa-edit"></i>
+                                    <!-- Botón Editar -->
+                                    <a href="<?= base_url('modifyProject/' . $project->ID_PROYECTO) ?>"
+                                        class="btn  btn-info d-flex align-items-center"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Editar proyecto">
+                                        <i class="fas fa-edit me-2"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('<?= base_url('deleteProject/' . $project->ID_PROYECTO) ?>')">
-                                        <i class="fas fa-trash"></i>
+
+                                    <!-- Botón Eliminar -->
+                                    <button type="button"
+                                        class="btn  btn-danger d-flex align-items-center"
+                                        onclick="confirmDelete('<?= base_url('deleteProject/' . $project->ID_PROYECTO) ?>')"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Eliminar proyecto">
+
+                                        <i class="fas fa-trash me-2"></i>
                                     </button>
+
+                                    <!-- Botón Publicar Actualización -->
+                                    <a href="<?= base_url('shareUpdateProject/' . $project->ID_PROYECTO) ?>"
+                                        class="btn  btn-success d-flex align-items-center"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        title="Publicar una actualización">
+                                        <i class="fas fa-plus-square me-2"></i>
+                                    </a>
                                 </div>
+
                             </div>
 
 
@@ -292,4 +330,40 @@
             button.textContent = "Ver más"; // Volver al texto original
         }
     }
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    document.querySelectorAll('.toggle-visibility').forEach(button => {
+        button.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project-id');
+            const currentState = this.getAttribute('data-visible');
+            const buttonIcon = this.querySelector('i');
+
+            // Enviar la solicitud al backend
+            fetch('<?= base_url("project/toggle-visibility/") ?>' + projectId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Cambiar el ícono y el estado dinámicamente
+                        this.setAttribute('data-visible', data.nuevoEstado);
+                        buttonIcon.classList.toggle('bi-eye');
+                        buttonIcon.classList.toggle('bi-eye-slash');
+                        // Mostrar alerta y recargar la página
+                        alert('Estado actualizado a: ' + data.nuevoEstado);
+                        location.reload(); // Recarga la página
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
 </script>

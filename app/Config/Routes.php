@@ -68,6 +68,9 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     $routes->get('project/details/(:num)', 'ProjectController::details/$1');
     $routes->get('project/showFrontUpdates/(:num)/(:num)/(:any)', 'ProjectController::showFrontUpdates/$1/$2/$3');
 
+    $routes->get('shareUpdateProject/(:num)', 'ProjectController::shareUpdateProject/$1');
+
+    $routes->post('saveUpdateProject/(:num)', 'ProjectController::saveUpdateProject/$1');
 
 
 
@@ -116,3 +119,5 @@ $routes->post('/register', 'registerController::store');
 $routes->get('/profile/(:segment)', 'UserController::scoreEntrepreneur/$1');
 
 $routes->post('rating/submit', 'UserController::submitRating');
+
+$routes->post('project/toggle-visibility/(:num)', 'ProjectController::toggleVisibility/$1');

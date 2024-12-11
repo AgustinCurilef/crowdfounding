@@ -107,15 +107,26 @@
                                     <div class="description-truncate">
                                         <?= esc(strlen($project->DESCRIPCION) > 80 ? substr($project->DESCRIPCION, 0, 80) . '...' : $project->DESCRIPCION) ?>
                                     </div>
+                                    <div class="description-full d-flex justify-content-between align-items-center mt-2">
+                                        <?php if (strlen($project->DESCRIPCION) > 80): ?>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
+                                                Resumen
+                                            </button>
 
-                                    <?php if (strlen($project->DESCRIPCION) > 80): ?>
-                                        <button type="button" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
-                                            Ver más...
-                                        </button>
-                                        <a href="<?= base_url('project/details/' . $project->ID_PROYECTO) ?>" class="btn btn-link p-0 mt-2">
-                                            Ver más...
-                                        </a>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                        <a href="<?= base_url('project/details/' . $project->ID_PROYECTO) ?> "
+                                            class="btn btn-outline-primary btn-sm me-2">
+                                            Actualizaciones
+                                        </a></span></p>
+                                        <?php if (session()->get('ROL') == '1'): ?>
+                                            <button class="btn btn-outline-danger btn-sm toggle-visibility"
+                                                data-project-id="<?= $project->ID_PROYECTO ?>"
+                                                data-visible="<?= $project->ESTADO ?>">
+                                                <i class="bi <?= $project->ESTADO == '1' ? 'bi-eye' : 'bi-eye-slash' ?>"></i>
+                                            </button>
+                                        <?php endif; ?>
+
+                                    </div>
 
 
                                 </div>
@@ -252,6 +263,38 @@
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.forEach(function(tooltipTriggerEl) {
             new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    document.querySelectorAll('.toggle-visibility').forEach(button => {
+        button.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project-id');
+            const currentState = this.getAttribute('data-visible');
+            const buttonIcon = this.querySelector('i');
+
+            // Enviar la solicitud al backend
+            fetch('<?= base_url("project/toggle-visibility/") ?>' + projectId, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Cambiar el ícono y el estado dinámicamente
+                        this.setAttribute('data-visible', data.nuevoEstado);
+                        buttonIcon.classList.toggle('bi-eye');
+                        buttonIcon.classList.toggle('bi-eye-slash');
+                        // Mostrar alerta y recargar la página
+                        alert('Estado actualizado a: ' + data.nuevoEstado);
+                        location.reload(); // Recarga la página
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 </script>

@@ -8,7 +8,7 @@ class UpdateModel extends Model
 {
     protected $table      = 'actualizacion_proyecto';
     protected $useSoftDeletes = false;
-    protected $allowedFields = ['ID_PROYECTO ', 'ID_USUARIO', 'FECHA ', 'DESCRIPCION', 'NOMBRE_IMAGEN'];
+    protected $allowedFields = ['ID_PROYECTO', 'ID_USUARIO', 'FECHA', 'DESCRIPCION', 'NOMBRE_IMAGEN'];
 
     protected $useTimestamps = false;
     protected $createdField  = 'created_at';
@@ -21,8 +21,11 @@ class UpdateModel extends Model
 
     public function getUpdatesByProjectId($projectId)
     {
-        return $this->where('ID_PROYECTO', $projectId)->findAll();
+        return $this->where('ID_PROYECTO', $projectId)
+            ->orderBy('FECHA', 'DESC')
+            ->findAll();
     }
+
     public function getImage($idProject, $idUser, $date)
     {
         $builder = $this->builder();
@@ -30,6 +33,7 @@ class UpdateModel extends Model
         $builder->where('ID_PROYECTO', $idProject)
             && $builder->where('ID_USUARIO', $idUser)
             && $builder->where('FECHA', $date);
+
 
         $query = $builder->get();
 
