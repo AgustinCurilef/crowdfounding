@@ -15,11 +15,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <?php if (empty($notifications)) : ?>
+                            <?php if (empty($notificationsUser)) : ?>
                                 <p>No tienes notificaciones.</p>
                             <?php else : ?>
                                 <div class="list-group">
-                                    <?php foreach ($notifications as $notification) : ?>
+                                    <?php foreach ($notificationsUser as $notification) : ?>
                                         <div class="list-group-item <?= ($notification['ESTADO'] == 'NO_LEIDO') ? 'list-group-item-warning' : '' ?>">
                                             <div class="d-flex w-100 justify-content-between">
                                                 <h5 class="mb-1"><?= esc($notification['NOMBRE']) ?></h5>

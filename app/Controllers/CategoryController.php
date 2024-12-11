@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Models\CategoryModel;
-
+use App\Models\NotificationUserModel;
 
 class CategoryController extends BaseController
 {
@@ -11,13 +11,17 @@ class CategoryController extends BaseController
     {
         // Inicializa el modelo de usuario una sola vez en el constructor
         $this->user = session()->get();
-
+        
     }
     public function index(): string
     {
         $categoryModel = new CategoryModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $data = [
+
             'title' => 'Lista de Categorías',
+            'notificationsUser' => $notificationsUser,
             'categories' => $categoryModel->findAll(),
             'user_name' => $this->user['USERNAME'] 
         ];
@@ -33,7 +37,10 @@ class CategoryController extends BaseController
 
     public function create(): string
     {
-        $data = ['title' => 'Agregar Categoría','user_name' => $this->user['USERNAME'] ];
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+        $data = ['title' => 'Agregar Categoría','user_name' => $this->user['USERNAME'],
+                'notificationsUser' => $notificationsUser];
         return view('estructura/header', $data)
             . view('estructura/navbar',$data)
             . view('estructura/sidebar')
@@ -58,10 +65,13 @@ class CategoryController extends BaseController
 
     public function edit($id)
     {
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Editar Categoría',
             'category' => $categoryModel->find($id),
+            'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'] 
         ];
        

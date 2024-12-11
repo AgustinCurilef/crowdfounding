@@ -15,10 +15,24 @@
                     <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
+            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown" style="width: 400px;">
                 <div class="dropdown-divider"></div>
-                <div id="notification-list">
+                <div id="notification-list" >
                     <!-- Las notificaciones se cargarán aquí -->
+                    <?php if (empty($notificationsUser)) : ?>
+                                <p>No tienes notificaciones.</p>
+                            <?php else : ?>
+                                <div class="list-group">
+                                    <?php foreach ($notificationsUser as $notification) : ?>
+                                        <div class="list-group-item <?= ($notification['ESTADO'] == 'NO_LEIDO') ? 'list-group-item-warning' : '' ?>">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1"><?= esc($notification['NOMBRE']) ?></h5>
+                                                <small><?= date('d/m/Y H:i', strtotime($notification['FECHA'])) ?></small>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
                 </div>
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('user/notifications') ?>" class="dropdown-item dropdown-footer">

@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Models\NotificationModel;
+use App\Models\NotificationUserModel;
 
 class NotificationController extends BaseController
 {
@@ -18,10 +19,13 @@ class NotificationController extends BaseController
     {
         $notificationModel = new NotificationModel();
         $notifications = $notificationModel->findAll();
-        
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $data = [
             'title' => 'Notificaciones',
+            'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'],
+            
             'notifications' => $notifications
         ];
         
@@ -34,7 +38,11 @@ class NotificationController extends BaseController
 
     public function create()
     {
-        $data = ['title' => 'Agregar Notificacion','user_name' => $this->user['USERNAME'] ];
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+        $data = ['title' => 'Agregar Notificacion','user_name' => $this->user['USERNAME'],
+                'notificationsUser' => $notificationsUser
+    ];
 
         return view('estructura/header', $data)
             . view('estructura/navbar',$data)
@@ -70,7 +78,8 @@ class NotificationController extends BaseController
     {
         $notificationModel = new NotificationModel();
         $notification = $notificationModel->find($id);
-        
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         if (!$notification) {
             return redirect()->to('/notification')->with('error', 'Notificación no encontrada');
         }
@@ -78,6 +87,7 @@ class NotificationController extends BaseController
         $data = [
             'title' => 'Editar Notificación',
             'user_name' => $this->user['USERNAME'],
+            'notificationsUser' => $notificationsUser,
             'notification' => $notification
         ];
         

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\InvestmentModel;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
+use App\Models\NotificationUserModel;
 use DateTime; // Añade esta línea
 
 
@@ -31,7 +32,8 @@ class InvestmentController extends BaseController
 
     public function index(): String
     {
-
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
         $projects = $ProjectModel->getProjects();
@@ -40,7 +42,8 @@ class InvestmentController extends BaseController
 
 
         $data = [
-            'title' => 'Mis Proyectos',
+            'notificationsUser' => $notificationsUser,
+            'title' => 'Mis Inversiones',
             'projects' => $projects,
             'categories' => $categories,
             'user_name' => session()->get('USERNAME')
@@ -55,7 +58,8 @@ class InvestmentController extends BaseController
     public function create($ID_PROYECTO)
     {
         $this->checkSession(); // Verifica la sesión
-
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $projectModel = new ProjectModel();
         $project = $projectModel->find($ID_PROYECTO);
 
@@ -65,6 +69,7 @@ class InvestmentController extends BaseController
         }
 
         $data = [
+            'notificationsUser' => $notificationsUser,
             'title' => 'Realizar Inversión',
             'project' => $project,
             'user_name' => session()->get('USERNAME')

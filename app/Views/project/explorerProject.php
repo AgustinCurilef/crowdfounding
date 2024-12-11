@@ -273,7 +273,7 @@
             const buttonIcon = this.querySelector('i');
 
             // Enviar la solicitud al backend
-            fetch('<?= base_url("project/toggle-visibility/") ?>' + projectId, {
+            fetch('<?= base_url("project/toggle-visibility-explorer/") ?>' + projectId, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

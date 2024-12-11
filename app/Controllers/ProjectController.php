@@ -61,11 +61,14 @@ class ProjectController extends BaseController
     {
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $categories = $categoryModel->findAll();
         $projects = $ProjectModel->getProjects();
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Explorar Proyectos',
             'projects' => $projects,
+            'notificationsUser' => $notificationsUser,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'], // Usa el nombre de usuario directamente
 
@@ -88,11 +91,12 @@ class ProjectController extends BaseController
     public function list(): String
     {
         $ProjectModel = new ProjectModel();
-        $categoryModel = new CategoryModel();
+        $categoryModel = new CategoryModel();        
         $projects = $ProjectModel->getProject($this->user['USERNAME']);
         $categories = $categoryModel->findAll();
         $NotificationUserModel = new NotificationUserModel();
         $amountNotification = $NotificationUserModel->getUnreadCount($this->user['ID_USUARIO']);
+        $notificationsUser = $NotificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
 
 
         $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
@@ -104,6 +108,7 @@ class ProjectController extends BaseController
 
         $data = [
             'title' => 'Mis Proyectos',
+            'notificationsUser' => $notificationsUser,
             'projects' => $paginatedProjects['data'], // Los proyectos paginados
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'], // Usa el nombre de usuario directamente
@@ -126,8 +131,12 @@ class ProjectController extends BaseController
         $userId = $this->user['ID_USUARIO'];
         $projects = $ProjectModel->getInvestmentsByUser($userId);
         $categories = $categoryModel->findAll();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Mis Inversiones',
+            'notificationsUser' => $notificationsUser,
             'projects' => $projects,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'] ?? null
@@ -145,22 +154,20 @@ class ProjectController extends BaseController
 
     public function addProyect(): String
     {
-
         $categoryModel = new CategoryModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $categories = $categoryModel->findAll();
 
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Crear Proyecto',
             'categories' => $categories,
+            'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'] ?? null
         ];
         
         
         return view('estructura/header', $data)
-        . view('estructura/navbar', $data)
-        . view('estructura/sidebar')
-        . view('project/addProyect', $data)
-        . view('estructura/footer');
         . view('estructura/navbar', $data)
         . view('estructura/sidebar')
         . view('project/addProyect', $data)
@@ -222,9 +229,6 @@ class ProjectController extends BaseController
             return redirect()->back()->withInput()->with('error', 'El nombre del proyecto ya está en uso.');
         }
         // Recogemos los datos del formulario
-
-            'ESTADO' => $this->request->getPost('ESTADO')
-        ];
         if (!$this->validate($validationRule)) {
             // Obtén los mensajes de error
             $errors = \Config\Services::validation()->getErrors();
@@ -262,6 +266,9 @@ class ProjectController extends BaseController
     {
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+        
 
         // Obtener el proyecto por su ID
         $project = $ProjectModel->getProjectById($id);
@@ -276,6 +283,7 @@ class ProjectController extends BaseController
         $data = [
             'title' => 'Modificar Proyecto',
             'project' => $project,
+            'notificationsUser' => $notificationsUser,
             'categories' => $categories,
             'selectedCategories' => $selectedCategories ?? [], // Array vacío si no hay categorías seleccionadas
             'user_name' => $this->user['USERNAME'] ?? null,
@@ -363,8 +371,6 @@ class ProjectController extends BaseController
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto. Error: ' . $dbError['message']);
         }
     }
-
-
     public function deleteProject($id)
     {
         $ProjectModel = new ProjectModel();
@@ -391,6 +397,8 @@ class ProjectController extends BaseController
         // Obtener los detalles del proyecto
         $userModel = new UserModel();
         $projectModel = new ProjectModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($idProyect);
         $emprendedor = $userModel->getUserByNickname($project->USERNAME_USUARIO);
 
@@ -402,9 +410,10 @@ class ProjectController extends BaseController
         // Cargar la vista con los datos del proyecto y las actualizaciones
 
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Detalle de Mis Proyectos',
             'project' => $project,
             'updates' => $updates,
+            'notificationsUser' => $notificationsUser,
             'emprendedor' => $emprendedor,
             'user_name' => $this->user['USERNAME'] ?? null
         ];
@@ -455,6 +464,21 @@ class ProjectController extends BaseController
             }
         }
     }
+    public function toggleVisibilityExplorer($idProyecto)
+    {
+        $user = new UserModel();
+        $notification = new NotificationUserModel();
+        $proyectoModel = new ProjectModel();
+        $proyecto = $proyectoModel->find($idProyecto);
+        $usuario = $user->getUserByNickname($proyecto->USERNAME_USUARIO);
+
+        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';   
+        $proyectoModel->update($idProyecto, ['ESTADO' => $nuevoEstado]);
+        $notification->addUserNotification(3, $usuario['ID_USUARIO']);
+
+        return $this->response->setJSON(['status' => 'success', 'nuevoEstado' => $nuevoEstado === '0' ? 'PRIVADO' : 'PUBLICO']);
+    }
+
     public function toggleVisibility($idProyecto)
     {
         $user = new UserModel();
@@ -463,21 +487,23 @@ class ProjectController extends BaseController
         $proyecto = $proyectoModel->find($idProyecto);
         $usuario = $user->getUserByNickname($proyecto->USERNAME_USUARIO);
 
-        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';
+        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';   
         $proyectoModel->update($idProyecto, ['ESTADO' => $nuevoEstado]);
-        $notification->addUserNotification(3, $usuario['ID_USUARIO']);
 
         return $this->response->setJSON(['status' => 'success', 'nuevoEstado' => $nuevoEstado === '0' ? 'PRIVADO' : 'PUBLICO']);
     }
+    
     public function shareUpdateProject($idProyecto)
     {
         $projectModel = new ProjectModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($idProyecto);
         // Preparar datos para la vista
         $data = [
             'title' => 'Actualizacion de mis proyectos',
             'project' => $project,
-
+            'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'] ?? null,
         ];
 
@@ -496,9 +522,7 @@ class ProjectController extends BaseController
     public function saveUpdateProject($projectId)
     {
         $model = new UpdateModel();
-        $investmentModel = new InvestmentModel(); 
         $projectModel = new ProjectModel();
-        $notification = new NotificationUserModel();
         $project = $projectModel->find($projectId);
 
         // Obtén los datos del formulario
@@ -523,16 +547,11 @@ class ProjectController extends BaseController
             ];
 
             // Insertar los datos en la tabla
-            
             $model->insert($data);
-            $inversores = $investmentModel->investmentsProject($projectId);
-            foreach ($inversores as $inversor) {
-                $notification->addUserNotification(4, $inversor);
-            }
-            return redirect()->to('project/details/' . $project->ID_PROYECTO)->with('success', 'Actualización publicada exitosamente');
-            
-        } 
-        return redirect()->back()->with('error', 'Error al cargar la imagen');
-    }
 
+            return redirect()->to('project/details/' . $project->ID_PROYECTO)->with('success', 'Actualización publicada exitosamente');
+        } else {
+            return redirect()->back()->with('error', 'Error al cargar la imagen');
+        }
+    }
 }

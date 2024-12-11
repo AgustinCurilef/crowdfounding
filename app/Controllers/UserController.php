@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
 use App\Models\UserModel;
+use App\Models\NotificationUserModel;
 use App\Models\PuntuarUsuarioModel;
 
 class UserController extends BaseController
@@ -20,7 +21,7 @@ class UserController extends BaseController
     public function index(): String
     {
         // Obtener el ID de usuario de la sesión
-        $data = ['title' => 'Home', 'user_name' => $this->user['USERNAME']];
+        $data = ['title' => 'Editar Perfil General', 'user_name' => $this->user['USERNAME']];
         return view('estructura/header', $data)
             . view('estructura/navbar', $data)
             . view('estructura/sidebar')
@@ -32,11 +33,14 @@ class UserController extends BaseController
     {
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
 
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Editar Perfil',
+            'notificationsUser' => $notificationsUser,
             'projects' => $projects,
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'],
@@ -186,8 +190,11 @@ class UserController extends BaseController
     {
         $userModel = new UserModel();
         $emprendedor = $userModel->getUserByNickname($nickname_user);
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $data = [
-            'title' => 'Home',
+            'title' => 'Perfil',
+            'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'],
             'emprendedor' => $emprendedor
         ];

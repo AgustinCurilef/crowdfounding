@@ -49,11 +49,14 @@ class NotificationUserController extends BaseController
         if (!session()->get('ID_USUARIO')) {
             return redirect()->to('/login');
         }
-
-        $notifications = $this->notificationUserModel->getUserNotifications($this->user['ID_USUARIO']);
+        $notificationUserModel = new NotificationUserModel();
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+        $notificationModel = new NotificationModel();
+        $notifications = $notificationModel->findAll();
 
         $data = [
             'title' => 'Mis Notificaciones',
+            'notificationsUser' => $notificationsUser,
             'notifications' => $notifications,
             'user_name' => $this->user['USERNAME']
         ];

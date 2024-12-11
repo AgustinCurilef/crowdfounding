@@ -33,6 +33,10 @@ $routes->group('', ['filter' => ['login', 'role:1']], function ($routes) {
     $routes->post('notification/update/(:num)', 'NotificationController::update/$1');
 
     $routes->get('notification/delete/(:num)', 'NotificationController::delete/$1');
+
+    /*Proyectos*/
+
+    $routes->post('project/toggle-visibility-explorer/(:num)', 'ProjectController::toggleVisibilityExplorer/$1');
 });
 
 /* Solo acceden los usuarios comunes */
@@ -48,6 +52,10 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
     $routes->post('user/saveChanges', 'UserController::saveChanges');
 
     $routes->post('/user/delete/(:num)', 'UserController::delete/$1');
+
+    $routes->get('/profile/(:segment)', 'UserController::scoreEntrepreneur/$1');
+
+    $routes->post('rating/submit', 'UserController::submitRating');
 
     /*Proyectos */
 
@@ -72,8 +80,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->post('saveUpdateProject/(:num)', 'ProjectController::saveUpdateProject/$1');
 
-
-
+    $routes->post('project/toggle-visibility/(:num)', 'ProjectController::toggleVisibility/$1');
 
     /*Inversion */
     $routes->get('investment/create/(:num)', 'InvestmentController::create/$1');
@@ -112,12 +119,7 @@ $routes->get('/register', 'registerController::register');
 $routes->post('/login/authenticate', 'LoginController::authenticate');
 
 $routes->get('/unauthorized', 'LoginController::unauthorized');
+
 /*Registro*/
 
 $routes->post('/register', 'registerController::store');
-
-$routes->get('/profile/(:segment)', 'UserController::scoreEntrepreneur/$1');
-
-$routes->post('rating/submit', 'UserController::submitRating');
-
-$routes->post('project/toggle-visibility/(:num)', 'ProjectController::toggleVisibility/$1');

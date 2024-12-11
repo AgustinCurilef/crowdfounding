@@ -14,7 +14,7 @@ class HomeController extends BaseController
         $categories = $categoryModel->findAll();
         $projects = $ProjectModel->getProjects();
         $data = [
-            'title' => 'Mis Proyectos',
+            'title' => 'Home',
             'projects' => $projects,
             'categories' => $categories
         ];
