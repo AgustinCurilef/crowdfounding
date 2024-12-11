@@ -5,12 +5,10 @@
 !system/cache/*
 !*/cache/index.html
 !*/cache/.htaccess
-writable
-writable/*
-/writable/*
-!/writable/cache
+/writable/logs
+/writable/session
+/writable/debugbar
 
-/writable/cache/*
 
 
 user_guide_src/build/*

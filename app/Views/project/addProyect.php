@@ -21,6 +21,15 @@
                                 <?php endif; ?>
 
                                 <form id="projectForm" action="saveProject" method="POST" enctype="multipart/form-data">
+                                    <?php if (session()->has('errors')): ?>
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                <?php foreach (session('errors') as $error): ?>
+                                                    <li><?= esc($error) ?></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    <?php endif; ?>
                                     <!-- Imagen de portada -->
                                     <div class="text-center mb-4">
                                         <div class="upload-preview mb-3">
