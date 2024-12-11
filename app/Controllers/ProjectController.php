@@ -5,8 +5,6 @@ namespace App\Controllers;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
 use App\Models\NotificationUserModel;
-use App\Models\UpdateModel;
-use App\Models\UserModel;
 
 
 class ProjectController extends BaseController
@@ -27,7 +25,7 @@ class ProjectController extends BaseController
         //log_message('si:', $urlImage);
         if ($imageName) {
 
-            // Obtener el tipo MIME de la imagen
+                    // Obtener el tipo MIME de la imagen
             $mime = mime_content_type($urlImage);
 
             // Leer el contenido de la imagen
@@ -36,23 +34,11 @@ class ProjectController extends BaseController
             // Especificar el tipo MIME correcto para imágenes JPG
             return $this->response
                 ->setHeader('Content-Type', $mime)
-                ->setBody($imageData); // Enviar la imagen al navegador
-
+                ->setBody($imageData);// Enviar la imagen al navegador
+                
         } else {
-            // Ruta de la imagen por defecto
-            $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/imagen_proyecto_por_defecto.png';
-
-            if (file_exists($defaultImagePath)) {
-                // Leer el contenido de la imagen predeterminada
-                $defaultImage = file_get_contents($defaultImagePath);
-
-                return $this->response->setHeader('Content-Type', 'image/jpeg')
-                    ->setBody($defaultImage); // Enviar la imagen por defecto al navegador
-            } else {
-                // Si la imagen predeterminada no existe, retornar un error 404
-                return $this->response->setStatusCode(404, 'Default image not found');
-            }
-        }
+            return $this->response->setStatusCode(404, 'Default image not found');
+        }      
     }
 
     public function listAllProjects(): String
@@ -152,46 +138,29 @@ class ProjectController extends BaseController
             'categories' => $categories,
             'user_name' => $this->user['USERNAME'] ?? null
         ];
-
+        
         return view('estructura/header', $data)
-            . view('estructura/navbar', $data)
-            . view('estructura/sidebar')
-            . view('project/addProyect', $data)
-            . view('estructura/footer');
+        . view('estructura/navbar', $data)
+        . view('estructura/sidebar')
+        . view('project/addProyect', $data)
+        . view('estructura/footer');
     }
-
+    
     public function saveProject()
     {
         // Configuración para la subida del archivo
+        $projectModel = new ProjectModel();
+        $file = $this->request->getFile('portada');
         $validationRule = [
             'portada' => [
-                'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
+                'rules' => 'is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'uploaded' => 'Debes seleccionar una imagen de portada.',
                     'is_image' => 'El archivo debe ser una imagen válida.',
                     'max_size' => 'El tamaño máximo permitido es de 2 MB.',
                     'mime_in' => 'Solo se permiten imágenes en formato JPG, JPEG o PNG.'
                 ]
             ]
         ];
-
-        // Validar la imagen si se ha cargado
-        $file = $this->request->getFile('portada');
-        $imageName = null;
-        if ($file && $file->isValid()) {
-            if (!$this->validate($validationRule)) {
-                return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
-            }
-            $uploadPath = WRITEPATH . 'uploads/proyecto/portada';
-            // Generar un nombre único para la imagen y moverla a la carpeta de subida
-            if (!is_dir($uploadPath)) {
-                mkdir($uploadPath, 0755, true);
-            }
-            $imageName = $file->getRandomName();
-            $file->move($uploadPath, $imageName);
-        }
-
-        // Recogemos los datos del formulario
         $data = [
             'NOMBRE' => $this->request->getPost('NOMBRE'),
             'CATEGORIAS' => $this->request->getPost('ID_CATEGORIA'),
@@ -202,11 +171,33 @@ class ProjectController extends BaseController
             'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
-            'ESTADO' => $this->request->getPost('ESTADO'),
-            'PORTADA' => $imageName // Puede ser null si no se subió imagen
-
+            'ESTADO' => $this->request->getPost('ESTADO')
         ];
-        $projectModel = new ProjectModel();
+        if (!$this->validate($validationRule)) {
+            // Obtén los mensajes de error
+            $errors = \Config\Services::validation()->getErrors();
+            // Muestra los errores o redirige con ellos
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+        // Validar la imagen si se ha cargado
+        if ($file->isValid()) {
+
+            $uploadPath = WRITEPATH . 'uploads/proyecto/portada';
+            // Generar un nombre único para la imagen y moverla a la carpeta de subida
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            $imageName = $file->getRandomName();
+            if ($file->move($uploadPath, $imageName)) {
+                $data['PORTADA'] = $imageName;
+            };
+        }
+        $projectName = $this->request->getPost('NOMBRE'); 
+        if ($projectModel->projectNameExists($projectName, null)) {
+            return redirect()->back()->withInput()->with('error', 'El nombre del proyecto ya está en uso.');
+        }
+        // Recogemos los datos del formulario
+
         log_message('debug', 'Datos recibidos: ' . json_encode($data));
 
         if ($projectModel->setProject($data)) {
@@ -246,13 +237,12 @@ class ProjectController extends BaseController
             . view('estructura/footer');
     }
 
-
-
+    
+    
     public function updateProject($id)
     {
-        $projectModel = new ProjectModel();
-
         // Configuración para la subida del archivo
+        $projectModel = new ProjectModel();
         $validationRule = [
             'portada' => [
                 'rules' => 'uploaded[portada]|is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
@@ -265,29 +255,31 @@ class ProjectController extends BaseController
             ]
         ];
 
-        // Recuperar la portada actual si no se sube una nueva
-        $imageName = $projectModel->getImage($id);
-
+        // Validar la imagen si se ha cargado
         $file = $this->request->getFile('portada');
+
         if ($file && $file->isValid() && !$file->hasMoved()) {
-            // Validar y procesar la nueva imagen
+            // Si la imagen fue subida, validar y procesarla
             if (!$this->validate($validationRule)) {
+                log_message('debug', 'no pasó la validación de las reglas: ' . $file->getMimeType()); // Tipo MIME
                 return redirect()->back()->withInput()->with('error', $this->validator->getErrors());
             }
             $uploadPath = WRITEPATH . 'uploads/proyecto/portada/';
             if (!is_dir($uploadPath)) {
                 mkdir($uploadPath, 0755, true);
             }
-            // Eliminar la imagen anterior si existe
-            if (!empty($imageName)) {
-                @unlink($uploadPath . $imageName);
+            $imageName = $projectModel->getImage($id);
+            // Generar un nombre único para la imagen y moverla a la carpeta de subida
+            if(empty($imageName)) {
+                $imageName = $file->getRandomName();
             }
-            // Asignar nuevo nombre y mover archivo
-            $imageName = $file->getRandomName();
+            else {
+                unlink($uploadPath . $imageName);
+            }
             $file->move($uploadPath, $imageName);
         }
 
-        // Recoger los datos del formulario
+        // Recogemos los datos del formulario
         $data = [
             'ID_PROYECTO' => $id,
             'NOMBRE' => $this->request->getPost('NOMBRE'),
@@ -300,18 +292,19 @@ class ProjectController extends BaseController
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
             'ESTADO' => $this->request->getPost('ESTADO'),
-            'PORTADA' => $imageName // Siempre tendrá un valor
+            'PORTADA' => $imageName // Puede ser null si no se subió imagen
         ];
-
         $updateSuccess = $projectModel->updateProject($data);
         if ($updateSuccess) {
             return redirect()->to('/myprojects')->with('success', 'Proyecto guardado exitosamente.');
         } else {
-            $dbError = $projectModel->db->error();
+            $dbError = $projectModel->db->error(); // Retorna un array con 'code' y 'message'
+            // Registrar o mostrar el error
             log_message('error', 'Error en la actualización del proyecto: ' . $dbError['message']);
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto. Error: ' . $dbError['message']);
         }
     }
+
     public function deleteProject($id)
     {
         $ProjectModel = new ProjectModel();
@@ -331,148 +324,6 @@ class ProjectController extends BaseController
             log_message('error', 'Error al eliminar el proyecto: ' . $e->getMessage());
             return redirect()->back()
                 ->with('error', 'Error al eliminar el proyecto');
-        }
-    }
-    public function details($idProyect)
-    {
-        // Obtener los detalles del proyecto
-        $userModel = new UserModel();
-        $projectModel = new ProjectModel();
-        $project = $projectModel->find($idProyect);
-        $emprendedor = $userModel->getUserByNickname($project->USERNAME_USUARIO);
-
-        // Obtener las actualizaciones del proyecto
-        $updateModel = new UpdateModel();
-        $updates = $updateModel->getUpdatesByProjectId($idProyect);
-
-
-        // Cargar la vista con los datos del proyecto y las actualizaciones
-
-        $data = [
-            'title' => 'Mis Proyectos',
-            'project' => $project,
-            'updates' => $updates,
-            'emprendedor' => $emprendedor,
-            'user_name' => $this->user['USERNAME'] ?? null
-        ];
-
-
-
-        return view('estructura/header', $data)
-            . view('estructura/navbar', $data)
-            . view('estructura/sidebar')
-            . view('project/details', $data)
-            . view('estructura/footer');
-    }
-    public function showFrontUpdates($idProyect, $ID_USUARIO, $FECHA)
-    {
-        $updateModel = new UpdateModel();
-
-        $imageName = $updateModel->getImage($idProyect, $ID_USUARIO, $FECHA); // Obtener imagen BLOB desde el modelo
-        $urlImage = WRITEPATH . 'uploads\\updates\\' . $imageName;
-        log_message('debug', 'Ruta de la imagen: ' . $urlImage);
-
-        //log_message('si:', $urlImage);
-        if ($imageName) {
-
-            // Obtener el tipo MIME de la imagen
-            $mime = mime_content_type($urlImage);
-
-            // Leer el contenido de la imagen
-            $imageData = file_get_contents($urlImage);
-
-            // Especificar el tipo MIME correcto para imágenes JPG
-            return $this->response
-                ->setHeader('Content-Type', $mime)
-                ->setBody($imageData); // Enviar la imagen al navegador
-
-        } else {
-            // Ruta de la imagen por defecto
-            $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/imagen_proyecto_por_defecto.png';
-
-            if (file_exists($defaultImagePath)) {
-                // Leer el contenido de la imagen predeterminada
-                $defaultImage = file_get_contents($defaultImagePath);
-
-                return $this->response->setHeader('Content-Type', 'image/jpeg')
-                    ->setBody($defaultImage); // Enviar la imagen por defecto al navegador
-            } else {
-                // Si la imagen predeterminada no existe, retornar un error 404
-                return $this->response->setStatusCode(404, 'Default image not found');
-            }
-        }
-    }
-    public function toggleVisibility($idProyecto)
-    {
-        $user = new UserModel();
-        $notification = new NotificationUserModel();
-        $proyectoModel = new ProjectModel();
-        $proyecto = $proyectoModel->find($idProyecto);
-        $usuario = $user->getUserByNickname($proyecto->USERNAME_USUARIO);
-
-        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';
-        $proyectoModel->update($idProyecto, ['ESTADO' => $nuevoEstado]);
-        $notification->addUserNotification(3, $usuario['ID_USUARIO']);
-
-        return $this->response->setJSON(['status' => 'success', 'nuevoEstado' => $nuevoEstado === '0' ? 'PRIVADO' : 'PUBLICO']);
-    }
-    public function shareUpdateProject($idProyecto)
-    {
-        $projectModel = new ProjectModel();
-        $project = $projectModel->find($idProyecto);
-        // Preparar datos para la vista
-        $data = [
-            'title' => 'Actualizacion de mis proyectos',
-            'project' => $project,
-
-            'user_name' => $this->user['USERNAME'] ?? null,
-        ];
-
-        // Cargar las vistas
-        return view('estructura/header', $data)
-            . view('estructura/navbar', $data)
-            . view('estructura/sidebar')
-            . view('project/addUpdateProject', $data)
-            . view('estructura/footer');
-    }
-
-
-
-
-
-    public function saveUpdateProject($projectId)
-    {
-        $model = new UpdateModel();
-        $projectModel = new ProjectModel();
-        $project = $projectModel->find($projectId);
-
-        // Obtén los datos del formulario
-        $descripcion = $this->request->getPost('descripcion');
-
-
-        // Subir la imagen (si se selecciona una)
-        $image = $this->request->getFile('portada');
-        if ($image->isValid() && !$image->hasMoved()) {
-            // Generar un nombre de archivo único
-            $imageName = $image->getRandomName();
-
-            // Mover la imagen al directorio 'writable/uploads/updates'
-            $image->move(WRITEPATH . 'uploads/updates', $imageName);
-
-            // Guardar los datos en la base de datos
-            $data = [
-                'ID_PROYECTO' => $project->ID_PROYECTO,
-                'ID_USUARIO' => $this->user['ID_USUARIO'],
-                'DESCRIPCION' => $descripcion,
-                'NOMBRE_IMAGEN' => $imageName // Guardamos solo el nombre de la imagen
-            ];
-
-            // Insertar los datos en la tabla
-            $model->insert($data);
-
-            return redirect()->to('project/details/' . $project->ID_PROYECTO)->with('success', 'Actualización publicada exitosamente');
-        } else {
-            return redirect()->back()->with('error', 'Error al cargar la imagen');
         }
     }
 }

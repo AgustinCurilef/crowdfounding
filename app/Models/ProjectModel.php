@@ -170,6 +170,16 @@ class ProjectModel extends Model
         return false;
     }
 
+    public function projectNameExists(string $projectName, int $excludeId = null): bool
+    {
+        $query = $this->where('nombre', $projectName);
+
+        if ($excludeId !== null) {
+            $query->where('id_projecto !=', $projectName);
+        }
+
+        return $query->countAllResults() > 0;
+    }
 
     public function getInvestmentsByUser($userId)
     {
