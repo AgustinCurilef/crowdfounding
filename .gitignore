@@ -9,7 +9,7 @@ writable
 writable/*
 /writable/*
 !/writable/cache
-
+!/writable/uploads
 /writable/cache/*
 
 
