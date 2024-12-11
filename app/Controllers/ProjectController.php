@@ -29,6 +29,7 @@ class ProjectController extends BaseController
         if ($imageName) {
 
                     // Obtener el tipo MIME de la imagen
+                    // Obtener el tipo MIME de la imagen
             $mime = mime_content_type($urlImage);
 
             // Leer el contenido de la imagen
@@ -154,20 +155,29 @@ class ProjectController extends BaseController
             'user_name' => $this->user['USERNAME'] ?? null
         ];
         
+        
         return view('estructura/header', $data)
+        . view('estructura/navbar', $data)
+        . view('estructura/sidebar')
+        . view('project/addProyect', $data)
+        . view('estructura/footer');
         . view('estructura/navbar', $data)
         . view('estructura/sidebar')
         . view('project/addProyect', $data)
         . view('estructura/footer');
     }
     
+    
     public function saveProject()
     {
         // Configuración para la subida del archivo
         $projectModel = new ProjectModel();
         $file = $this->request->getFile('portada');
+        $projectModel = new ProjectModel();
+        $file = $this->request->getFile('portada');
         $validationRule = [
             'portada' => [
+                'rules' => 'is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
                 'rules' => 'is_image[portada]|max_size[portada,2048]|mime_in[portada,image/jpg,image/jpeg,image/png]',
                 'errors' => [
                     'is_image' => 'El archivo debe ser una imagen válida.',
@@ -186,6 +196,33 @@ class ProjectController extends BaseController
             'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
             'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
+            'ESTADO' => $this->request->getPost('ESTADO')
+        ];
+        if (!$this->validate($validationRule)) {
+            // Obtén los mensajes de error
+            $errors = \Config\Services::validation()->getErrors();
+            // Muestra los errores o redirige con ellos
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+        // Validar la imagen si se ha cargado
+        if ($file->isValid()) {
+
+            $uploadPath = WRITEPATH . 'uploads/proyecto/portada';
+            // Generar un nombre único para la imagen y moverla a la carpeta de subida
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            $imageName = $file->getRandomName();
+            if ($file->move($uploadPath, $imageName)) {
+                $data['PORTADA'] = $imageName;
+            };
+        }
+        $projectName = $this->request->getPost('NOMBRE'); 
+        if ($projectModel->projectNameExists($projectName, null)) {
+            return redirect()->back()->withInput()->with('error', 'El nombre del proyecto ya está en uso.');
+        }
+        // Recogemos los datos del formulario
+
             'ESTADO' => $this->request->getPost('ESTADO')
         ];
         if (!$this->validate($validationRule)) {
@@ -254,9 +291,12 @@ class ProjectController extends BaseController
 
     
     
+    
+    
     public function updateProject($id)
     {
         // Configuración para la subida del archivo
+        $projectModel = new ProjectModel();
         $projectModel = new ProjectModel();
         $validationRule = [
             'portada' => [
