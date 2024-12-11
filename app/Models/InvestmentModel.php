@@ -41,7 +41,7 @@ class InvestmentModel extends Model
     }
 
     public function updateStatusInvestment($estado, $idProyecto)
-{
+    {
     // Verificar si el estado es válido (opcional)
     $estadosValidos = ['Pendiente', 'Pagado', 'Cancelado']; // Definir los estados permitidos
     if (!in_array($estado, $estadosValidos)) {
@@ -53,8 +53,19 @@ class InvestmentModel extends Model
                        ->set('estado', $estado) // Establecer el nuevo estado
                        ->where('ID_PROYECTO', $idProyecto) // Filtrar por el ID_PROYECTO
                        ->update(); // Ejecutar la actualización
+    }
+    public function investmentsProject($idProyecto) {
+        $result = $this->db->table('inversiones') // Asumiendo que la tabla de inversiones se llama 'inversiones'
+            ->select('ID_USUARIO')
+            ->where('ID_PROYECTO', $idProyecto) // Filtrar por el ID_PROYECTO 
+            ->get(); // Ejecutar la consulta
 
-   
-}
-
+        if ($result->getNumRows() > 0) {
+            // Retorna los resultados como un arreglo
+            return $result->getResultArray();
+        } else {
+            // Retorna un arreglo vacío si no hay resultados
+            return [];
+        }
+    }
 }

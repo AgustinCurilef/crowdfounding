@@ -7,6 +7,7 @@ use App\Models\CategoryModel;
 use App\Models\NotificationUserModel;
 use App\Models\UpdateModel;
 use App\Models\UserModel;
+use App\Models\InvestmentModel;
 
 
 class ProjectController extends BaseController
@@ -268,7 +269,19 @@ class ProjectController extends BaseController
                 ]
             ]
         ];
-
+        $data = [
+            'ID_PROYECTO' => $id,
+            'NOMBRE' => $this->request->getPost('NOMBRE'),
+            'CATEGORIAS' => $this->request->getPost('ID_CATEGORIA'),
+            'USERNAME_USUARIO' => $this->user['USERNAME'],
+            'PRESUPUESTO' => $this->request->getPost('PRESUPUESTO'),
+            'OBJETIVO' => $this->request->getPost('OBJETIVO'),
+            'DESCRIPCION' => $this->request->getPost('DESCRIPCION'),
+            'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
+            'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
+            'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
+            'ESTADO' => $this->request->getPost('ESTADO'),
+        ];
         // Validar la imagen si se ha cargado
         $file = $this->request->getFile('portada');
 
@@ -290,34 +303,27 @@ class ProjectController extends BaseController
             else {
                 unlink($uploadPath . $imageName);
             }
-            $file->move($uploadPath, $imageName);
+            if ($file->move($uploadPath, $imageName)) {
+                $data['PORTADA'] = $imageName;
+            };
         }
 
         // Recogemos los datos del formulario
-        $data = [
-            'ID_PROYECTO' => $id,
-            'NOMBRE' => $this->request->getPost('NOMBRE'),
-            'CATEGORIAS' => $this->request->getPost('ID_CATEGORIA'),
-            'USERNAME_USUARIO' => $this->user['USERNAME'],
-            'PRESUPUESTO' => $this->request->getPost('PRESUPUESTO'),
-            'OBJETIVO' => $this->request->getPost('OBJETIVO'),
-            'DESCRIPCION' => $this->request->getPost('DESCRIPCION'),
-            'FECHA_LIMITE' => $this->request->getPost('FECHA_LIMITE'),
-            'RECOMPENSAS' => $this->request->getPost('RECOMPENSAS'),
-            'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
-            'ESTADO' => $this->request->getPost('ESTADO'),
-            'PORTADA' => $imageName // Puede ser null si no se subió imagen
-        ];
+        // Recogemos los datos del formulario
+
         $updateSuccess = $projectModel->updateProject($data);
         if ($updateSuccess) {
             return redirect()->to('/myprojects')->with('success', 'Proyecto guardado exitosamente.');
         } else {
             $dbError = $projectModel->db->error(); // Retorna un array con 'code' y 'message'
             // Registrar o mostrar el error
+            $dbError = $projectModel->db->error(); // Retorna un array con 'code' y 'message'
+            // Registrar o mostrar el error
             log_message('error', 'Error en la actualización del proyecto: ' . $dbError['message']);
             return redirect()->back()->with('error', 'Hubo un problema al guardar el proyecto. Error: ' . $dbError['message']);
         }
     }
+
 
     public function deleteProject($id)
     {
@@ -450,7 +456,9 @@ class ProjectController extends BaseController
     public function saveUpdateProject($projectId)
     {
         $model = new UpdateModel();
+        $investmentModel = new InvestmentModel(); 
         $projectModel = new ProjectModel();
+        $notification = new NotificationUserModel();
         $project = $projectModel->find($projectId);
 
         // Obtén los datos del formulario
@@ -475,11 +483,16 @@ class ProjectController extends BaseController
             ];
 
             // Insertar los datos en la tabla
+            
             $model->insert($data);
-
+            $inversores = $investmentModel->investmentsProject($projectId);
+            foreach ($inversores as $inversor) {
+                $notification->addUserNotification(4, $inversor);
+            }
             return redirect()->to('project/details/' . $project->ID_PROYECTO)->with('success', 'Actualización publicada exitosamente');
-        } else {
-            return redirect()->back()->with('error', 'Error al cargar la imagen');
-        }
+            
+        } 
+        return redirect()->back()->with('error', 'Error al cargar la imagen');
     }
+
 }
