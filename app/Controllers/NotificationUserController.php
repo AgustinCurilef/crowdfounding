@@ -52,12 +52,12 @@ class NotificationUserController extends BaseController
         $notificationUserModel = new NotificationUserModel();
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $notificationModel = new NotificationModel();
-        $notifications = $notificationModel->findAll();
+        $notificationsUserAll = $notificationUserModel->getUserNotifications(session()->get('ID_USUARIO')); 
 
         $data = [
             'title' => 'Mis Notificaciones',
             'notificationsUser' => $notificationsUser,
-            'notifications' => $notifications,
+            'notificationsUserAll' => $notificationsUserAll,
             'user_name' => $this->user['USERNAME']
         ];
 
@@ -99,15 +99,8 @@ class NotificationUserController extends BaseController
         }
 
         // Respuesta según el éxito o error
-        if (empty($errors)) {
-            return $this->response->setJSON(['status' => 'success']);
-        }
+        return $this->response->setJSON(['status' => 'success']);
 
-        return $this->response->setJSON([
-            'status' => 'error',
-            'message' => 'Algunas notificaciones no pudieron ser marcadas como leídas.',
-            'errors' => $errors
-        ]);
     }
 
 

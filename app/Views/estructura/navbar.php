@@ -15,12 +15,12 @@
                     <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown" style="width: 400px;">
+            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown">
                 <div class="dropdown-divider"></div>
-                <div id="notification-list" >
+                <div id="notification-list" style="width : 400px">
                     <!-- Las notificaciones se cargarán aquí -->
                     <?php if (empty($notificationsUser)) : ?>
-                                <p>No tienes notificaciones.</p>
+                                <p class="dropdown-item dropdown-footer">No tienes notificaciones.</p>
                             <?php else : ?>
                                 <div class="list-group">
                                     <?php foreach ($notificationsUser as $notification) : ?>

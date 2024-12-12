@@ -47,6 +47,7 @@ class NotificationUserModel extends Model
         return $this->select('notificaciones_usuario.*, notificaciones.NOMBRE, notificaciones.DESCRIPCION')
             ->join('notificaciones', 'notificaciones.ID_NOTIFICACION = notificaciones_usuario.ID_NOTIFICACION')
             ->where('notificaciones_usuario.ID_USUARIO', $userId)
+            ->where('notificaciones_usuario.ESTADO', 0)
             ->orderBy('notificaciones_usuario.FECHA', 'DESC')
             ->limit($limit)
             ->find();
