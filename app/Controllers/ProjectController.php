@@ -205,29 +205,6 @@ class ProjectController extends BaseController
             'SITIO_WEB' => $this->request->getPost('SITIO_WEB'),
             'ESTADO' => $this->request->getPost('ESTADO')
         ];
-        if (!$this->validate($validationRule)) {
-            // Obtén los mensajes de error
-            $errors = \Config\Services::validation()->getErrors();
-            // Muestra los errores o redirige con ellos
-            return redirect()->back()->withInput()->with('errors', $errors);
-        }
-        // Validar la imagen si se ha cargado
-        if ($file->isValid()) {
-
-            $uploadPath = WRITEPATH . 'uploads/proyecto/portada';
-            // Generar un nombre único para la imagen y moverla a la carpeta de subida
-            if (!is_dir($uploadPath)) {
-                mkdir($uploadPath, 0755, true);
-            }
-            $imageName = $file->getRandomName();
-            if ($file->move($uploadPath, $imageName)) {
-                $data['PORTADA'] = $imageName;
-            };
-        }
-        $projectName = $this->request->getPost('NOMBRE'); 
-        if ($projectModel->projectNameExists($projectName, null)) {
-            return redirect()->back()->withInput()->with('error', 'El nombre del proyecto ya está en uso.');
-        }
         // Recogemos los datos del formulario
         if (!$this->validate($validationRule)) {
             // Obtén los mensajes de error
