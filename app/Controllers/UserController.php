@@ -189,13 +189,18 @@ class UserController extends BaseController
     public function scoreEntrepreneur($nickname_user)
     {
         $userModel = new UserModel();
-        $emprendedor = $userModel->getUserByNickname($nickname_user);
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
         $notificationUserModel = new NotificationUserModel();
+        $idUsuario = session()->get('ID_USUARIO');
+        $emprendedor = $userModel->getUserByNickname($nickname_user);
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
+        $statistics = $puntuarUsuarioModel->calculateStatistics($emprendedor['ID_USUARIO']);
         $data = [
             'title' => 'Perfil',
             'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'],
+            'statistics' => $statistics,
+            'idUsuario'=> $idUsuario,
             'emprendedor' => $emprendedor
         ];
 
@@ -208,32 +213,28 @@ class UserController extends BaseController
     public function submitRating()
     {
         $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        
+        // Obtener datos desde la solicitud
+        $request = $this->request->getJSON();
 
-        $data = $this->request->getJSON(true);
-        $idUsuarioPuntador = $data['id_usuario_puntador'];
-        $idUsuarioPuntuado = $data['id_usuario_puntuado'];
-        $puntaje = $data['puntaje'];
+        $puntuador = $request->puntuador;
+        $puntuado = $request->puntuado;
+        $puntaje = $request->puntaje;
 
-        // Validaciones
-        if ($idUsuarioPuntador === $idUsuarioPuntuado) {
-            return $this->response->setJSON(['success' => false, 'message' => 'No puedes calificarte a ti mismo.']);
-        }
-
-        // Lógica de almacenamiento de calificación
-        $resultado = $puntuarUsuarioModel->insert([
-            'id_usuario_puntador' => $idUsuarioPuntador,
-            'id_usuario_puntuado' => $idUsuarioPuntuado,
-            'puntaje' => $puntaje
-        ]);
-
-        // Calcula promedio y número de votos
-        $promedio = $puntuarUsuarioModel->getPromedioPuntuacion($idUsuarioPuntuado);
-        $totalVotos = $puntuarUsuarioModel->getNumeroVotos($idUsuarioPuntuado);
-
-        return $this->response->setJSON([
-            'success' => $resultado,
-            'promedio' => $promedio,
-            'totalVotos' => $totalVotos
+        // Inserta o actualiza el registro
+        $data = [
+            'ID_USUARIO_PUNTUADOR' => $puntuador,
+            'ID_USUARIO_PUNTUADO' => $puntuado,
+            'PUNTAJE' => $puntaje
+        ];
+        
+        $puntuarUsuarioModel->upsert($data);
+        // Calcular estadísticas
+        $statistics = $puntuarUsuarioModel->calculateStatistics($puntuado);
+        echo json_encode([
+            'success' => true,
+            'promedio' => round($statistics['promedio'], 1),
+            'totalVotos' => $statistics['totalVotos']
         ]);
     }
-}
+}   

@@ -16,8 +16,8 @@
                     <i class="fas fa-star"></i>
                     <i class="far fa-star"></i>
                 </div>
-                <span class="ms-2 average-rating">(3.2)</span>
-                <span class="ms-2 text-muted"><span id="vote-count">150</span> </span> <!-- Aquí agregas la cantidad de votos -->
+                <span class="ms-2 average-rating"></span>
+                <span class="ms-2 text-muted"><span id="vote-count"></span> </span> <!-- Aquí agregas la cantidad de votos -->
             </div>
 
 
@@ -48,15 +48,10 @@
 </main>
 <script>
     let selectedRating = 0; // Variable global fuera del evento
-
     document.addEventListener("DOMContentLoaded", () => {
         const userRatingStars = document.querySelectorAll("#user-rating .star-rating");
-        let selectedRating = 0; // Almacena el valor seleccionado
-
-        // Suponiendo que esta variable contenga el número de votos
-        const voteCount = 10; // Cambia este valor según los datos que tengas
-        // Establecer el número de votos en el elemento
-
+        const voteCount = <?= json_encode($statistics['totalVotos']); ?>; 
+        //console.log(voteCount);
         document.getElementById('vote-count').textContent = `${voteCount} votos`;
         userRatingStars.forEach(star => {
             // Resalta al pasar el cursor
@@ -95,24 +90,35 @@
         }
     });
     document.getElementById('submit-rating').addEventListener('click', () => {
-        const idUsuarioPuntador = <?= json_encode(session('id_usuario')); ?>; // ID del usuario que vota
+        const idUsuarioPuntuador = <?= json_encode($idUsuario); ?>; // ID del usuario que vota
         const idUsuarioPuntuado = <?= json_encode($emprendedor['ID_USUARIO']); ?>; // ID del emprendedor
         const puntaje = selectedRating; // Puntuación seleccionada
 
-        if (puntaje === 0) {
+        if (selectedRating == 0) {
             alert('Por favor, selecciona una puntuación antes de enviar.');
             return;
         }
 
-        fetch('<?= base_url('rating/submit'); ?>', {
+        if (idUsuarioPuntuador == idUsuarioPuntuado) {
+            alert('No puedes puntuarte a ti mismo.');
+            return;
+        }
+
+        console.log('Datos a enviar:', {
+            puntuador: idUsuarioPuntuador,
+            puntuado: idUsuarioPuntuado,
+            puntaje: selectedRating
+        });
+
+        fetch('<?= base_url('/rating/submit'); ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    id_usuario_puntador: idUsuarioPuntador,
-                    id_usuario_puntuado: idUsuarioPuntuado,
-                    puntaje: puntaje
+                    puntuador: idUsuarioPuntuador,
+                    puntuado: idUsuarioPuntuado,
+                    puntaje: selectedRating
                 })
             })
             .then(response => response.json())

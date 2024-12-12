@@ -55,7 +55,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->get('/profile/(:segment)', 'UserController::scoreEntrepreneur/$1');
 
-    $routes->post('rating/submit', 'UserController::submitRating');
+    $routes->post('/rating/submit', 'UserController::submitRating');
 
     /*Proyectos */
 

@@ -476,11 +476,13 @@ class ProjectController extends BaseController
         $notificationUserModel = new NotificationUserModel();
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($idProyecto);
+        
         // Preparar datos para la vista
         $data = [
             'title' => 'Actualizacion de mis proyectos',
             'project' => $project,
             'notificationsUser' => $notificationsUser,
+            
             'user_name' => $this->user['USERNAME'] ?? null,
         ];
 

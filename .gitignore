@@ -5,9 +5,9 @@
 !system/cache/*
 !*/cache/index.html
 !*/cache/.htaccess
-/writable/logs
-/writable/session
-/writable/debugbar
+/writable/logs/*
+/writable/session/*
+/writable/debugbar/*
 
 
 
