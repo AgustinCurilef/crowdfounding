@@ -24,6 +24,7 @@ class NotificationUserModel extends Model
             ->join('notificaciones', 'notificaciones.ID_NOTIFICACION = notificaciones_usuario.ID_NOTIFICACION')
             ->where('notificaciones_usuario.ID_USUARIO', $userId)
             ->orderBy('notificaciones_usuario.FECHA', 'DESC')
+            ->limit(20)
             ->findAll();
     }
 

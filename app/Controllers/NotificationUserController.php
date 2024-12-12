@@ -52,7 +52,7 @@ class NotificationUserController extends BaseController
         $notificationUserModel = new NotificationUserModel();
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $notificationModel = new NotificationModel();
-        $notificationsUserAll = $notificationUserModel->getUserNotifications(session()->get('ID_USUARIO')); 
+        $notificationsUserAll = $notificationUserModel->getUserNotifications(session()->get('ID_USUARIO'));
 
         $data = [
             'title' => 'Mis Notificaciones',
@@ -98,9 +98,12 @@ class NotificationUserController extends BaseController
             }
         }
 
+        if (!empty($errors)) {
+            return $this->response->setJSON(['status' => 'error', 'errors' => $errors]);
+        }
+
         // Respuesta según el éxito o error
         return $this->response->setJSON(['status' => 'success']);
-
     }
 
 
