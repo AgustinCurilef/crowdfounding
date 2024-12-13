@@ -22,7 +22,7 @@
                             <?php foreach ($notificationsUser as $notification) : ?>
                                 <div class="list-group-item <?= ($notification['ESTADO'] == 'NO_LEIDO') ? 'list-group-item-warning' : '' ?>">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1"><?= esc($notification['NOMBRE']) ?></h5>
+                                        <p class="mb-1"><?= esc($notification['NOMBRE']) ?></p>
                                         <small><?= date('d/m/Y H:i', strtotime($notification['FECHA'])) ?></small>
                                     </div>
                                 </div>

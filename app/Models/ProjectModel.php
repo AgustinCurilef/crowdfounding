@@ -288,8 +288,6 @@ class ProjectModel extends Model
     }
 
 
-
-
     public function deleteProject($id)
     {
         try {
