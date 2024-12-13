@@ -351,9 +351,14 @@ class ProjectController extends BaseController
     public function deleteProject($id)
     {
         $ProjectModel = new ProjectModel();
+        $imageName = $ProjectModel->getImage($id);
+        $uploadPath = WRITEPATH . 'uploads/profile_pictures/';
         try {
             // Intentar eliminar el proyecto
             if ($ProjectModel->delete($id)) {
+                if (!empty($imageName)) {
+                    unlink($uploadPath . $imageName);
+                }
                 // Si la eliminación fue exitosa, redirigir con mensaje de éxito
                 return redirect()->to('/myprojects')
                     ->with('success', 'Proyecto eliminado exitosamente');

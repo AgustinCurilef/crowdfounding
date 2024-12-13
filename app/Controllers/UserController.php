@@ -178,8 +178,13 @@ class UserController extends BaseController
     public function delete($id)
     {
         $userModel = new UserModel();
-
+        $imageName = $userModel->getImage($id);
+        $uploadPath = WRITEPATH . 'uploads/profile_pictures/';
         if ($userModel->delete($id)) {
+            if (!empty($imageName)) {
+                unlink($uploadPath . $imageName);
+            }
+            // Mu
             return redirect()->to('/')->with('success', 'Usuario eliminado correctamente.');
         } else {
             return redirect()->to('/editProfile')->with('error', 'No se pudo eliminar el usuario.');
