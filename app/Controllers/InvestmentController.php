@@ -6,6 +6,7 @@ use App\Models\InvestmentModel;
 use App\Models\ProjectModel;
 use App\Models\CategoryModel;
 use App\Models\NotificationUserModel;
+use App\Models\PuntuarUsuarioModel;
 use DateTime; // Añade esta línea
 
 
@@ -36,13 +37,16 @@ class InvestmentController extends BaseController
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-
-
-
+        
+        
+        
         $data = [
             'notificationsUser' => $notificationsUser,
+            'statistics' => $statistics,
             'title' => 'Mis Inversiones',
             'projects' => $projects,
             'categories' => $categories,
@@ -58,18 +62,21 @@ class InvestmentController extends BaseController
     public function create($ID_PROYECTO)
     {
         $this->checkSession(); // Verifica la sesión
-        $notificationUserModel = new NotificationUserModel();
-        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $projectModel = new ProjectModel();
+        $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($ID_PROYECTO);
-
+        
         if (!$project) {
             return redirect()->to('/inicio')
-                ->with('error', 'Proyecto no encontrado');
+            ->with('error', 'Proyecto no encontrado');
         }
-
+        
         $data = [
             'notificationsUser' => $notificationsUser,
+            'statistics' => $statistics,
             'title' => 'Realizar Inversión',
             'project' => $project,
             'user_name' => session()->get('USERNAME')

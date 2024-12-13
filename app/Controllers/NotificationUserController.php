@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\NotificationModel;
 use App\Models\NotificationUserModel;
 use App\Models\UserModel;
-
+use App\Models\PuntuarUsuarioModel;
 
 class NotificationUserController extends BaseController
 {
@@ -50,12 +50,15 @@ class NotificationUserController extends BaseController
             return redirect()->to('/login');
         }
         $notificationUserModel = new NotificationUserModel();
-        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $notificationModel = new NotificationModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
+        $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $notificationsUserAll = $notificationUserModel->getUserNotifications(session()->get('ID_USUARIO'));
-
+        
         $data = [
             'title' => 'Mis Notificaciones',
+            'statistics' => $statistics,
             'notificationsUser' => $notificationsUser,
             'notificationsUserAll' => $notificationsUserAll,
             'user_name' => $this->user['USERNAME']

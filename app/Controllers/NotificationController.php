@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\NotificationModel;
 use App\Models\NotificationUserModel;
+use App\Models\PuntuarUsuarioModel;
 
 class NotificationController extends BaseController
 {
@@ -18,14 +19,16 @@ class NotificationController extends BaseController
     public function index()
     {
         $notificationModel = new NotificationModel();
-        $notifications = $notificationModel->findAll();
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $notifications = $notificationModel->findAll();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $data = [
             'title' => 'Notificaciones',
+            'statistics' => $statistics,
             'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'],
-            
             'notifications' => $notifications
         ];
         
@@ -39,12 +42,17 @@ class NotificationController extends BaseController
     public function create()
     {
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        $data = ['title' => 'Agregar Notificacion','user_name' => $this->user['USERNAME'],
-                'notificationsUser' => $notificationsUser
+        $data = [
+            'title' => 'Agregar Notificacion',
+            'user_name' => $this->user['USERNAME'],
+            'statistics' => $statistics,
+            'notificationsUser' => $notificationsUser
     ];
-
-        return view('estructura/header', $data)
+    
+    return view('estructura/header', $data)
             . view('estructura/navbar',$data)
             . view('estructura/sidebar')
             . view('notification/create')
@@ -77,8 +85,10 @@ class NotificationController extends BaseController
     public function edit($id)
     {
         $notificationModel = new NotificationModel();
-        $notification = $notificationModel->find($id);
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
         $notificationUserModel = new NotificationUserModel();
+        $notification = $notificationModel->find($id);
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         if (!$notification) {
             return redirect()->to('/notification')->with('error', 'Notificación no encontrada');
@@ -86,6 +96,7 @@ class NotificationController extends BaseController
         
         $data = [
             'title' => 'Editar Notificación',
+            'statistics' => $statistics,
             'user_name' => $this->user['USERNAME'],
             'notificationsUser' => $notificationsUser,
             'notification' => $notification

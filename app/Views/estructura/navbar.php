@@ -59,14 +59,14 @@
                         <?= esc($user_name) ?>
 
                     <div class="d-flex justify-content-center align-items-center">
-                        <div class="star-rating average-rating">
+                        <div class="star-rating average-rating" id ="starScore">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <span class="ms-2 average-rating">(4.2)</span>
+                        <span class="ms-2 average-rating" id = "numScore"></span>
                     </div>
                     </p>
                 </li>
@@ -109,4 +109,24 @@
             })
             .catch(error => console.error('Error en la solicitud:', error));
     }
+    function updateStarRating() {
+        const stars = document.querySelectorAll('#starScore i');
+        const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
+        stars.forEach((star, index) => {
+            if (index < Math.floor(scoreStored)) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
+        document.getElementById('numScore').textContent = `(${scoreStored})`;
+        updateStarRating(); // Llama a la función para actualizar las estrellas promedio
+    
+    });
 </script>

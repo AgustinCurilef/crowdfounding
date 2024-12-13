@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\CategoryModel;
 use App\Models\NotificationUserModel;
+use App\Models\PuntuarUsuarioModel;
 
 class CategoryController extends BaseController
 {
@@ -17,9 +18,11 @@ class CategoryController extends BaseController
     {
         $categoryModel = new CategoryModel();
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $data = [
-
+            'statistics' => $statistics,
             'title' => 'Lista de Categorías',
             'notificationsUser' => $notificationsUser,
             'categories' => $categoryModel->findAll(),
@@ -38,9 +41,14 @@ class CategoryController extends BaseController
     public function create(): string
     {
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        $data = ['title' => 'Agregar Categoría','user_name' => $this->user['USERNAME'],
-                'notificationsUser' => $notificationsUser];
+        $data = [
+            'title' => 'Agregar Categoría',
+            'user_name' => $this->user['USERNAME'],
+            'statistics' => $statistics,
+            'notificationsUser' => $notificationsUser];
         return view('estructura/header', $data)
             . view('estructura/navbar',$data)
             . view('estructura/sidebar')
@@ -66,10 +74,13 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $categoryModel = new CategoryModel();
         $data = [
             'title' => 'Editar Categoría',
+            'statistics' => $statistics,
             'category' => $categoryModel->find($id),
             'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'] 

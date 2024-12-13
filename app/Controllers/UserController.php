@@ -34,12 +34,15 @@ class UserController extends BaseController
         $ProjectModel = new ProjectModel();
         $categoryModel = new CategoryModel();
         $notificationUserModel = new NotificationUserModel();
+        $puntuarUsuarioModel = new PuntuarUsuarioModel();
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-
+        
         $data = [
             'title' => 'Editar Perfil',
+            'statistics' => $statistics,
             'notificationsUser' => $notificationsUser,
             'projects' => $projects,
             'categories' => $categories,
