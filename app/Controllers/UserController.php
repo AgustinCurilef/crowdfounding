@@ -195,9 +195,11 @@ class UserController extends BaseController
         $emprendedor = $userModel->getUserByNickname($nickname_user);
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $statistics = $puntuarUsuarioModel->calculateStatistics($emprendedor['ID_USUARIO']);
+        $vote = $puntuarUsuarioModel->getVote($emprendedor['ID_USUARIO'], session()->get('ID_USUARIO'));
         $data = [
             'title' => 'Perfil',
             'notificationsUser' => $notificationsUser,
+            'mi_voto' => $vote,
             'user_name' => $this->user['USERNAME'],
             'statistics' => $statistics,
             'idUsuario'=> $idUsuario,
@@ -213,7 +215,7 @@ class UserController extends BaseController
     public function submitRating()
     {
         $puntuarUsuarioModel = new PuntuarUsuarioModel();
-        
+        $notification = new NotificationUserModel();
         // Obtener datos desde la solicitud
         $request = $this->request->getJSON();
 
@@ -230,6 +232,7 @@ class UserController extends BaseController
         
         $puntuarUsuarioModel->upsert($data);
         // Calcular estadísticas
+        $notification->addUserNotification(5, $puntuado);
         $statistics = $puntuarUsuarioModel->calculateStatistics($puntuado);
         echo json_encode([
             'success' => true,

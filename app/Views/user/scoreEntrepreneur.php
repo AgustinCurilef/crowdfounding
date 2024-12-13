@@ -9,14 +9,14 @@
         <div class="rating-section">
             <h5>Puntuación Promedio</h5>
             <div class="d-flex justify-content-center align-items-center">
-                <div class="star-rating average-rating">
+                <div class="star-rating average-rating" id = "starScore">
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="far fa-star"></i>
                 </div>
-                <span class="ms-2 average-rating"></span>
+                <span class="ms-2 average-rating" id = "numScore" onload="updateStarRating()"></span>
                 <span class="ms-2 text-muted"><span id="vote-count"></span> </span> <!-- Aquí agregas la cantidad de votos -->
             </div>
 
@@ -47,24 +47,41 @@
     </div>
 </main>
 <script>
-    let selectedRating = 0; // Variable global fuera del evento
+    function updateStarRating() {
+        const stars = document.querySelectorAll('#starScore i');
+        const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
+        stars.forEach((star, index) => {
+            if (index < Math.floor(scoreStored)) {
+                star.classList.remove('far');
+                star.classList.add('fas');
+            } else {
+                star.classList.remove('fas');
+                star.classList.add('far');
+            }
+        });
+    }
+  
+    let selectedRating = <?= json_encode($mi_voto); ?>; // Variable global fuera del evento
     document.addEventListener("DOMContentLoaded", () => {
         const userRatingStars = document.querySelectorAll("#user-rating .star-rating");
+        const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
         const voteCount = <?= json_encode($statistics['totalVotos']); ?>; 
-        //console.log(voteCount);
+        updateStarRating(); // Llama a la función para actualizar las estrellas promedio
+        highlightStars(selectedRating, true);
+        document.getElementById('numScore').textContent = `(${scoreStored})`;
         document.getElementById('vote-count').textContent = `${voteCount} votos`;
         userRatingStars.forEach(star => {
             // Resalta al pasar el cursor
             star.addEventListener("mouseover", () => {
                 highlightStars(star.dataset.value);
             });
-
+            
             // Resetea al mover el cursor fuera
             star.addEventListener("mouseout", () => {
                 resetStars();
                 if (selectedRating > 0) highlightStars(selectedRating, true); // Mantiene las estrellas seleccionadas
             });
-
+            
             // Fija la selección al hacer clic
             star.addEventListener("click", () => {
                 selectedRating = star.dataset.value;
@@ -72,7 +89,6 @@
                 highlightStars(selectedRating, true);
             });
         });
-
         // Resalta las estrellas hasta el valor dado
         function highlightStars(value, permanent = false) {
             userRatingStars.forEach(star => {
@@ -81,7 +97,7 @@
                 }
             });
         }
-
+        
         // Resetea todas las estrellas
         function resetStars() {
             userRatingStars.forEach(star => {
@@ -90,10 +106,11 @@
         }
     });
     document.getElementById('submit-rating').addEventListener('click', () => {
+
         const idUsuarioPuntuador = <?= json_encode($idUsuario); ?>; // ID del usuario que vota
         const idUsuarioPuntuado = <?= json_encode($emprendedor['ID_USUARIO']); ?>; // ID del emprendedor
         const puntaje = selectedRating; // Puntuación seleccionada
-
+        
         if (selectedRating == 0) {
             alert('Por favor, selecciona una puntuación antes de enviar.');
             return;
@@ -121,16 +138,6 @@
                     puntaje: selectedRating
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Actualiza el promedio y el conteo de votos
-                    document.querySelector('.average-rating').textContent = `(${data.promedio})`;
-                    document.getElementById('vote-count').textContent = `${data.totalVotos} votos`;
-                } else {
-                    alert('Ocurrió un error al registrar tu voto.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        location.reload();
     });
 </script>

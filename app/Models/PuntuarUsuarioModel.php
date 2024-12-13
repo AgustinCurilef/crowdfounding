@@ -14,12 +14,21 @@ class PuntuarUsuarioModel extends Model
 
     public function calculateStatistics($puntuado) {
     $query = $this
-        ->select('AVG(PUNTAJE) as promedio, COUNT(*) as totalVotos')
+        ->select('ROUND(AVG(PUNTAJE), 1) as promedio, COUNT(*) as totalVotos')
         ->where('ID_USUARIO_PUNTUADO', $puntuado)
         ->get();
     return $query->getRowArray();
     }
-    
+
+    public function getVote($puntuado, $puntuador) {
+        $query = $this
+            ->select('PUNTAJE')
+            ->where('ID_USUARIO_PUNTUADOR', $puntuador)
+            ->where('ID_USUARIO_PUNTUADO', $puntuado)
+            ->get();
+        return $query->getRowArray();
+    }
+
     public function upsert($data)
     {
         // Verificar si ya existe un registro con la clave primaria compuesta
