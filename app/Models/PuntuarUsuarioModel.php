@@ -23,8 +23,8 @@ class PuntuarUsuarioModel extends Model
     public function getVote($puntuado, $puntuador) {
         $query = $this
             ->select('PUNTAJE')
-            ->where('ID_USUARIO_PUNTUADOR', $puntuador)
             ->where('ID_USUARIO_PUNTUADO', $puntuado)
+            ->where('ID_USUARIO_PUNTUADOR', $puntuador)
             ->get();
         return $query->getRowArray();
     }

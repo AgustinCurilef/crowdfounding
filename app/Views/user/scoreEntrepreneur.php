@@ -9,14 +9,14 @@
         <div class="rating-section">
             <h5>Puntuación Promedio</h5>
             <div class="d-flex justify-content-center align-items-center">
-                <div class="star-rating average-rating" id = "starScore">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                <div class="star-rating average-rating" id = "starScoreEmp">
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
                     <i class="far fa-star"></i>
                 </div>
-                <span class="ms-2 average-rating" id = "numScore" onload="updateStarRating()"></span>
+                <span class="ms-2 average-rating" id = "numScoreEmp" onload="updateStarRating()"></span>
                 <span class="ms-2 text-muted"><span id="vote-count"></span> </span> <!-- Aquí agregas la cantidad de votos -->
             </div>
 
@@ -48,10 +48,10 @@
 </main>
 <script>
     function updateStarRating() {
-        const stars = document.querySelectorAll('#starScore i');
-        const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
-        stars.forEach((star, index) => {
-            if (index < Math.floor(scoreStored)) {
+        const starsEmp = document.querySelectorAll('#starScoreEmp i');
+        const scoreStoredEmp = <?= json_encode($statisticsEmp['promedio']); ?>; // Promedio del backend
+        starsEmp.forEach((star, index) => {
+            if (index < Math.floor(scoreStoredEmp)) {
                 star.classList.remove('far');
                 star.classList.add('fas');
             } else {
@@ -64,11 +64,11 @@
     let selectedRating = <?= json_encode($mi_voto); ?>; // Variable global fuera del evento
     document.addEventListener("DOMContentLoaded", () => {
         const userRatingStars = document.querySelectorAll("#user-rating .star-rating");
-        const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
-        const voteCount = <?= json_encode($statistics['totalVotos']); ?>; 
-        updateStarRating(); // Llama a la función para actualizar las estrellas promedio
+        const scoreStoredEmp = <?= json_encode($statisticsEmp['promedio']); ?> ?? 0;
+        const voteCount = <?= json_encode($statisticsEmp['totalVotos']); ?>; 
         highlightStars(selectedRating, true);
-        document.getElementById('numScore').textContent = `(${scoreStored})`;
+        updateStarRating(); // Llama a la función para actualizar las estrellas promedio
+        document.getElementById('numScoreEmp').textContent = `(${scoreStoredEmp})`;
         document.getElementById('vote-count').textContent = `${voteCount} votos`;
         userRatingStars.forEach(star => {
             // Resalta al pasar el cursor

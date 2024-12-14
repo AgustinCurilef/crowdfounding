@@ -111,7 +111,7 @@
     }
     function updateStarRating() {
         const stars = document.querySelectorAll('#starScore i');
-        const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
+        //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
         stars.forEach((star, index) => {
             if (index < Math.floor(scoreStored)) {
                 star.classList.remove('far');
@@ -128,5 +128,5 @@
         document.getElementById('numScore').textContent = `(${scoreStored})`;
         updateStarRating(); // Llama a la función para actualizar las estrellas promedio
     
-    });
+    });*/
 </script>

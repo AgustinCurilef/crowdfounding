@@ -202,13 +202,15 @@ class UserController extends BaseController
         $idUsuario = session()->get('ID_USUARIO');
         $emprendedor = $userModel->getUserByNickname($nickname_user);
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        $statistics = $puntuarUsuarioModel->calculateStatistics($emprendedor['ID_USUARIO']);
+        $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
+        $statisticsEmp = $puntuarUsuarioModel->calculateStatistics($emprendedor['ID_USUARIO']);
         $vote = $puntuarUsuarioModel->getVote($emprendedor['ID_USUARIO'], session()->get('ID_USUARIO'));
         $data = [
             'title' => 'Perfil',
             'notificationsUser' => $notificationsUser,
             'mi_voto' => $vote,
             'user_name' => $this->user['USERNAME'],
+            'statisticsEmp' => $statisticsEmp,
             'statistics' => $statistics,
             'idUsuario'=> $idUsuario,
             'emprendedor' => $emprendedor
