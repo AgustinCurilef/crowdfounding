@@ -46,22 +46,8 @@
         </div>
     </div>
 </main>
-<script>
-    function updateStarRating() {
-        const starsEmp = document.querySelectorAll('#starScoreEmp i');
-        const scoreStoredEmp = <?= json_encode($statisticsEmp['promedio']); ?>; // Promedio del backend
-        starsEmp.forEach((star, index) => {
-            if (index < Math.floor(scoreStoredEmp)) {
-                star.classList.remove('far');
-                star.classList.add('fas');
-            } else {
-                star.classList.remove('fas');
-                star.classList.add('far');
-            }
-        });
-    }
-  
-    let selectedRating = <?= json_encode($mi_voto); ?>; // Variable global fuera del evento
+<script>    
+    let selectedRating = <?= json_encode($mi_voto['PUNTAJE'] ?? null); ?>;
     document.addEventListener("DOMContentLoaded", () => {
         const userRatingStars = document.querySelectorAll("#user-rating .star-rating");
         const scoreStoredEmp = <?= json_encode($statisticsEmp['promedio']); ?> ?? 0;
@@ -104,7 +90,21 @@
                 star.classList.remove("hover", "active");
             });
         }
+        function updateStarRating() {
+            const starsEmp = document.querySelectorAll('#starScoreEmp i');
+            const scoreStoredEmp = <?= json_encode($statisticsEmp['promedio']); ?>; // Promedio del backend
+            starsEmp.forEach((star, index) => {
+                if (index < Math.floor(scoreStoredEmp)) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
     });
+    
     document.getElementById('submit-rating').addEventListener('click', () => {
 
         const idUsuarioPuntuador = <?= json_encode($idUsuario); ?>; // ID del usuario que vota

@@ -84,8 +84,13 @@
 </nav> <!--end::Header--> <!--begin::Sidebar-->
 
 <script>
-    function markNotificationsAsRead() {
-        fetch('<?= base_url('notification/mark-read') ?>', {
+    document.addEventListener("DOMContentLoaded", () => {
+        const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
+        document.getElementById('numScore').textContent = `(${scoreStored})`;
+        updateStarRating2(); // Llama a la función para actualizar las estrellas promedio
+        
+        function markNotificationsAsRead() {
+            fetch('<?= base_url('notification/mark-read') ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,25 +113,19 @@
                 }
             })
             .catch(error => console.error('Error en la solicitud:', error));
-    }
-    function updateStarRating() {
-        const stars = document.querySelectorAll('#starScore i');
-        //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
-        stars.forEach((star, index) => {
-            if (index < Math.floor(scoreStored)) {
-                star.classList.remove('far');
-                star.classList.add('fas');
-            } else {
-                star.classList.remove('fas');
-                star.classList.add('far');
-            }
-        });
-    }
-    
-    document.addEventListener("DOMContentLoaded", () => {
-        const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
-        document.getElementById('numScore').textContent = `(${scoreStored})`;
-        updateStarRating(); // Llama a la función para actualizar las estrellas promedio
-    
-    });*/
+        }
+        function updateStarRating2() {
+            const stars = document.querySelectorAll('#starScore i');
+            //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
+            stars.forEach((star, index) => {
+                if (index < Math.floor(scoreStored)) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+    });
 </script>
