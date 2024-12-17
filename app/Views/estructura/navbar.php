@@ -70,7 +70,6 @@
                     </div>
                     </p>
                 </li>
-
                 <!--end::User Image-->
                 <!--begin::Menu Body-->
                 <li class="user-body">
@@ -89,7 +88,23 @@
         document.getElementById('numScore').textContent = `(${scoreStored})`;
         updateStarRating2(); // Llama a la función para actualizar las estrellas promedio
         
-        function markNotificationsAsRead() {
+        
+        function updateStarRating2() {
+            const stars = document.querySelectorAll('#starScore i');
+            //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
+            stars.forEach((star, index) => {
+                if (index < Math.floor(scoreStored)) {
+                    star.classList.remove('far');
+                    star.classList.add('fas');
+                } else {
+                    star.classList.remove('fas');
+                    star.classList.add('far');
+                }
+            });
+        }
+    });
+
+    function markNotificationsAsRead() {
             fetch('<?= base_url('notification/mark-read') ?>', {
                 method: 'POST',
                 headers: {
@@ -114,18 +129,4 @@
             })
             .catch(error => console.error('Error en la solicitud:', error));
         }
-        function updateStarRating2() {
-            const stars = document.querySelectorAll('#starScore i');
-            //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
-            stars.forEach((star, index) => {
-                if (index < Math.floor(scoreStored)) {
-                    star.classList.remove('far');
-                    star.classList.add('fas');
-                } else {
-                    star.classList.remove('fas');
-                    star.classList.add('far');
-                }
-            });
-        }
-    });
 </script>

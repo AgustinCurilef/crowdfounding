@@ -40,11 +40,31 @@ class PuntuarUsuarioModel extends Model
         
         if (empty($existing['ID_PUNTUACION'])) {
             // Si no existe, insertar
-            return $this->insert($data);
+            if ($this->insert($data)) {
+                return [
+                    'success' => true,
+                    'message' => 'Puntuación registrada correctamente.'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Error al registrar la puntuación.'
+                ];
+            }
         } 
         else {
             // Si existe, actualizar
-            return $this->update($existing['ID_PUNTUACION'], ['PUNTAJE' => $data['PUNTAJE']]);
+            if ($this->update($existing['ID_PUNTUACION'], ['PUNTAJE' => $data['PUNTAJE']])){
+                return [
+                    'success' => true,
+                    'message' => 'Puntuación actualizada correctamente.'
+                ];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Error al actualizar la puntuación.'
+                ];
+            }
         } 
     }
 

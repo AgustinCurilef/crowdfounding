@@ -240,14 +240,17 @@ class UserController extends BaseController
             'PUNTAJE' => $puntaje
         ];
         
-        $puntuarUsuarioModel->upsert($data);
+        $result = $puntuarUsuarioModel->upsert($data);
         // Calcular estadísticas
         $notification->addUserNotification(5, $puntuado);
-        $statistics = $puntuarUsuarioModel->calculateStatistics($puntuado);
+        
+        return $this->response->setJSON($result);
+
+        /*$statistics = $puntuarUsuarioModel->calculateStatistics($puntuado);
         echo json_encode([
             'success' => true,
             'promedio' => round($statistics['promedio'], 1),
             'totalVotos' => $statistics['totalVotos']
-        ]);
+        ]);*/
     }
 }   

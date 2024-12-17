@@ -138,6 +138,22 @@
                     puntaje: selectedRating
                 })
             })
-        location.reload();
+        .then(response => response.json())  // Convierte la respuesta en JSON
+        .then(data => {
+            //const data = JSON.parse(responseText);
+            //console.log('Respuesta del servidor:', responseText);
+            if (data.success) { // Verifica si la respuesta contiene "success: true"
+                alert('Puntuación enviada con éxito.');
+                console.log('si');
+                location.reload(); // Recarga solo si fue exitoso
+            } else {
+                alert('Hubo un problema al enviar la puntuación: ' + data.message);
+                console.log('no');
+            }
+        })
+        /*.catch(error => {
+            console.error('Error:', error);
+            alert('Error al enviar la puntuación. Inténtalo de nuevo.');
+        });*/
     });
 </script>
