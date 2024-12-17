@@ -39,7 +39,7 @@ class UserController extends BaseController
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $projects = $ProjectModel->getProjects();
         $categories = $categoryModel->findAll();
-        
+
         $data = [
             'title' => 'Editar Perfil',
             'statistics' => $statistics,
@@ -212,7 +212,7 @@ class UserController extends BaseController
             'user_name' => $this->user['USERNAME'],
             'statisticsEmp' => $statisticsEmp,
             'statistics' => $statistics,
-            'idUsuario'=> $idUsuario,
+            'idUsuario' => $idUsuario,
             'emprendedor' => $emprendedor
         ];
 
@@ -239,11 +239,16 @@ class UserController extends BaseController
             'ID_USUARIO_PUNTUADO' => $puntuado,
             'PUNTAJE' => $puntaje
         ];
-        
+
         $result = $puntuarUsuarioModel->upsert($data);
-        // Calcular estadísticas
-        $notification->addUserNotification(5, $puntuado);
-        
+        if ($result['success'] && $result['operacion'] != 0) {
+            // Calcular estadísticas
+            $notification->addUserNotification($result['operacion'], $puntuado);
+        }
+
+
+
+
         return $this->response->setJSON($result);
 
         /*$statistics = $puntuarUsuarioModel->calculateStatistics($puntuado);
@@ -253,4 +258,4 @@ class UserController extends BaseController
             'totalVotos' => $statistics['totalVotos']
         ]);*/
     }
-}   
+}

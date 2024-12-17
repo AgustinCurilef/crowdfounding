@@ -14,13 +14,13 @@ use App\Models\PuntuarUsuarioModel;
 class ProjectController extends BaseController
 {
     protected  $user;
-    
+
     public function __construct()
     {
         // Inicializa el modelo de usuario una sola vez en el constructor
         $this->user = session()->get();
     }
-    
+
     public function showFront($idProyect)
     {
         $projectModel = new ProjectModel();
@@ -28,36 +28,36 @@ class ProjectController extends BaseController
         $urlImage = WRITEPATH . 'uploads\\proyecto\\portada\\' . $imageName;
         //log_message('si:', $urlImage);
         if ($imageName) {
-            
+
             // Obtener el tipo MIME de la imagen
             // Obtener el tipo MIME de la imagen
             $mime = mime_content_type($urlImage);
-            
+
             // Leer el contenido de la imagen
             $imageData = file_get_contents($urlImage);
-            
+
             // Especificar el tipo MIME correcto para imágenes JPG
             return $this->response
-            ->setHeader('Content-Type', $mime)
-            ->setBody($imageData); // Enviar la imagen al navegador
-            
+                ->setHeader('Content-Type', $mime)
+                ->setBody($imageData); // Enviar la imagen al navegador
+
         } else {
             // Ruta de la imagen por defecto
             $defaultImagePath = WRITEPATH . '../public/template/dist/assets/img/imagen_proyecto_por_defecto.png';
-            
+
             if (file_exists($defaultImagePath)) {
                 // Leer el contenido de la imagen predeterminada
                 $defaultImage = file_get_contents($defaultImagePath);
-                
+
                 return $this->response->setHeader('Content-Type', 'image/jpeg')
-                ->setBody($defaultImage); // Enviar la imagen por defecto al navegador
+                    ->setBody($defaultImage); // Enviar la imagen por defecto al navegador
             } else {
                 // Si la imagen predeterminada no existe, retornar un error 404
                 return $this->response->setStatusCode(404, 'Default image not found');
             }
-        }     
+        }
     }
-    
+
     public function listAllProjects(): String
     {
         $ProjectModel = new ProjectModel();
@@ -95,7 +95,7 @@ class ProjectController extends BaseController
     public function list(): String
     {
         $ProjectModel = new ProjectModel();
-        $categoryModel = new CategoryModel();        
+        $categoryModel = new CategoryModel();
         $NotificationUserModel = new NotificationUserModel();
         $puntuarUsuarioModel = new PuntuarUsuarioModel();
         $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
@@ -103,15 +103,15 @@ class ProjectController extends BaseController
         $categories = $categoryModel->findAll();
         $amountNotification = $NotificationUserModel->getUnreadCount($this->user['ID_USUARIO']);
         $notificationsUser = $NotificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        
-        
+
+
         $currentPage = $this->request->getVar('page') ?? 1; // Capturamos la página actual (por defecto, 1)
         $perPage = 6; // Definimos cuántos ítems por página
         helper('pagination');  // Carga el helper
-        
+
         // Llamada a paginateArray que devuelve los proyectos y los datos de paginación
         $paginatedProjects = paginateArray($projects, $perPage, $currentPage);
-        
+
         $data = [
             'title' => 'Mis Proyectos',
             'statistics' => $statistics,
@@ -142,7 +142,7 @@ class ProjectController extends BaseController
         $projects = $ProjectModel->getInvestmentsByUser($userId);
         $categories = $categoryModel->findAll();
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        
+
         $data = [
             'title' => 'Mis Inversiones',
             'statistics' => $statistics,
@@ -170,7 +170,7 @@ class ProjectController extends BaseController
         $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $categories = $categoryModel->findAll();
-        
+
         $data = [
             'title' => 'Crear Proyecto',
             'statistics' => $statistics,
@@ -178,16 +178,16 @@ class ProjectController extends BaseController
             'notificationsUser' => $notificationsUser,
             'user_name' => $this->user['USERNAME'] ?? null
         ];
-        
-        
+
+
         return view('estructura/header', $data)
-        . view('estructura/navbar', $data)
-        . view('estructura/sidebar')
-        . view('project/addProyect', $data)
-        . view('estructura/footer');
+            . view('estructura/navbar', $data)
+            . view('estructura/sidebar')
+            . view('project/addProyect', $data)
+            . view('estructura/footer');
     }
-    
-    
+
+
     public function saveProject()
     {
         // Configuración para la subida del archivo
@@ -238,7 +238,7 @@ class ProjectController extends BaseController
                 $data['PORTADA'] = $imageName;
             };
         }
-        $projectName = $this->request->getPost('NOMBRE'); 
+        $projectName = $this->request->getPost('NOMBRE');
         if ($projectModel->projectNameExists($projectName, null)) {
             return redirect()->back()->withInput()->with('error', 'El nombre del proyecto ya está en uso.');
         }
@@ -260,17 +260,17 @@ class ProjectController extends BaseController
         $puntuarUsuarioModel = new PuntuarUsuarioModel();
         $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
-        
-        
+
+
         // Obtener el proyecto por su ID
         $project = $ProjectModel->getProjectById($id);
-        
+
         // Obtener todas las categorías disponibles
         $categories = $categoryModel->findAll();
-        
+
         // Obtener las categorías asociadas a este proyecto
         $selectedCategories = $categoryModel->getCategory($id);
-        
+
         // Preparar datos para la vista
         $data = [
             'title' => 'Modificar Proyecto',
@@ -290,10 +290,10 @@ class ProjectController extends BaseController
             . view('estructura/footer');
     }
 
-    
-    
-    
-    
+
+
+
+
     public function updateProject($id)
     {
         // Configuración para la subida del archivo
@@ -338,10 +338,9 @@ class ProjectController extends BaseController
             }
             $imageName = $projectModel->getImage($id);
             // Generar un nombre único para la imagen y moverla a la carpeta de subida
-            if(empty($imageName)) {
+            if (empty($imageName)) {
                 $imageName = $file->getRandomName();
-            }
-            else {
+            } else {
                 unlink($uploadPath . $imageName);
             }
             if ($file->move($uploadPath, $imageName)) {
@@ -401,14 +400,14 @@ class ProjectController extends BaseController
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($idProyect);
         $emprendedor = $userModel->getUserByNickname($project->USERNAME_USUARIO);
-        
+
         // Obtener las actualizaciones del proyecto
         $updateModel = new UpdateModel();
         $updates = $updateModel->getUpdatesByProjectId($idProyect);
-        
-        
+
+
         // Cargar la vista con los datos del proyecto y las actualizaciones
-        
+
         $data = [
             'title' => 'Detalle de Mis Proyectos',
             'statistics' => $statistics,
@@ -473,7 +472,7 @@ class ProjectController extends BaseController
         $proyecto = $proyectoModel->find($idProyecto);
         $usuario = $user->getUserByNickname($proyecto->USERNAME_USUARIO);
 
-        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';   
+        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';
         $proyectoModel->update($idProyecto, ['ESTADO' => $nuevoEstado]);
         $notification->addUserNotification(3, $usuario['ID_USUARIO']);
 
@@ -488,12 +487,12 @@ class ProjectController extends BaseController
         $proyecto = $proyectoModel->find($idProyecto);
         $usuario = $user->getUserByNickname($proyecto->USERNAME_USUARIO);
 
-        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';   
+        $nuevoEstado = $proyecto->ESTADO === '1' ? '0' : '1';
         $proyectoModel->update($idProyecto, ['ESTADO' => $nuevoEstado]);
 
         return $this->response->setJSON(['status' => 'success', 'nuevoEstado' => $nuevoEstado === '0' ? 'PRIVADO' : 'PUBLICO']);
     }
-    
+
     public function shareUpdateProject($idProyecto)
     {
         $projectModel = new ProjectModel();
@@ -502,7 +501,7 @@ class ProjectController extends BaseController
         $statistics = $puntuarUsuarioModel->calculateStatistics(session()->get('ID_USUARIO'));
         $notificationsUser = $notificationUserModel->getRecentNotifications(session()->get('ID_USUARIO'), $limit = 5);
         $project = $projectModel->find($idProyecto);
-        
+
         // Preparar datos para la vista
         $data = [
             'title' => 'Actualizacion de mis proyectos',
@@ -529,6 +528,8 @@ class ProjectController extends BaseController
         $model = new UpdateModel();
         $projectModel = new ProjectModel();
         $project = $projectModel->find($projectId);
+        $invesment = new InvestmentModel();
+        $UsersInvestments = $invesment->investmentsProject($projectId);
 
         // Obtén los datos del formulario
         $descripcion = $this->request->getPost('descripcion');
@@ -553,6 +554,10 @@ class ProjectController extends BaseController
 
             // Insertar los datos en la tabla
             $model->insert($data);
+            foreach ($UsersInvestments as $inversionista) {
+                $notification = new NotificationUserModel();
+                $notification->addUserNotification(4, $inversionista['ID_USUARIO']);
+            }
 
             return redirect()->to('project/details/' . $project->ID_PROYECTO)->with('success', 'Actualización publicada exitosamente');
         } else {

@@ -11,7 +11,7 @@
                     <?= esc(getAmountNotification(session('ID_USUARIO'))) ?>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown" style="width : 400px">
+            <div class="dropdown-menu dropdown-menu-end" id="notification-dropdown" style="width : 500px">
                 <div class="dropdown-divider"></div>
                 <div id="notification-list">
                     <!-- Las notificaciones se cargarán aquí -->
@@ -59,14 +59,14 @@
                         <?= esc($user_name) ?>
 
                     <div class="d-flex justify-content-center align-items-center">
-                        <div class="star-rating average-rating" id ="starScore">
+                        <div class="star-rating average-rating" id="starScore">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <span class="ms-2 average-rating" id = "numScore"></span>
+                        <span class="ms-2 average-rating" id="numScore"></span>
                     </div>
                     </p>
                 </li>
@@ -87,8 +87,8 @@
         const scoreStored = <?= json_encode($statistics['promedio']); ?> ?? 0;
         document.getElementById('numScore').textContent = `(${scoreStored})`;
         updateStarRating2(); // Llama a la función para actualizar las estrellas promedio
-        
-        
+
+
         function updateStarRating2() {
             const stars = document.querySelectorAll('#starScore i');
             //const scoreStored = <?= json_encode($statistics['promedio']); ?>; // Promedio del backend
@@ -105,7 +105,7 @@
     });
 
     function markNotificationsAsRead() {
-            fetch('<?= base_url('notification/mark-read') ?>', {
+        fetch('<?= base_url('notification/mark-read') ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,5 +128,5 @@
                 }
             })
             .catch(error => console.error('Error en la solicitud:', error));
-        }
+    }
 </script>
