@@ -50,7 +50,7 @@
 
 
                     <div class="card h-100">
-                        <img class="card-img-top" src="data:image/jpeg;base64,<?= esc($project->imagen_base64) ?>" alt="Project Image">
+                        <img class="card-img-top" src="<?= base_url('project/showFront/' . $project->ID_PROYECTO) ?>" alt="Project Image">
                         <div class="card-body">
                             <!-- Nombre y Presupuesto -->
                             <div class="mb-3">
@@ -85,16 +85,18 @@
                                 <div class="description-truncate">
                                     <?= esc(strlen($project->DESCRIPCION) > 80 ? substr($project->DESCRIPCION, 0, 80) . '...' : $project->DESCRIPCION) ?>
                                 </div>
+                                <div class="description-full d-flex justify-content-between align-items-center mt-2">
+                                    <?php if (strlen($project->DESCRIPCION) > 80): ?>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
+                                            Ver mas
+                                        </button>
 
-                                <?php if (strlen($project->DESCRIPCION) > 80): ?>
-                                    <button type="button" class="btn btn-link p-0 mt-2" data-bs-toggle="modal" data-bs-target="#modal-<?= $project->ID_PROYECTO ?>">
-                                        Ver más...
-                                    </button>
-                                <?php endif; ?>
+                                    <?php endif; ?>
+
+                                </div>
 
 
                             </div>
-
                             <!-- Modal para la descripción completa -->
                             <div class="modal fade" id="modal-<?= $project->ID_PROYECTO ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $project->ID_PROYECTO ?>" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                                 <div class="modal-dialog">

@@ -71,7 +71,7 @@ $routes->group('', ['filter' => 'login'], function ($routes) {
 
     $routes->get('/deleteProject/(:num)', 'ProjectController::deleteProject/$1');
 
-    $routes->get('/project/showFront/(:num)', 'ProjectController::showFront/$1');
+
 
     $routes->get('project/details/(:num)', 'ProjectController::details/$1');
     $routes->get('project/showFrontUpdates/(:num)/(:num)/(:any)', 'ProjectController::showFrontUpdates/$1/$2/$3');
@@ -119,6 +119,8 @@ $routes->get('/register', 'registerController::register');
 $routes->post('/login/authenticate', 'LoginController::authenticate');
 
 $routes->get('/unauthorized', 'LoginController::unauthorized');
+
+$routes->get('/project/showFront/(:num)', 'ProjectController::showFront/$1');
 
 /*Registro*/
 

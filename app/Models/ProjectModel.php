@@ -61,7 +61,6 @@ class ProjectModel extends Model
         foreach ($projects as $project) {
             // Añadimos las categorías a cada proyecto
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
-            log_message('debug', 'Proyectos obtenidos: ' . json_encode($projects));
             $project->categoria_nombre = $categoryModel->getCategory($project->ID_PROYECTO);
             $project->monto_recaudado = $this->getAmountInvestmentsByProject($project->ID_PROYECTO);
             $fechaHoy = (new \DateTime())->format('Y-m-d');
@@ -202,7 +201,7 @@ class ProjectModel extends Model
             // Calculamos el porcentaje de progreso
             $project->porcentaje_progreso = ($project->monto_recaudado / $project->PRESUPUESTO) * 100;
             if ($project->PORTADA) {
-                $project->imagen_base64 = base64_encode($project->PORTADA ); // Convierte a base64 para mostrar en HTML
+                $project->imagen_base64 = base64_encode($project->PORTADA); // Convierte a base64 para mostrar en HTML
             }
         }
 
@@ -259,10 +258,10 @@ class ProjectModel extends Model
                             'ID_CATEGORIA' => $categoryId
                         ];
                     }
-                        // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
-                        $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
-                    }
-                    /*
+                    // Insertar múltiples filas en la tabla intermedia 'proyecto_categoria'
+                    $this->db->table('proyecto_categoria')->insertBatch($proyectoCategoriaData);
+                }
+                /*
                     // Insertar la imagen en la tabla 'imagenes_proyecto'
                     if (!empty($data['ARCHIVO'])) {
                         // Preparar los datos para la tabla 'imagenes_proyecto'
@@ -277,9 +276,9 @@ class ProjectModel extends Model
                         $this->db->table('imagenes_proyecto')->insert($imageDataInsert);
                     }
                     */
-                    // Si la actualización fue exitosa, retornar true
-                    return true;
-                }
+                // Si la actualización fue exitosa, retornar true
+                return true;
+            }
         } catch (\Exception $e) {
             log_message('error', 'Error al actualizar el proyecto o en la tabla intermedia: ' . $e->getMessage());
         }
